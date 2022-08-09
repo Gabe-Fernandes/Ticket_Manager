@@ -3,11 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketManager", "TicketManager\TicketManager.csproj", "{8F9D682C-6A5E-4BC2-AC31-9F70B6DF38FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicketManager", "TicketManager\TicketManager.csproj", "{8F9D682C-6A5E-4BC2-AC31-9F70B6DF38FE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C7FC8A7C-1B21-4CC3-8EC2-D0F5C0C8C7D5}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketManagerTests", "TicketManagerTests\TicketManagerTests.csproj", "{03DC1B2B-46D7-43E4-9DC1-E39823DEB9CB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8F9D682C-6A5E-4BC2-AC31-9F70B6DF38FE} = {8F9D682C-6A5E-4BC2-AC31-9F70B6DF38FE}
 	EndProjectSection
 EndProject
 Global
@@ -20,6 +25,10 @@ Global
 		{8F9D682C-6A5E-4BC2-AC31-9F70B6DF38FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F9D682C-6A5E-4BC2-AC31-9F70B6DF38FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F9D682C-6A5E-4BC2-AC31-9F70B6DF38FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03DC1B2B-46D7-43E4-9DC1-E39823DEB9CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03DC1B2B-46D7-43E4-9DC1-E39823DEB9CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03DC1B2B-46D7-43E4-9DC1-E39823DEB9CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03DC1B2B-46D7-43E4-9DC1-E39823DEB9CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
