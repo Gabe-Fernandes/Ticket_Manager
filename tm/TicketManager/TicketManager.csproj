@@ -20,8 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Repositories\" />
-    <Folder Include="Interfaces\" />
     <Folder Include="Hubs\" />
   </ItemGroup>
 

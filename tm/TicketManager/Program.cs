@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TicketManager.Data;
+using TicketManager.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
