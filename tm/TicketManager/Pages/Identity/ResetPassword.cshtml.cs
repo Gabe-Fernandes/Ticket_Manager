@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -8,13 +9,22 @@ using TicketManager.Models;
 
 namespace TicketManager.Pages.Identity;
 
+[AllowAnonymous]
 public class ResetPasswordModel : PageModel
 {
     private readonly UserManager<AppUser> _userManager;
+    private readonly LoginModel _loginModel;
+    private readonly SignInManager<AppUser> _signInManager;
+    private readonly ILogger<LoginModel> _logger;
 
-    public ResetPasswordModel(UserManager<AppUser> userManager)
+    public ResetPasswordModel(UserManager<AppUser> userManager,
+        SignInManager<AppUser> signInManager,
+        ILogger<LoginModel> logger)
     {
         _userManager = userManager;
+        _signInManager = signInManager;
+        _logger = logger;
+        _loginModel = new LoginModel(_signInManager, _logger, _userManager);
     }
 
     [BindProperty]
@@ -38,7 +48,6 @@ public class ResetPasswordModel : PageModel
 
         [Required]
         public string Code { get; set; }
-
     }
 
     public IActionResult OnGet(string code = null)
@@ -67,14 +76,18 @@ public class ResetPasswordModel : PageModel
         var user = await _userManager.FindByEmailAsync(Input.Email);
         if (user == null)
         {
-            // Don't reveal that the user does not exist
-            return RedirectToPage("./ResetPasswordConfirmation");
+            // Add temporary data - reveal if wrong?
+            return Page();
         }
 
         var result = await _userManager.ResetPasswordAsync(user, Input.Code, Input.Password);
         if (result.Succeeded)
         {
-            return RedirectToPage("./ResetPasswordConfirmation");
+            // Add temporary data
+            await _signInManager.PasswordSignInAsync(
+                user.Email, Input.Password, isPersistent: false, lockoutOnFailure: false);
+            await _loginModel.GenerateSecurityContextAsync(Input.Email, HttpContext);
+            return RedirectToPage("/Main/MyProjects", new { code = "reset_password_login" });
         }
 
         foreach (var error in result.Errors)

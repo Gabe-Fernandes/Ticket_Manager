@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Text.Encodings.Web;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,7 @@ using TicketManager.Models;
 
 namespace TicketManager.Pages.Identity;
 
+[AllowAnonymous]
 public class ForgotPasswordModel : PageModel
 {
     private readonly UserManager<AppUser> _userManager;
@@ -38,18 +40,16 @@ public class ForgotPasswordModel : PageModel
             var user = await _userManager.FindByEmailAsync(Input.Email);
             if (user == null || !await _userManager.IsEmailConfirmedAsync(user))
             {
-                // Don't reveal that the user does not exist or is not confirmed
-                return RedirectToPage("./ForgotPasswordConfirmation");
+                // Add temporary data
+                return Page();
             }
 
-            // For more information on how to enable account confirmation and password reset please
-            // visit https://go.microsoft.com/fwlink/?LinkID=532713
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
             var callbackUrl = Url.Page(
-                "/Account/ResetPassword",
+                "/Identity/ResetPassword",
                 pageHandler: null,
-                values: new { area = "Identity", code },
+                values: new { code },
                 protocol: Request.Scheme);
 
             await _emailSender.SendEmailAsync(
@@ -57,7 +57,8 @@ public class ForgotPasswordModel : PageModel
                 "Reset Password",
                 $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-            return RedirectToPage("./ForgotPasswordConfirmation");
+            // Add temporary data
+            return Page();
         }
 
         return Page();

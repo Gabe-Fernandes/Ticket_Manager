@@ -10,4 +10,6 @@ public class AppUser : IdentityUser
 
     [Required]
     public string LastName { get; set; }
+
+    public string AssignedRole { get; set; }
 }

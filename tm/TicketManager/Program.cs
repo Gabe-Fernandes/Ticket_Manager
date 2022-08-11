@@ -1,6 +1,9 @@
+﻿using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using TicketManager.Data;
 using TicketManager.Models;
+using TicketManager.Pages.Identity;
+using TicketManager.Pages.Identity.Email;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +14,27 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<AppDbContext>();
 
+builder.Services.AddAuthentication(LoginModel.Cookie).AddCookie(LoginModel.Cookie, options =>
+{
+    options.Cookie.Name = LoginModel.Cookie;
+    options.LoginPath = "/Identity/Login";
+    options.AccessDeniedPath = "/Identity/AccessDenied";
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy => policy.RequireRole(LoginModel.Admin));
+    options.AddPolicy("Management", policy =>
+    {
+        policy.RequireRole(LoginModel.Admin);
+        policy.RequireRole(LoginModel.TechLead);
+    });
+});
+
 builder.Services.AddRazorPages();
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 
 var app = builder.Build();
 
