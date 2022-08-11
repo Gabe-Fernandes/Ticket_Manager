@@ -1,12 +1,12 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace TicketManager.Pages.Main
+namespace TicketManager.Pages.Main;
+
+[Authorize(Policy = "AdminOnly")]
+public class AdminDashboardModel : PageModel
 {
-    public class AdminDashboardModel : PageModel
+    public void OnGet()
     {
-        public void OnGet()
-        {
-        }
     }
 }

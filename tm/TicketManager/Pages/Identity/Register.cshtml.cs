@@ -2,6 +2,7 @@
 using System.Text;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ using TicketManager.Models;
 
 namespace TicketManager.Pages.Identity;
 
+[AllowAnonymous]
 public class RegisterModel : PageModel
 {
     private readonly SignInManager<AppUser> _signInManager;
@@ -29,7 +31,7 @@ public class RegisterModel : PageModel
     {
         _userManager = userManager;
         _userStore = userStore;
-        _emailStore = GetEmailStore();
+        _emailStore = (IUserEmailStore<AppUser>)_userStore;
         _signInManager = signInManager;
         _logger = logger;
         _emailSender = emailSender;
@@ -38,9 +40,9 @@ public class RegisterModel : PageModel
     [BindProperty]
     public InputModel Input { get; set; }
 
-    public string ReturnUrl { get; set; }
-
     public IList<AuthenticationScheme> ExternalLogins { get; set; }
+
+    public string[] Roles = new[] { "Admin", "TechLead", "Developer" };
 
     public class InputModel
     {
@@ -59,22 +61,36 @@ public class RegisterModel : PageModel
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [StringLength(21, ErrorMessage = "Maximum length exceeded")]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [StringLength(21, ErrorMessage = "Maximum length exceeded")]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        public string AssingedRole { get; set; }
     }
 
 
-    public async Task OnGetAsync(string returnUrl = null)
+    public async Task OnGetAsync()
     {
-        ReturnUrl = returnUrl;
         ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
     }
 
-    public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+    public async Task<IActionResult> OnPostAsync()
     {
-        returnUrl ??= Url.Content("~/");
         ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         if (ModelState.IsValid)
         {
-            var user = CreateUser();
+            var user = Activator.CreateInstance<AppUser>();
+
+            user.FirstName = Input.FirstName;
+            user.LastName = Input.LastName;
+            user.AssignedRole = Input.AssingedRole;
 
             await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
             await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -88,23 +104,16 @@ public class RegisterModel : PageModel
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                 var callbackUrl = Url.Page(
-                    "/Account/ConfirmEmail",
+                    "/Main/MyProjects",
                     pageHandler: null,
-                    values: new { area = "Identity", userId, code, returnUrl },
+                    values: new { userId, code },
                     protocol: Request.Scheme);
 
                 await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                     $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                {
-                    return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl });
-                }
-                else
-                {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return LocalRedirect(returnUrl);
-                }
+                TempData["Confirmation_Animation"] = "Confirmed";
+                return Page();
             }
             foreach (var error in result.Errors)
             {
@@ -114,27 +123,4 @@ public class RegisterModel : PageModel
 
         return Page(); // If we got this far, something failed, redisplay form
   }
-
-  private AppUser CreateUser()
-    {
-        try
-        {
-            return Activator.CreateInstance<AppUser>();
-        }
-        catch
-        {
-            throw new InvalidOperationException($"Can't create an instance of '{nameof(AppUser)}'. " +
-                $"Ensure that '{nameof(AppUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
-                $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
-        }
-    }
-
-    private IUserEmailStore<AppUser> GetEmailStore()
-    {
-        if (!_userManager.SupportsUserEmail)
-        {
-            throw new NotSupportedException("The default UI requires a user store with email support.");
-        }
-        return (IUserEmailStore<AppUser>)_userStore;
-    }
 }
