@@ -1,0 +1,35 @@
+﻿// z-indecies
+$chat: 1;
+// color pallete
+// ...
+
+@mixin WidthHeight($w, $h) {
+  width: $w;
+  height: $h;
+}
+
+@mixin MsgStyles($msg-color, $txt-justification) {
+  display: flex;
+  justify-content: $txt-justification;
+
+  p {
+    background-color: $msg-color;
+    padding: 0.4em 1.0em;
+    border-radius: 1em;
+    max-width: 55%;
+  }
+}
+
+@mixin ImgStyles($height, $t, $r, $b, $l) {
+  position: absolute;
+  top: $t;
+  right: $r;
+  bottom: $b;
+  left: $l;
+  transform: translate(0%, -50%);
+
+  img {
+    width: 100%;
+    height: $height;
+  }
+}

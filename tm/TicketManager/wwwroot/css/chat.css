@@ -1,0 +1,141 @@
+.chat-window {
+  position: fixed;
+  right: 20%;
+  bottom: 0%;
+  z-index: 1;
+  height: 75vh;
+  width: 30vw;
+}
+.chat-window .top {
+  position: relative;
+  height: 15%;
+}
+.chat-window .top label {
+  position: absolute;
+  left: 3.14em;
+  top: 50%;
+  transform: translate(0%, -50%);
+}
+.chat-window .top input {
+  width: 100%;
+  height: 100%;
+  text-indent: 10%;
+  font-size: 1.4em;
+  border-top-left-radius: 1em;
+  border-top-right-radius: 1em;
+}
+.chat-window .top .minimize {
+  position: absolute;
+  top: 50%;
+  right: 16%;
+  bottom: 0%;
+  left: auto;
+  transform: translate(0%, -50%);
+}
+.chat-window .top .minimize img {
+  width: 100%;
+  height: 2.4em;
+}
+.chat-window .top .close {
+  position: absolute;
+  top: 50%;
+  right: 2%;
+  bottom: 0%;
+  left: auto;
+  transform: translate(0%, -50%);
+}
+.chat-window .top .close img {
+  width: 100%;
+  height: 2.4em;
+}
+.chat-window .top .pfp {
+  position: absolute;
+  top: 50%;
+  right: auto;
+  bottom: 0%;
+  left: 2%;
+  transform: translate(0%, -50%);
+}
+.chat-window .top .pfp img {
+  width: 100%;
+  height: 2.4em;
+}
+.chat-window .mid {
+  height: 70%;
+  background-color: white;
+}
+.chat-window .mid ol {
+  width: 100%;
+  height: 100%;
+  list-style: none;
+  overflow-y: scroll;
+}
+.chat-window .mid ol .conversation {
+  margin: 0% 7% 5% 0%;
+}
+.chat-window .mid ol .conversation .msg-in {
+  display: flex;
+  justify-content: start;
+}
+.chat-window .mid ol .conversation .msg-in p {
+  background-color: pink;
+  padding: 0.4em 1em;
+  border-radius: 1em;
+  max-width: 55%;
+}
+.chat-window .mid ol .conversation .msg-in div {
+  display: flex;
+  width: 18%;
+  justify-content: center;
+  align-items: flex-end;
+}
+.chat-window .mid ol .conversation .msg-in div img {
+  width: 2.4em;
+  height: 2.4em;
+}
+.chat-window .mid ol .conversation .msg-out {
+  display: flex;
+  justify-content: end;
+}
+.chat-window .mid ol .conversation .msg-out p {
+  background-color: lightblue;
+  padding: 0.4em 1em;
+  border-radius: 1em;
+  max-width: 55%;
+}
+.chat-window .mid ol .search-result {
+  transition: background-color 0.45s;
+}
+.chat-window .mid ol .search-result:nth-child(odd) {
+  background-color: whitesmoke;
+}
+.chat-window .mid ol .search-result:hover {
+  cursor: pointer;
+  background-color: lightblue;
+}
+.chat-window .mid ol .search-result div {
+  display: flex;
+  padding: 5% 7%;
+}
+.chat-window .mid ol .search-result div img {
+  width: 2.4em;
+  height: 2.4em;
+  margin-right: 10%;
+}
+.chat-window .bot {
+  height: 15%;
+}
+.chat-window .bot input {
+  width: 70%;
+  height: 100%;
+  border: 0px;
+  text-indent: 10%;
+  overflow-y: scroll;
+}
+.chat-window .bot button {
+  width: 30%;
+  height: 100%;
+  border: 0px;
+}
+
+/*# sourceMappingURL=chat.css.map */

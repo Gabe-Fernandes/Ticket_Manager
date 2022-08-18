@@ -12,4 +12,6 @@ public class AppUser : IdentityUser
     public string LastName { get; set; }
 
     public string AssignedRole { get; set; }
+
+    public string ProfilePicture { get; set; }
 }

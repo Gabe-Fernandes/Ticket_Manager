@@ -1,0 +1,115 @@
+﻿@import "_library.scss";
+
+.chat-window {
+  position: fixed;
+  right: 20%;
+  bottom: 0%;
+  z-index: $chat;
+  height: 75vh;
+  width: 30vw;
+
+  .top {
+    position: relative;
+    height: 15%;
+
+    label {
+      position: absolute;
+      left: 3.14em;
+      top: 50%;
+      transform: translate(0%, -50%);
+    }
+
+    input {
+      @include WidthHeight(100%, 100%);
+      text-indent: 10%;
+      font-size: 1.4em;
+      border-top-left-radius: 1em;
+      border-top-right-radius: 1em;
+    }
+
+    .minimize {
+      @include ImgStyles(2.4em, 50%, 16%, 0%, auto);
+    }
+
+    .close {
+      @include ImgStyles(2.4em, 50%, 2%, 0%, auto);
+    }
+
+    .pfp {
+      @include ImgStyles(2.4em, 50%, auto, 0%, 2%);
+    }
+  }
+
+  .mid {
+    height: 70%;
+    background-color: white;
+
+    ol {
+      @include WidthHeight(100%, 100%);
+      list-style: none;
+      overflow-y: scroll;
+
+      .conversation {
+        margin: 0% 7% 5% 0%;
+
+        .msg-in {
+          @include MsgStyles(pink, start);
+
+          div {
+            display: flex;
+            width: 18%;
+            justify-content: center;
+            align-items: flex-end;
+
+            img {
+              @include WidthHeight(2.4em, 2.4em);
+            }
+          }
+        }
+
+        .msg-out {
+          @include MsgStyles(lightblue, end);
+        }
+      }
+
+      .search-result {
+        transition: background-color 0.45s;
+
+        &:nth-child(odd) {
+          background-color: whitesmoke;
+        }
+
+        &:hover {
+          cursor: pointer;
+          background-color: lightblue;
+        }
+
+        div {
+          display: flex;
+          padding: 5% 7%;
+
+          img {
+            @include WidthHeight(2.4em, 2.4em);
+            margin-right: 10%;
+          }
+        }
+      }
+    }
+  }
+
+  .bot {
+    height: 15%;
+
+    input {
+      @include WidthHeight(70%, 100%);
+      border: 0px;
+      text-indent: 10%;
+      overflow-y: scroll;
+    }
+
+    button {
+      @include WidthHeight(30%, 100%);
+      border: 0px;
+    }
+  }
+}

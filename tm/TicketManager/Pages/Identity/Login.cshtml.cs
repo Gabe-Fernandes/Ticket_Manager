@@ -98,7 +98,10 @@ public class LoginModel : PageModel
         {
             new Claim(ClaimTypes.Name, userFromDb.FirstName),
             new Claim("LastName", userFromDb.LastName),
-            new Claim(ClaimTypes.Role, userFromDb.AssignedRole)
+            new Claim("Email", userFromDb.Email),
+            new Claim("Id", userFromDb.Id),
+            new Claim(ClaimTypes.Role, userFromDb.AssignedRole),
+            new Claim(ClaimTypes.NameIdentifier, userFromDb.Id)
         };
 
         var identity = new ClaimsIdentity(claims, Cookie);
