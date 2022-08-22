@@ -8,6 +8,13 @@ $chat: 1;
   height: $h;
 }
 
+@mixin Col-Stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
 @mixin MsgStyles($msg-color, $txt-justification) {
   display: flex;
   justify-content: $txt-justification;
@@ -20,16 +27,13 @@ $chat: 1;
   }
 }
 
-@mixin ImgStyles($height, $t, $r, $b, $l) {
+@mixin ImgStyles($diameter, $t, $r, $b, $l) {
   position: absolute;
   top: $t;
   right: $r;
   bottom: $b;
   left: $l;
   transform: translate(0%, -50%);
-
-  img {
-    width: 100%;
-    height: $height;
-  }
+  width: $diameter;
+  height: $diameter;
 }

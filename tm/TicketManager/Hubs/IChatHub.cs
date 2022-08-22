@@ -7,4 +7,5 @@ public interface IChatHub
     Task UsersFiltered(IEnumerable<AppUser> filteredUsers);
     Task MessagesLoaded(IEnumerable<Message> messages);
     Task MessageSent(Message message);
+    Task RenderChatWindow(ChatGuidList chatWindowIds);
 }

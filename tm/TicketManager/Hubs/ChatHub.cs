@@ -63,4 +63,23 @@ public class ChatHub : Hub<IChatHub>
 
         await Clients.Users(recipientId, myId).MessageSent(message);
     }
+
+    public async Task GenerateChatGuidList()
+    {
+        ChatGuidList chatGuidList = new ChatGuidList();
+        await Clients.Caller.RenderChatWindow(chatGuidList);
+    }
+}
+
+public class ChatGuidList
+{
+    public string ChatWindowId { get; } = Guid.NewGuid().ToString();
+    public string PfpId { get; } = Guid.NewGuid().ToString();
+    public string NameTagId { get; } = Guid.NewGuid().ToString();
+    public string SearchBoxId { get; } = Guid.NewGuid().ToString();
+    public string MinimizeBtnId { get; } = Guid.NewGuid().ToString();
+    public string CloseBtnId { get; } = Guid.NewGuid().ToString();
+    public string ContentListId { get; } = Guid.NewGuid().ToString();
+    public string MessageInputId { get; } = Guid.NewGuid().ToString();
+    public string SendBtnId { get; } = Guid.NewGuid().ToString();
 }

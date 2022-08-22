@@ -1,13 +1,30 @@
 ﻿@import "_library.scss";
 
-.chat-window {
-  position: fixed;
-  right: 20%;
-  bottom: 0%;
+.chat-container {
+  @include WidthHeight(100vw, 72vh);
   z-index: $chat;
-  height: 75vh;
-  width: 30vw;
+  position: fixed;
+  bottom: 0%;
+  display: flex;
+  flex-flow: row-reverse;
+  justify-content: flex-start;
+}
 
+.chat-column {
+  @include WidthHeight(5vw, 72vh);
+  @include Col-Stack();
+  margin-right: 4vw;
+
+  img {
+    @include WidthHeight(11vh, 11vh);
+    border-radius: 5.5vh;
+    margin-bottom: 1vh;
+  }
+}
+
+.chat-window {
+  @include WidthHeight(25%, 100%);
+  margin-right: 2%;
   .top {
     position: relative;
     height: 15%;

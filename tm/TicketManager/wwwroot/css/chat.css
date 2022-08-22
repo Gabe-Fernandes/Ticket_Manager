@@ -1,10 +1,34 @@
-.chat-window {
-  position: fixed;
-  right: 20%;
-  bottom: 0%;
+.chat-container {
+  width: 100vw;
+  height: 72vh;
   z-index: 1;
-  height: 75vh;
-  width: 30vw;
+  position: fixed;
+  bottom: 0%;
+  display: flex;
+  flex-flow: row-reverse;
+  justify-content: flex-start;
+}
+
+.chat-column {
+  width: 5vw;
+  height: 72vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 4vw;
+}
+.chat-column img {
+  width: 11vh;
+  height: 11vh;
+  border-radius: 5.5vh;
+  margin-bottom: 1vh;
+}
+
+.chat-window {
+  width: 25%;
+  height: 100%;
+  margin-right: 2%;
 }
 .chat-window .top {
   position: relative;
@@ -31,9 +55,7 @@
   bottom: 0%;
   left: auto;
   transform: translate(0%, -50%);
-}
-.chat-window .top .minimize img {
-  width: 100%;
+  width: 2.4em;
   height: 2.4em;
 }
 .chat-window .top .close {
@@ -43,9 +65,7 @@
   bottom: 0%;
   left: auto;
   transform: translate(0%, -50%);
-}
-.chat-window .top .close img {
-  width: 100%;
+  width: 2.4em;
   height: 2.4em;
 }
 .chat-window .top .pfp {
@@ -55,9 +75,7 @@
   bottom: 0%;
   left: 2%;
   transform: translate(0%, -50%);
-}
-.chat-window .top .pfp img {
-  width: 100%;
+  width: 2.4em;
   height: 2.4em;
 }
 .chat-window .mid {

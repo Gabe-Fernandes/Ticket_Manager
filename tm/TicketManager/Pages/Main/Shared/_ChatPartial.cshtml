@@ -1,20 +1,10 @@
-﻿<div class="chat-window">
-	<div class="top">
-		<div class="pfp"><img class="hide" id="profilePicture" src="/icons/user.png" /></div>
-		<label id="nameTag"></label>
-		<input type="text" id="searchBox" placeholder="to..." />
-		<div class="minimize"><img src="/icons/delete.png" /></div>
-		<div class="close"><img src="/icons/cancel.png" /></div>
-	</div>
-	<div class="mid">
-		<ol id="contentList">
-		</ol>
-	</div>
-	<div class="bot">
-		<input type="text" id="messageInput" placeholder="message..."
-		/><button type="button" id="sendBtn">Send</button>
-	</div>
+﻿<script async src="~/js/signalr.js"></script>
+<script async src="~/js/chatHub.js"></script>
+
+<div class="chat-container" id="chatContainer">
+
+<div class="chat-column">
+	<img id="newChatBtn" src="/icons/plus.png"/>
 </div>
 
-<script src="~/js/signalr.js"></script>
-<script src="~/js/chatHub.js"></script>
+</div>
