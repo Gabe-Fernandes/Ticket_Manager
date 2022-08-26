@@ -10,38 +10,39 @@
   //0
   $("#newChatBtn").on("click", () => {
     if (chatWindows.length > 2) {
-      ShuffleChatWindows();
+      //push
     }
     Messenger.send("GenerateChatGuidList");
   });
 
-  Messenger.on("RenderChatWindow", chatGuidList => {
-    RenderChatWindow(chatGuidList);
+  Messenger.on("RenderNewChatWindow", chatGuidList => {
+    RenderNewChatWindow(chatGuidList);
   });
 
-  function RenderChatWindow(guidList) {
+  function RenderNewChatWindow(guidList) {
     $("#chatContainer").append(`<div class='chat-window' id='${guidList.chatWindowId}'>
       <div class='top'>
-        <img class='hide pfp' src='/icons/user.png' id='${guidList.pfpId}'>
-        <label id='${guidList.nameTagId}'></label><input placeholder='to...' id='${guidList.searchBoxId}'>
-        <img class='minimize' src='/icons/delete.png' id='${guidList.minimizeBtnId}'>
-        <img class='close' src='/icons/cancel.png' id='${guidList.closeBtnId}'></div>
-      <div class='mid'>
+        <img class='hide' src='/icons/user.png' id='${guidList.pfpId}'>
+        <label class='hide' id='${guidList.nameTagId}'></label>
+        <input placeholder='to...' id='${guidList.searchBoxId}'>
+        <div><img src='/icons/cancel.png' id='${guidList.closeBtnId}'></div></div>
+      <div class='mid extend-mid' id='${guidList.midId}'>
         <ol id='${guidList.contentListId}'></div>
-      <div class='bot'>
+      <div class='bot hide' id='${guidList.botId}'>
         <input placeholder='message...' id='${guidList.messageInputId}'><button
-        id='${guidList.sendBtnId}'>Send`);
+        id='${guidList.sendBtnId}' class='btn'>Send`);
 
     chatWindows.push(guidList);
     AddChatWindowEvents(guidList);
   }
 
   function AddChatWindowEvents(guidList) {
-    $(`#${guidList.searchBoxId}`).on("input", function () { SearchBox(guidList) });
-    $(`#${guidList.minimizeBtnId}`).on("click", function () { MinimizeChatWindow(guidList) });
-    $(`#${guidList.closeBtnId}`).on("click", function () { CloseChatWindow(guidList) });
-    $(`#${guidList.sendBtnId}`).on("click", function () { SendBtn(guidList) });
-  }//()=>
+    $(`#${guidList.searchBoxId}`).on("input", () => { SearchBox(guidList) });
+    $(`#${guidList.sendBtnId}`).on("click", () => { SendBtn(guidList) });
+    $(`#${guidList.closeBtnId}`).on("click", () => {
+      ToggledChatWindow(guidList.chatWindowId, chatWindows, "chatWindowId");
+    });
+  }
 
   //1
   function SearchBox(guidList) {
@@ -68,7 +69,7 @@
           <div><img src='${obj.profilePicture}'/>
           <p>${obj.firstName} ${obj.lastName}<br/>
             &nbsp;&nbsp;&nbsp; -${obj.assignedRole}`);
-        $(`#${obj.id}`).on("click", function () { SelectCoworker(obj, guidList) });
+        $(`#${obj.id}`).on("click", ()=> { SelectCoworker(obj, guidList) });
       });
     }
   }
@@ -76,16 +77,26 @@
   //2
   function SelectCoworker(coworker, guidList) {
     const chatCtx = Object.assign(coworker, guidList);
-    $(`#${chatCtx.chatWindowId}`)[0].value = chatCtx;
+    $(`#${chatCtx.chatWindowId}`)[0].value = chatCtx; //is this storage persistent
     tempCtx = chatCtx;
     SwitchHeaderFromSearchToChat(chatCtx);
+    SwitchFooterFromSearchToChat(chatCtx);
     Messenger.send("LoadMessages", chatCtx.id);
   }
 
   function SwitchHeaderFromSearchToChat(chatCtx) {
-    $(`#${chatCtx.searchBoxId}`).attr({ value: "", placeholder: "", class: "disable" });
+    $(`#${chatCtx.searchBoxId}`).attr("class", "hide");
+    $(`#${chatCtx.nameTagId}`).attr("class", '');
     $(`#${chatCtx.nameTagId}`)[0].innerHTML = `${chatCtx.firstName} ${chatCtx.lastName}`;
-    $(`#${chatCtx.pfpId}`).attr({ class: "pfp", src: `${chatCtx.profilePicture}` });
+    $(`#${chatCtx.pfpId}`).attr({ src: `${chatCtx.profilePicture}`, class: '' });
+
+    $(`<div><img src='/icons/delete.png' id='${chatCtx.minimizeBtnId}'></div>`).insertAfter(`#${chatCtx.searchBoxId}`);
+    $(`#${chatCtx.minimizeBtnId}`).on("click", () => { MinimizeChatWindow(chatCtx) });
+  }
+
+  function SwitchFooterFromSearchToChat(chatCtx) {
+    $(`#${chatCtx.midId}`).attr("class", "mid");
+    $(`#${chatCtx.botId}`).attr("class", "bot");
   }
 
   Messenger.on("MessagesLoaded", messages => {
@@ -125,20 +136,52 @@
     contentList.scrollTop = contentList.scrollHeight;
   });
 
-  function MinimizeChatWindow(guidList) {
-
+  //4
+  function MinimizeChatWindow(chatCtx) {
+    const minimizedWindow = ToggledChatWindow(chatCtx.chatWindowId, chatWindows, "chatWindowId");
+    minimizedChatWindows.push(minimizedWindow);
+    RenderMinimizedChatWindow(chatCtx);
+  }
+  
+  function ToggledChatWindow(windowId, chatArray, idType) {
+    $(`#${windowId}`)[0].remove();
+    for (let i = 0; i < chatArray.length; i++) {
+      if (chatArray[i][idType] === windowId) {
+        return chatArray.splice(i, 1);
+      }
+    }
   }
 
-  function CloseChatWindow(guidList) {
-
+  function RenderMinimizedChatWindow(chatCtx) {
+    $("#chatColumn").append(`<img id='${chatCtx.minimizedChatWindowId}' src='${chatCtx.profilePicture}'>`);
+    $(`#${chatCtx.minimizedChatWindowId}`).on("click", () => {
+      ToggledChatWindow(chatCtx.minimizedChatWindowId, minimizedChatWindows, "minimizedChatWindowId");
+      RenderSpecificChatWindow(chatCtx);
+    });
   }
 
-  function ShuffleChatWindows() {
+  function RenderSpecificChatWindow(chatCtx) {
+    $("#chatContainer").append(`<div class='chat-window' id='${chatCtx.chatWindowId}'>
+      <div class='top'>
+        <img src='${chatCtx.profilePicture}' id='${chatCtx.pfpId}'>
+        <label id='${chatCtx.nameTagId}'>${chatCtx.firstName} ${chatCtx.lastName}</label>
+        <div><img src='/icons/delete.png' id='${chatCtx.minimizeBtnId}'></div>
+        <div><img src='/icons/cancel.png' id='${chatCtx.closeBtnId}'></div></div>
+      <div class='mid' id='${chatCtx.midId}'>
+        <ol id='${chatCtx.contentListId}'></div>
+      <div class='bot' id='${chatCtx.botId}'>
+        <input placeholder='message...' id='${chatCtx.messageInputId}'><button
+        id='${chatCtx.sendBtnId}' class='btn'>Send`);
 
-  }
+    chatWindows.push(chatCtx);
+    $(`#${chatCtx.minimizeBtnId}`).on("click", () => { MinimizeChatWindow(chatCtx) });
+    $(`#${chatCtx.sendBtnId}`).on("click", () => { SendBtn(chatCtx) });
+    $(`#${chatCtx.closeBtnId}`).on("click", () => {
+      ToggledChatWindow(chatCtx.chatWindowId, chatWindows, "chatWindowId");
+    });
 
-  function RenderMinimizedChatWindow() {
-
+    tempCtx = chatCtx;
+    Messenger.send("LoadMessages", chatCtx.id);
   }
 
   // Start connection

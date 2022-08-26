@@ -29,10 +29,25 @@ public class ChatHub : Hub<IChatHub>
 
         var UsersFromProject = await _appUserRepo.GetAllAsync(); // Make this the collection of users on this project
         var filteredUsers = UsersFromProject.Where(
-            u => (u.FirstName.ToUpper() + " " + u.LastName.ToUpper()).Contains(filterText)
+            u => (u.FirstName + " " + u.LastName).ToUpper().Contains(filterText)
             && u.Id != myId).ToList();
 
-        await Clients.Caller.UsersFiltered(filteredUsers);
+        // we don't want to send sensitive data from appuser to the client
+        var userCtxList = new List<ChatUserContext>();
+        foreach (var user in filteredUsers)
+        {
+            ChatUserContext userCtx = new ChatUserContext
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                AssignedRole = user.AssignedRole,
+                ProfilePicture = user.ProfilePicture
+            };
+            userCtxList.Add(userCtx);
+        }
+
+        await Clients.Caller.UsersFiltered(userCtxList);
     }
 
     public async Task LoadMessages(string coworkerId) // algo could improve
@@ -67,7 +82,7 @@ public class ChatHub : Hub<IChatHub>
     public async Task GenerateChatGuidList()
     {
         ChatGuidList chatGuidList = new ChatGuidList();
-        await Clients.Caller.RenderChatWindow(chatGuidList);
+        await Clients.Caller.RenderNewChatWindow(chatGuidList);
     }
 }
 
@@ -82,4 +97,16 @@ public class ChatGuidList
     public string ContentListId { get; } = Guid.NewGuid().ToString();
     public string MessageInputId { get; } = Guid.NewGuid().ToString();
     public string SendBtnId { get; } = Guid.NewGuid().ToString();
+    public string MidId { get; } = Guid.NewGuid().ToString();
+    public string BotId { get; } = Guid.NewGuid().ToString();
+    public string MinimizedChatWindowId { get; } = Guid.NewGuid().ToString();
+}
+
+public class ChatUserContext
+{
+    public string Id { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string AssignedRole { get; set; }
+    public string ProfilePicture { get; set; }
 }

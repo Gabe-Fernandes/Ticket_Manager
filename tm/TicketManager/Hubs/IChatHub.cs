@@ -4,8 +4,8 @@ namespace TicketManager.Hubs;
 
 public interface IChatHub
 {
-    Task UsersFiltered(IEnumerable<AppUser> filteredUsers);
+    Task UsersFiltered(IEnumerable<ChatUserContext> chatUserContextList);
     Task MessagesLoaded(IEnumerable<Message> messages);
     Task MessageSent(Message message);
-    Task RenderChatWindow(ChatGuidList chatWindowIds);
+    Task RenderNewChatWindow(ChatGuidList chatWindowIds);
 }

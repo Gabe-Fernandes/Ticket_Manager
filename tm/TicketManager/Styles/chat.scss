@@ -19,47 +19,58 @@
     @include WidthHeight(11vh, 11vh);
     border-radius: 5.5vh;
     margin-bottom: 1vh;
+    cursor: pointer;
   }
 }
 
 .chat-window {
   @include WidthHeight(25%, 100%);
   margin-right: 2%;
+  background-color: white;
+  border-top-left-radius: 1em;
+  border-top-right-radius: 1em;
+  background-color: #0d1117;
+
   .top {
-    position: relative;
     height: 15%;
+    box-shadow: inset 0 0 0.5em grey;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+    @include Row-Center();
+
+    img {
+      @include WidthHeight(2.4em, 2.4em);
+      border-radius: 1.2em;
+      cursor: pointer;
+    }
+
+    div {
+      @include WidthHeight(1.4em, 1.4em);
+      margin: 0em 0.5em;
+      background-color: white;
+      cursor: pointer;
+      border-radius: 1em;
+      @include Row-Center();
+    }
 
     label {
-      position: absolute;
-      left: 3.14em;
-      top: 50%;
-      transform: translate(0%, -50%);
+      width: 55%;
+      text-indent: 10%;
+      font-size: 1.4em;
+      @include TextEllipsis();
     }
 
     input {
-      @include WidthHeight(100%, 100%);
+      @include WidthHeight(70%, 100%);
       text-indent: 10%;
       font-size: 1.4em;
-      border-top-left-radius: 1em;
-      border-top-right-radius: 1em;
-    }
-
-    .minimize {
-      @include ImgStyles(2.4em, 50%, 16%, 0%, auto);
-    }
-
-    .close {
-      @include ImgStyles(2.4em, 50%, 2%, 0%, auto);
-    }
-
-    .pfp {
-      @include ImgStyles(2.4em, 50%, auto, 0%, 2%);
+      background-color: transparent;
+      border: none;
     }
   }
 
   .mid {
     height: 70%;
-    background-color: white;
 
     ol {
       @include WidthHeight(100%, 100%);
@@ -80,6 +91,7 @@
 
             img {
               @include WidthHeight(2.4em, 2.4em);
+              border-radius: 1.2em;
             }
           }
         }
@@ -93,12 +105,12 @@
         transition: background-color 0.45s;
 
         &:nth-child(odd) {
-          background-color: whitesmoke;
+          background-color: #22272d;
         }
 
         &:hover {
           cursor: pointer;
-          background-color: lightblue;
+          background-color: #00DFBF;
         }
 
         div {
@@ -107,6 +119,7 @@
 
           img {
             @include WidthHeight(2.4em, 2.4em);
+            border-radius: 1.2em;
             margin-right: 10%;
           }
         }
@@ -114,14 +127,20 @@
     }
   }
 
+  .extend-mid {
+    height: 85%;
+  }
+
   .bot {
     height: 15%;
+    box-shadow: inset 0 0 0.5em grey;
 
     input {
       @include WidthHeight(70%, 100%);
       border: 0px;
       text-indent: 10%;
       overflow-y: scroll;
+      background-color: transparent;
     }
 
     button {
@@ -129,4 +148,21 @@
       border: 0px;
     }
   }
+}
+
+::-webkit-scrollbar {
+  width: 1em;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 0.5em grey;
+  border-radius: 0.5em;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #0056DF, #00DFBF);
+  border-radius: 0.5em;
+}
+
+::-webkit-scrollbar-thumb:hover {
 }

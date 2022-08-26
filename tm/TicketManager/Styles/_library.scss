@@ -8,11 +8,24 @@ $chat: 1;
   height: $h;
 }
 
+@mixin TextEllipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@mixin Row-Center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @mixin Col-Stack {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
+  flex-flow: column-reverse;
 }
 
 @mixin MsgStyles($msg-color, $txt-justification) {
@@ -25,15 +38,4 @@ $chat: 1;
     border-radius: 1em;
     max-width: 55%;
   }
-}
-
-@mixin ImgStyles($diameter, $t, $r, $b, $l) {
-  position: absolute;
-  top: $t;
-  right: $r;
-  bottom: $b;
-  left: $l;
-  transform: translate(0%, -50%);
-  width: $diameter;
-  height: $diameter;
 }
