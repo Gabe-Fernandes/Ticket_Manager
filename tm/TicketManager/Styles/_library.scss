@@ -1,0 +1,41 @@
+﻿// z-indecies
+$chat: 1;
+// color pallete
+// ...
+
+@mixin WidthHeight($w, $h) {
+  width: $w;
+  height: $h;
+}
+
+@mixin TextEllipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@mixin Row-Center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin Col-Stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  flex-flow: column-reverse;
+}
+
+@mixin MsgStyles($msg-color, $txt-justification) {
+  display: flex;
+  justify-content: $txt-justification;
+
+  p {
+    background-color: $msg-color;
+    padding: 0.4em 1.0em;
+    border-radius: 1em;
+    max-width: 55%;
+  }
+}

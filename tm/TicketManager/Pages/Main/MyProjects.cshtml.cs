@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,7 +8,6 @@ using TicketManager.Pages.Identity;
 
 namespace TicketManager.Pages.Main;
 
-//[Authorize]
 public class MyProjectsModel : PageModel
 {
     private readonly ILogger<LoginModel> _logger;
@@ -49,8 +47,6 @@ public class MyProjectsModel : PageModel
         var result = await _userManager.ConfirmEmailAsync(user, code);
         if (result.Succeeded)
         {
-            //await _signInManager.PasswordSignInAsync(
-                //user.Email, user.PasswordHash, isPersistent: false, lockoutOnFailure: false);
             await _loginModel.GenerateSecurityContextAsync(user.Email, HttpContext);
             TempData["Confirmation"] = "Thank you for confirming your email.";
             return Page();

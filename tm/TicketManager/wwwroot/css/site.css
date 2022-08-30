@@ -1,18 +1,37 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+* {
+  margin: 0px;
+  border-left: 0px;
+  border-right: 0px;
+  padding: 0px;
+  font-family: "Trebuchet MS", "Times New Roman";
+  text-decoration: none;
+  color: white;
 }
 
 body {
-  margin-bottom: 60px;
+  background-color: #161b22;
 }
+
+.hide {
+  opacity: 0%;
+  pointer-events: none;
+  position: absolute;
+}
+
+.btn {
+  cursor: pointer;
+  transition: filter 0.25s;
+  font-size: 1.1em;
+  border-radius: 1em;
+  background: linear-gradient(45deg, #0056DF, #00DFBF);
+}
+.btn:hover {
+  filter: brightness(115%);
+}
+.btn:active {
+  transform: scale(0.94);
+  transform: translateY(4px);
+  box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+}
+
+/*# sourceMappingURL=site.css.map */

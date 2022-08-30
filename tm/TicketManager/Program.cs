@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using TicketManager.Data;
+using TicketManager.Data.Repositories;
+using TicketManager.Hubs;
+using TicketManager.Interfaces;
 using TicketManager.Models;
 using TicketManager.Pages.Identity;
 using TicketManager.Pages.Identity.Email;
@@ -35,6 +38,9 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddRazorPages();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
+builder.Services.AddSignalR();
+builder.Services.AddTransient<IMessageRepository, MessageRepository>();
+builder.Services.AddTransient<IAppUserRepository, AppUserRepository>();
 
 var app = builder.Build();
 
@@ -51,9 +57,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication();;
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
+app.MapHub<ChatHub>("/chatHub");
 
 app.Run();
