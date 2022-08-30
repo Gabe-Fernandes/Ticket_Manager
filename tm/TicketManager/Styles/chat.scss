@@ -72,6 +72,11 @@
   .mid {
     height: 70%;
 
+    .message-col {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+
     ol {
       @include WidthHeight(100%, 100%);
       list-style: none;
@@ -81,7 +86,7 @@
         margin: 0% 7% 5% 0%;
 
         .msg-in {
-          @include MsgStyles(pink, start);
+          @include MsgStyles(#34b0e2, start);
 
           div {
             display: flex;
@@ -97,7 +102,7 @@
         }
 
         .msg-out {
-          @include MsgStyles(lightblue, end);
+          @include MsgStyles(#17993c, end);
         }
       }
 
@@ -108,7 +113,7 @@
           background-color: #22272d;
         }
 
-        &:hover {
+        &:hover, &:focus {
           cursor: pointer;
           background-color: #00DFBF;
         }
@@ -144,7 +149,7 @@
     }
 
     button {
-      @include WidthHeight(30%, 100%);
+      @include WidthHeight(30%, 70%);
       border: 0px;
     }
   }

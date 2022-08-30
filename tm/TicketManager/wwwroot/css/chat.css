@@ -81,6 +81,10 @@
 .chat-window .mid {
   height: 70%;
 }
+.chat-window .mid .message-col {
+  display: flex;
+  flex-direction: column-reverse;
+}
 .chat-window .mid ol {
   width: 100%;
   height: 100%;
@@ -95,7 +99,7 @@
   justify-content: start;
 }
 .chat-window .mid ol .conversation .msg-in p {
-  background-color: pink;
+  background-color: #34b0e2;
   padding: 0.4em 1em;
   border-radius: 1em;
   max-width: 55%;
@@ -116,7 +120,7 @@
   justify-content: end;
 }
 .chat-window .mid ol .conversation .msg-out p {
-  background-color: lightblue;
+  background-color: #17993c;
   padding: 0.4em 1em;
   border-radius: 1em;
   max-width: 55%;
@@ -127,7 +131,7 @@
 .chat-window .mid ol .search-result:nth-child(odd) {
   background-color: #22272d;
 }
-.chat-window .mid ol .search-result:hover {
+.chat-window .mid ol .search-result:hover, .chat-window .mid ol .search-result:focus {
   cursor: pointer;
   background-color: #00DFBF;
 }
@@ -158,7 +162,7 @@
 }
 .chat-window .bot button {
   width: 30%;
-  height: 100%;
+  height: 70%;
   border: 0px;
 }
 

@@ -22,7 +22,7 @@ public class ChatHub : Hub<IChatHub>
         _contextAccessor = contextAccessor;
     }
 
-    public async Task FilterUsers(string filterText)
+    public async Task FilterUsers(string filterText, List<string> usersInActiveWindows)
     {
         filterText = filterText.ToUpper();
         string myId = _contextAccessor.HttpContext.User.FindFirstValue("Id");
@@ -36,15 +36,11 @@ public class ChatHub : Hub<IChatHub>
         var userCtxList = new List<ChatUserContext>();
         foreach (var user in filteredUsers)
         {
-            ChatUserContext userCtx = new ChatUserContext
+            if (usersInActiveWindows.Contains(user.Id) == false)
             {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                AssignedRole = user.AssignedRole,
-                ProfilePicture = user.ProfilePicture
-            };
-            userCtxList.Add(userCtx);
+                ChatUserContext userCtx = new ChatUserContext(user);
+                userCtxList.Add(userCtx);
+            }
         }
 
         await Clients.Caller.UsersFiltered(userCtxList);
@@ -76,13 +72,18 @@ public class ChatHub : Hub<IChatHub>
         };
         _messageRepo.Add(message);
 
-        await Clients.Users(recipientId, myId).MessageSent(message);
+        ChatGuidList chatGuidList = new ChatGuidList();
+        var coworker = await _appUserRepo.GetByIdAsync(myId);
+        ChatUserContext userCtx = new ChatUserContext(coworker);
+
+        await Clients.User(myId).MessageSent(message);
+        await Clients.User(recipientId).MessageReceived(chatGuidList, userCtx);
     }
 
     public async Task GenerateChatGuidList()
     {
         ChatGuidList chatGuidList = new ChatGuidList();
-        await Clients.Caller.RenderNewChatWindow(chatGuidList);
+        await Clients.Caller.RenderSearchWindow(chatGuidList);
     }
 }
 
@@ -104,6 +105,15 @@ public class ChatGuidList
 
 public class ChatUserContext
 {
+    public ChatUserContext(AppUser appUser)
+    {
+        Id = appUser.Id;
+        FirstName = appUser.FirstName;
+        LastName = appUser.LastName;
+        AssignedRole = appUser.AssignedRole;
+        ProfilePicture = appUser.ProfilePicture;
+    }
+
     public string Id { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
