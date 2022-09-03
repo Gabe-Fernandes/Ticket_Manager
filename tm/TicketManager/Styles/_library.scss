@@ -1,7 +1,14 @@
 ﻿// z-indecies
-$chat: 1;
+$zChat: 1;
+$zNavbar: 2;
 // color pallete
-// ...
+$cHighlight: #00DFBF;
+$cMain: #161b22;
+$cOffMain: #22272d;
+$cTableMain: #0d1117;
+$cCC1: #17993c;
+$cCC2: #34b0e2;
+$cError: #781d1d;
 
 @mixin WidthHeight($w, $h) {
   width: $w;
@@ -14,18 +21,17 @@ $chat: 1;
   white-space: nowrap;
 }
 
-@mixin Row-Center {
+@mixin Flex-Row($justify, $align) {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: $justify;
+  align-items: $align;
 }
 
-@mixin Col-Stack {
+@mixin Flex-Col($align, $justify) {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  flex-flow: column-reverse;
+  align-items: $align;
+  justify-content: $justify;
 }
 
 @mixin MsgStyles($msg-color, $txt-justification) {
@@ -37,5 +43,71 @@ $chat: 1;
     padding: 0.4em 1.0em;
     border-radius: 1em;
     max-width: 55%;
+  }
+}
+
+@mixin Table {
+  transition: background-color 0.45s;
+
+  &:nth-child(odd) {
+    background-color: $cOffMain;
+  }
+
+  &:hover, &:focus {
+    cursor: pointer;
+    background-color: $cHighlight;
+  }
+}
+
+@mixin Img-Round($size) {
+  height: $size;
+  width: $size;
+  min-height: $size;
+  min-width: $size;
+  border-radius: 50%;
+}
+
+@mixin Toggle-Label {
+  @include Flex-Row(center, center);
+  cursor: pointer;
+  position: relative;
+  margin: 0.8em;
+  transition: color 0.4s;
+
+  &::before {
+    content: "";
+    @include WidthHeight(2.5em, 1.2em);
+    background-color: white;
+    box-shadow: inset 0 0 0.55em gray;
+    border-radius: 0.6em;
+    margin-right: 0.8em;
+    transition: background-color 0.4s;
+  }
+
+  &::after {
+    content: "";
+    @include WidthHeight(0.8em, 0.8em);
+    border-radius: 0.4em;
+    position: absolute;
+    background-color: gray;
+    box-shadow: 0 0 0.4em $cMain;
+    left: 1.5em;
+    transition: background-color 0.4s;
+    transition: left 0.4s;
+  }
+}
+
+@mixin Toggle-Input-Checked-Label {
+  color: $cCC1;
+
+  &::before {
+    background-color: $cMain;
+    box-shadow: inset 0 0 0.35em $cCC1;
+  }
+
+  &::after {
+    background-color: $cCC1;
+    box-shadow: 0 0 0.15em gray;
+    left: 0.2em;
   }
 }

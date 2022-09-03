@@ -1,0 +1,249 @@
+.top-nav {
+  width: 100vw;
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 2;
+  background-color: #34b0e2;
+}
+.top-nav .links {
+  width: 82%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.top-nav .links span {
+  margin: 0vh 2vw 0vh 3vw;
+}
+.top-nav .links div {
+  width: 12%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.39s, box-shadow 0.39s, background-color 0.39s;
+}
+.top-nav .links div:hover {
+  background-color: #00DFBF;
+  box-shadow: 4px 3px 22px 2px rgba(0, 0, 0, 0.5);
+  transform: scale(1.02);
+}
+.top-nav .links div:active {
+  transform: scale(0.94);
+}
+.top-nav .buttons {
+  width: 15%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.top-nav .buttons div {
+  width: 33%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: filter 0.25s, box-shadow 0.25s;
+}
+.top-nav .buttons div:hover {
+  filter: brightness(115%);
+  box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+}
+.top-nav .buttons div:active {
+  transform: scale(0.94);
+  transform: translateY(4px);
+}
+.top-nav .buttons div img {
+  height: 2.4em;
+  width: 2.4em;
+  min-height: 2.4em;
+  min-width: 2.4em;
+  border-radius: 50%;
+}
+
+.panel {
+  width: 28vw;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  position: fixed;
+  top: 12vh;
+  right: 1vw;
+  z-index: 2;
+  background-color: #0d1117;
+  border-radius: 1em;
+  opacity: 65%;
+  box-shadow: inset 0 0 0.5em grey;
+  transition: opacity 0.25s, width 0.25s, height 0.25s;
+}
+.panel:hover {
+  opacity: 100%;
+}
+.panel .user-panel label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  margin: 0.8em;
+  transition: color 0.4s;
+}
+.panel .user-panel label::before {
+  content: "";
+  width: 2.5em;
+  height: 1.2em;
+  background-color: white;
+  box-shadow: inset 0 0 0.55em gray;
+  border-radius: 0.6em;
+  margin-right: 0.8em;
+  transition: background-color 0.4s;
+}
+.panel .user-panel label::after {
+  content: "";
+  width: 0.8em;
+  height: 0.8em;
+  border-radius: 0.4em;
+  position: absolute;
+  background-color: gray;
+  box-shadow: 0 0 0.4em #161b22;
+  left: 1.5em;
+  transition: background-color 0.4s;
+  transition: left 0.4s;
+}
+.panel .user-panel input:checked + label {
+  color: #17993c;
+}
+.panel .user-panel input:checked + label::before {
+  background-color: #161b22;
+  box-shadow: inset 0 0 0.35em #17993c;
+}
+.panel .user-panel input:checked + label::after {
+  background-color: #17993c;
+  box-shadow: 0 0 0.15em gray;
+  left: 0.2em;
+}
+.panel .user-panel div {
+  width: 15vw;
+  height: 10vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #161b22;
+  border-radius: 2em;
+  transition: filter 0.3s;
+}
+.panel .user-panel div:nth-child(even) {
+  background-color: #22272d;
+}
+.panel .user-panel div:hover {
+  filter: brightness(125%);
+  cursor: pointer;
+}
+.panel .user-panel img {
+  height: 2.4em;
+  width: 2.4em;
+  min-height: 2.4em;
+  min-width: 2.4em;
+  border-radius: 50%;
+  margin: 0.8em;
+}
+.panel .notification-panel, .panel .chat-panel {
+  width: 28vw;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.panel .notification-panel .search-container, .panel .chat-panel .search-container {
+  width: 70%;
+  height: 18%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.panel .notification-panel .search-container input, .panel .chat-panel .search-container input {
+  width: 100%;
+  height: 50%;
+  border-radius: 1em;
+  text-indent: 16%;
+  color: #000;
+}
+.panel .notification-panel .search-container img, .panel .chat-panel .search-container img {
+  height: 1.4em;
+  width: 1.4em;
+  min-height: 1.4em;
+  min-width: 1.4em;
+  border-radius: 50%;
+  position: absolute;
+  left: 3%;
+}
+.panel .notification-panel .content, .panel .chat-panel .content {
+  width: 80%;
+  height: 70%;
+  overflow-y: scroll;
+  background-color: #161b22;
+  border-radius: 0.4em;
+}
+.panel .notification-panel .content .row, .panel .chat-panel .content .row {
+  transition: background-color 0.45s;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.panel .notification-panel .content .row:nth-child(odd), .panel .chat-panel .content .row:nth-child(odd) {
+  background-color: #22272d;
+}
+.panel .notification-panel .content .row:hover, .panel .notification-panel .content .row:focus, .panel .chat-panel .content .row:hover, .panel .chat-panel .content .row:focus {
+  cursor: pointer;
+  background-color: #00DFBF;
+}
+.panel .notification-panel .content .row img, .panel .chat-panel .content .row img {
+  height: 2.5em;
+  width: 2.5em;
+  min-height: 2.5em;
+  min-width: 2.5em;
+  border-radius: 50%;
+  margin: 0.8em;
+}
+.panel .notification-panel .content .row div, .panel .chat-panel .content .row div {
+  width: 65%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0.8em 0em;
+}
+.panel .notification-panel .content .row div span, .panel .chat-panel .content .row div span {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.panel .notification-panel .btn-div, .panel .chat-panel .btn-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1em 0em;
+}
+
+.small-panel {
+  width: 17vw;
+  height: 36vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/*# sourceMappingURL=navbar.css.map */

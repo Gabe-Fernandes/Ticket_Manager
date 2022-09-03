@@ -60,23 +60,25 @@ public class ChatHub : Hub<IChatHub>
 
     public async Task SendMessage(string recipientId, string messageBody)
     {
-        var myId = _contextAccessor.HttpContext.User.FindFirstValue("Id");
+        var senderId = _contextAccessor.HttpContext.User.FindFirstValue("Id");
+        var sender = await _appUserRepo.GetByIdAsync(senderId);
+        var recipient = await _appUserRepo.GetByIdAsync(recipientId);
 
         Message message = new Message
         {
-            Name = _contextAccessor.HttpContext.User.Identity.Name,
+            SenderName = sender.FirstName + " " + sender.LastName,
+            ReceiverName = recipient.FirstName + " " + recipient.LastName,
             Body = messageBody,
             Date = DateTime.Now,
-            From = myId,
+            From = senderId,
             To = recipientId
         };
         _messageRepo.Add(message);
 
         ChatGuidList chatGuidList = new ChatGuidList();
-        var coworker = await _appUserRepo.GetByIdAsync(myId);
-        ChatUserContext userCtx = new ChatUserContext(coworker);
+        ChatUserContext userCtx = new ChatUserContext(sender);
 
-        await Clients.User(myId).MessageSent(message);
+        await Clients.User(senderId).MessageSent(message);
         await Clients.User(recipientId).MessageReceived(chatGuidList, userCtx);
     }
 

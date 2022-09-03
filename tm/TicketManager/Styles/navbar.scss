@@ -1,0 +1,173 @@
+﻿@import "_library.scss";
+
+.top-nav {
+  @include WidthHeight(100vw, 10vh);
+  @include Flex-Row(center, center);
+  position: fixed;
+  z-index: $zNavbar;
+  background-color: $cCC2;
+
+  .links {
+    @include WidthHeight(82%, 100%);
+    @include Flex-Row(flex-start, center);
+
+    span {
+      margin: 0vh 2vw 0vh 3vw;
+    }
+
+    div {
+      @include WidthHeight(12%, 100%);
+      @include Flex-Row(center, center);
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.39s, box-shadow 0.39s, background-color 0.39s;
+
+      &:hover {
+        background-color: $cHighlight;
+        box-shadow: 4px 3px 22px 2px rgba(0,0,0, 0.5);
+        transform: scale(1.02);
+      }
+
+      &:active {
+        transform: scale(0.94);
+      }
+    }
+  }
+
+  .buttons {
+    @include WidthHeight(15%, 100%);
+    @include Flex-Row(flex-end, center);
+
+    div {
+      @include WidthHeight(33%, 100%);
+      @include Flex-Row(center, center);
+      cursor: pointer;
+      transition: filter 0.25s, box-shadow 0.25s;
+
+      &:hover {
+        filter: brightness(115%);
+        box-shadow: 3px 2px 22px 1px rgba(0,0,0, 0.24);
+      }
+
+      &:active {
+        transform: scale(0.94);
+        transform: translateY(4px);
+      }
+
+      img {
+        @include Img-Round(2.4em);
+      }
+    }
+  }
+}
+
+.panel {
+  @include WidthHeight(28vw, 70vh);
+  @include Flex-Col(center, flex-start);
+  position: fixed;
+  top: 12vh;
+  right: 1vw;
+  z-index: $zNavbar;
+  background-color: $cTableMain;
+  border-radius: 1em;
+  opacity: 65%;
+  box-shadow: inset 0 0 0.5em grey;
+  transition: opacity 0.25s, width 0.25s, height 0.25s;
+
+  &:hover {
+    opacity: 100%;
+  }
+
+  .user-panel {
+    label {
+      @include Toggle-Label();
+    }
+
+    input:checked + label {
+      @include Toggle-Input-Checked-Label();
+    }
+
+    div {
+      @include WidthHeight(15vw, 10vh);
+      @include Flex-Row(flex-start, center);
+      background-color: $cMain;
+      border-radius: 2em;
+      transition: filter 0.3s;
+
+      &:nth-child(even) {
+        background-color: $cOffMain;
+      }
+
+      &:hover {
+        filter: brightness(125%);
+        cursor: pointer;
+      }
+    }
+
+    img {
+      @include Img-Round(2.4em);
+      margin: 0.8em;
+    }
+  }
+
+  .notification-panel, .chat-panel {
+    @include WidthHeight(28vw, 70vh);
+    @include Flex-Col(center, flex-start);
+
+    .search-container {
+      @include WidthHeight(70%, 18%);
+      @include Flex-Col(center, center);
+      position: relative;
+
+      input {
+        @include WidthHeight(100%, 50%);
+        border-radius: 1em;
+        text-indent: 16%;
+        color: #000;
+      }
+
+      img {
+        @include Img-Round(1.4em);
+        position: absolute;
+        left: 3%;
+      }
+    }
+
+    .content {
+      @include WidthHeight(80%, 70%);
+      overflow-y: scroll;
+      background-color: $cMain;
+      border-radius: 0.4em;
+
+      .row {
+        @include Table();
+        @include Flex-Row(flex-start, center);
+
+        img {
+          @include Img-Round(2.5em);
+          margin: 0.8em;
+        }
+
+        div {
+          @include WidthHeight(65%, 100%);
+          @include Flex-Row(flex-start, center);
+          margin: 0.8em 0em;
+
+          span {
+            @include TextEllipsis();
+          }
+        }
+      }
+    }
+
+    .btn-div {
+      @include Flex-Row(center, center);
+      margin: 1em 0em;
+    }
+  }
+}
+
+  .small-panel {
+    @include WidthHeight(17vw, 36vh);
+    @include Flex-Col(center, center);
+  }

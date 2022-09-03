@@ -24,6 +24,7 @@
     <Exec Command="mkdir $(ProjectDir)wwwroot\css" Condition="!Exists('$(ProjectDir)wwwroot\css')" />
     <Exec Command="sass $(ProjectDir)Styles\site.scss $(ProjectDir)wwwroot\css\site.css" />
     <Exec Command="sass $(ProjectDir)Styles\chat.scss $(ProjectDir)wwwroot\css\chat.css" />
+    <Exec Command="sass $(ProjectDir)Styles\navbar.scss $(ProjectDir)wwwroot\css\navbar.css" />
   </Target>
     
   <ItemGroup>
