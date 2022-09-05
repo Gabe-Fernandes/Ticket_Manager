@@ -4,15 +4,20 @@
   let usersInActiveWindows = JSON.parse(localStorage.getItem("usersInActiveWindows")) ?? [];
   let tempGuid = null;
   let tempCtx = null;
-  let searchWindowIsOpen = localStorage.getItem("searchWindowIsOpen") ?? false;
+  let searchWindowIsOpen = localStorage.getItem("searchWindowIsOpen") ?? "false";
 
   // Create/start connection
-  var Messenger = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
-  function Success() { console.log("success") }
+  var ChatMessenger = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+  var NavMessenger = new signalR.HubConnectionBuilder().withUrl("/navbarHub").build();
+  function ChatSuccess() { console.log("chatHub success"); LoadStartupChats() }
+  function NavSuccess() { console.log("navHub success") }
   function Failure() { console.log("failure") }
-  Messenger.start().then(Success, Failure);
+  ChatMessenger.start().then(ChatSuccess, Failure);
+  ChatMessenger.onclose(async () => await ChatMessenger.start());
+  NavMessenger.start().then(NavSuccess, Failure);
+  NavMessenger.onclose(async () => await NavMessenger.start());
 
-  window.onload = () => {
+  function LoadStartupChats() {
     for (let i = 0; i < minimizedChatWindows.length; i++) {
       const chatCtx = minimizedChatWindows[i];
       RenderMinimizedChatWindow(chatCtx);
@@ -28,16 +33,21 @@
         RenderChatWindow(chatCtx, chatWindows.length, true);
       }
     }
-  };
+  }
 
   //0
   $("#newChatBtn").on("click", () => {
-    if (searchWindowIsOpen === false) {
-      Messenger.send("GenerateChatGuidList");
+    if (searchWindowIsOpen === "false") {
+      ChatMessenger.send("GenerateChatGuidList");
     }
   });
+  $("#newChatBtn").hover(function () {
+    $("#newChatTooltip").removeClass("hide");
+  }, function () {
+    $("#newChatTooltip").addClass("hide");
+  });
 
-  Messenger.on("RenderSearchWindow", chatGuidList => {
+  ChatMessenger.on("RenderSearchWindow", chatGuidList => {
     RenderSearchWindow(chatGuidList);
   });
 
@@ -63,10 +73,10 @@
   function SearchBox(guidList) {
     const filterString = $(`#${guidList.searchBoxId}`)[0].value;
     tempGuid = guidList;
-    Messenger.send("FilterUsers", filterString, usersInActiveWindows);
+    ChatMessenger.send("FilterUsers", filterString, usersInActiveWindows);
   }
 
-  Messenger.on("UsersFiltered", filteredUsers => {
+  ChatMessenger.on("UsersFiltered", filteredUsers => {
     RenderUsers(filteredUsers);
   });
 
@@ -79,11 +89,11 @@
     else {
       filteredUsers.forEach(obj => {
         $(`#${guidList.contentListId}`).append(
-          `<li tabindex="0" class='search-result' id='${obj.id}'>
+          `<li tabindex="0" class='search-result' id='${obj.selectUserBtnId}'>
           <div><img src='${obj.profilePicture}'/>
           <p>${obj.firstName} ${obj.lastName}<br/>
             &nbsp;&nbsp;&nbsp; -${obj.assignedRole}`);
-        $(`#${obj.id}`).on("click", ()=> { SelectCoworker(obj, guidList) });
+        $(`#${obj.selectUserBtnId}`).on("click", ()=> { SelectCoworker(obj, guidList) });
       });
     }
   }
@@ -93,19 +103,18 @@
     const chatCtx = Object.assign(coworker, guidList);
     const index = CloseChatWindow(guidList);
     RenderChatWindow(chatCtx, index);
-    tempCtx = chatCtx;
-    Messenger.send("LoadMessages", chatCtx.id);
+    ChatMessenger.send("LoadMessages", chatCtx.id);
   }
 
-  Messenger.on("MessagesLoaded", messages => {
-    const chatCtx = tempCtx;
+  ChatMessenger.on("MessagesLoaded", (messages, myId) => {
+    const chatCtx = $(`#${myId}`)[0].value;
     const contentList = $(`#${chatCtx.contentListId}`)[0];
     contentList.innerHTML = "";
     messages.forEach(msg => {
       RenderMessage(msg, chatCtx);
     });
     contentList.scrollTop = contentList.scrollHeight;
-    CheckForChatWindowShuffle();
+    CheckForChatWindowShuffle(); // may not be needed anymore? -------------------------------
   });
 
   function RenderMessage(msg, chatCtx) {
@@ -121,10 +130,10 @@
   //3
   function SendBtn(chatCtx) {
     tempCtx = chatCtx;
-    Messenger.send("SendMessage", chatCtx.id, $(`#${chatCtx.messageInputId}`)[0].value);
+    ChatMessenger.send("SendMessage", chatCtx.id, $(`#${chatCtx.messageInputId}`)[0].value);
   }
 
-  Messenger.on("MessageSent", msg => {
+  ChatMessenger.on("MessageSent", msg => {
     const chatCtx = tempCtx;
     const contentList = $(`#${chatCtx.contentListId}`)[0];
     $(`#${chatCtx.messageInputId}`)[0].value = "";
@@ -132,7 +141,7 @@
     contentList.scrollTop = contentList.scrollHeight;
   });
 
-  Messenger.on("MessageReceived", (guidList, coworker) => {
+  ChatMessenger.on("MessageReceived", (guidList, coworker) => {
     const chatCtx = Object.assign(coworker, guidList);
     CloseMinimizedChatWindow(chatCtx); // does nothing if DNE
     RenderChatWindow(chatCtx);
@@ -161,10 +170,15 @@
 
   function CloseChatWindow(chatCtx) {
     for (let i = 0; i < chatWindows.length; i++) {
-      if (chatWindows[i].chatWindowId === chatCtx.chatWindowId) { // find the chat window to remove 
-        if ($(`#${chatWindows[i].midId}`).hasClass("extend-mid")) { SetSearchWindowIsOpen(false) } // if deleting a search window
-        else { usersInActiveWindows = usersInActiveWindows.filter(u => u != chatCtx.id) } // keep all users but the one at this window
-        $(`#${chatCtx.chatWindowId}`)[0].remove();
+      if (chatWindows[i].id === chatCtx.id) { // find the chat window to remove 
+        if ($(`#${chatWindows[i].midId}`).hasClass("extend-mid")) { // if deleting a search window
+          SetSearchWindowIsOpen(false);
+          $(`#${chatCtx.chatWindowId}`)[0].remove();
+        }
+        else {
+          usersInActiveWindows = usersInActiveWindows.filter(u => u != chatCtx.id); // keep all users but the one at this window
+          $(`#${chatCtx.id}`)[0].remove();
+        }
         chatWindows.splice(i, 1);
         localStorage.setItem("chatWindows", JSON.stringify(chatWindows));
         return i;
@@ -174,10 +188,16 @@
 
   function RenderMinimizedChatWindow(chatCtx) {
     $("#chatColumn").append(
-      `<img id='${chatCtx.minimizedChatWindowId}' tabindex="0" src='${chatCtx.profilePicture}'>`);
+      `<div id='${chatCtx.minimizedChatWindowId}'><img tabindex="0" src='${chatCtx.profilePicture}'>
+        <span id='${chatCtx.nameTagId}' class="hide">${chatCtx.firstName} ${chatCtx.lastName}`);
     $(`#${chatCtx.minimizedChatWindowId}`).on("click", () => {
       CloseMinimizedChatWindow(chatCtx);
       RenderChatWindow(chatCtx);
+    });
+    $(`#${chatCtx.minimizedChatWindowId}`).hover(function () {
+      $(`#${chatCtx.nameTagId}`).removeClass("hide");
+    }, function () {
+      $(`#${chatCtx.nameTagId}`).addClass("hide");
     });
     if (minimizedChatWindows.length > 5) { // minimized window cap
       CloseMinimizedChatWindow(minimizedChatWindows[0]);
@@ -185,7 +205,7 @@
   }
 
   function RenderChatWindow(chatCtx, index = chatWindows.length, loadingNewPage = false) {
-    const renderString = `<div class='chat-window' id='${chatCtx.chatWindowId}'>
+    const renderString = `<div class='chat-window' id='${chatCtx.id}'>
       <div class='top'>
         <img src='${chatCtx.profilePicture}' id='${chatCtx.pfpId}'>
         <label id='${chatCtx.nameTagId}'>${chatCtx.firstName} ${chatCtx.lastName}</label>
@@ -202,7 +222,7 @@
       $("#chatContainer").append(renderString);
     }
     else {
-      $(renderString).insertBefore(`#${chatWindows[index].chatWindowId}`);
+      $(renderString).insertBefore(`#${chatWindows[index].id}`);
     }
 
     if (loadingNewPage === false) {
@@ -213,8 +233,8 @@
     }
 
     AddChatWindowEvents(chatCtx);
-    tempCtx = chatCtx;
-    Messenger.send("LoadMessages", chatCtx.id);
+    $(`#${chatCtx.id}`)[0].value = chatCtx;
+    ChatMessenger.send("LoadMessages", chatCtx.id);
   }
 
   function AddChatWindowEvents(chatCtx) {
@@ -224,7 +244,7 @@
   }
 
   function SetSearchWindowIsOpen(bool) {
-    searchWindowIsOpen = bool;
+    searchWindowIsOpen = (bool) ? "true" : "false";
     localStorage.setItem("searchWindowIsOpen", searchWindowIsOpen);
   }
 
@@ -235,6 +255,121 @@
       }
       else {
         MinimizeChatWindow(chatWindows[0]);
+      }
+    }
+  }
+
+
+
+
+
+
+  $(document).click(function (event) { //close navbar panel when clicking anywhere not listed here
+    const $target = $(event.target);
+    if (!$target.closest("#navbarPanel").length &&
+      !$target.closest("#notificationMenuBtn").length &&
+      !$target.closest("#chatMenuBtn").length &&
+      !$target.closest("#userMenuBtn").length) {
+      ClearPanels();
+    }
+  });
+
+  function ClearPanels() {
+    $("#navbarPanel").addClass("hide");
+    $("#notificationPanel").addClass("hide");
+    $("#chatPanel").addClass("hide");
+    $("#userPanel").addClass("hide");
+    $("#chatSearch")[0].value = "";
+    $("#notificationSearch")[0].value = "";
+    showMoreIndex = 0;
+  }
+
+  function SwitchNavbarPanel(myPanel, panel1, panel2, smallPanel = false) {
+    if ($(`#${myPanel}`).hasClass("hide")) { //open panel
+      $("#navbarPanel").removeClass("hide");
+      $("#moreNotificationsBtn").removeClass("hide");
+      $("#moreChatsBtn").removeClass("hide");
+      if (smallPanel) { $("#navbarPanel").addClass("small-panel") }
+      else { $("#navbarPanel").removeClass("small-panel") }
+      $(`#${myPanel}`).removeClass("hide");
+      $(`#${panel1}`).addClass("hide");
+      $(`#${panel2}`).addClass("hide");
+      NavMessenger.send("GetData", "chatContent", true, 0); // generalize later ----------------------------
+    }
+    else { //close panel
+      $("#navbarPanel").addClass("hide");
+      $(`#${myPanel}`).addClass("hide");
+      showMoreIndex = 0;
+    }
+  }
+
+  $("#userMenuBtn").on("click", () => {
+    SwitchNavbarPanel("userPanel", "notificationPanel", "chatPanel", true);
+  });
+
+  // notification events
+  $("#notificationMenuBtn").on("click", () => {
+    SwitchNavbarPanel("notificationPanel", "chatPanel", "userPanel");
+  });
+  $("#moreNotificationsBtn").on("click", () => {
+    showMoreIndex += 5;
+    NavMessenger.send("GetData", "notificationContent", false, showMoreIndex);
+  });
+  $("#notificationSearch").on("input", () => {
+    $("#moreNotificationsBtn").addClass("hide");
+    showMoreIndex = 0;
+    const filterString = $("#notificationSearch")[0].value;
+    NavMessenger.send("FilterContent", "notificationContent", filterString);
+  });
+
+  // chat events
+  $("#chatMenuBtn").on("click", () => {
+    SwitchNavbarPanel("chatPanel", "notificationPanel", "userPanel");
+  });
+  $("#moreChatsBtn").on("click", () => {
+    showMoreIndex += 5;
+    NavMessenger.send("GetData", "chatContent", false, showMoreIndex);
+  });
+  $("#chatSearch").on("input", () => {
+    $("#moreChatsBtn").addClass("hide");
+    showMoreIndex = 0;
+    const filterString = $("#chatSearch")[0].value;
+    NavMessenger.send("FilterContent", "chatContent", filterString);
+  });
+
+  // process server data
+  NavMessenger.on("PanelDataReceiver", (contentId, panelData, clearContent, hideShowMoreBtn) => {
+    if (hideShowMoreBtn) {
+      $("#moreNotificationsBtn").addClass("hide");
+      $("#moreChatsBtn").addClass("hide");
+    }
+    else {
+      $("#moreNotificationsBtn").removeClass("hide");
+      $("#moreChatsBtn").removeClass("hide");
+    }
+    RenderContent(contentId, panelData, clearContent);
+  });
+
+  function RenderContent(contentId, panelData, clearContent) {
+    if (clearContent) {
+      $(`#${contentId}`)[0].innerHTML = "";
+    }
+    if (panelData.length === 0) {
+      $(`#${contentId}`).append("<span>No conversations to display...");
+    }
+    for (let i = 0; i < panelData.length; i++) {
+      $(`#${contentId}`).append(`
+      <div tabindex="0" id="${panelData[i].selectNavMenuOptionId}" class="row">
+        <img src="${panelData[i].imgSrc}">
+        <div>
+          <span>${panelData[i].title}<br>
+          ${panelData[i].description}<br>
+          ${panelData[i].time}`);
+      if (contentId === "chatContent") {
+        $(`#${panelData[i].selectNavMenuOptionId}`).on("click", () => {
+          ClearPanels();
+          ChatMessenger.send("OpenChatFromNav", panelData[i].coworkerId);
+        });
       }
     }
   }

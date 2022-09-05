@@ -55,28 +55,30 @@ public class ChatHub : Hub<IChatHub>
             (m.To == coworkerId && m.From == myId) ||
             (m.To == myId && m.From == coworkerId)).ToList();
         
-        await Clients.Caller.MessagesLoaded(ourMessages);
+        await Clients.Caller.MessagesLoaded(ourMessages, coworkerId);
     }
 
     public async Task SendMessage(string recipientId, string messageBody)
     {
-        var myId = _contextAccessor.HttpContext.User.FindFirstValue("Id");
+        var senderId = _contextAccessor.HttpContext.User.FindFirstValue("Id");
+        var sender = await _appUserRepo.GetByIdAsync(senderId);
+        var recipient = await _appUserRepo.GetByIdAsync(recipientId);
 
         Message message = new Message
         {
-            Name = _contextAccessor.HttpContext.User.Identity.Name,
+            SenderName = sender.FirstName + " " + sender.LastName,
+            ReceiverName = recipient.FirstName + " " + recipient.LastName,
             Body = messageBody,
             Date = DateTime.Now,
-            From = myId,
+            From = senderId,
             To = recipientId
         };
         _messageRepo.Add(message);
 
         ChatGuidList chatGuidList = new ChatGuidList();
-        var coworker = await _appUserRepo.GetByIdAsync(myId);
-        ChatUserContext userCtx = new ChatUserContext(coworker);
+        ChatUserContext userCtx = new ChatUserContext(sender);
 
-        await Clients.User(myId).MessageSent(message);
+        await Clients.User(senderId).MessageSent(message);
         await Clients.User(recipientId).MessageReceived(chatGuidList, userCtx);
     }
 
@@ -84,6 +86,15 @@ public class ChatHub : Hub<IChatHub>
     {
         ChatGuidList chatGuidList = new ChatGuidList();
         await Clients.Caller.RenderSearchWindow(chatGuidList);
+    }
+    
+    public async Task OpenChatFromNav(string coworkerId)
+    {
+        var coworker = await _appUserRepo.GetByIdAsync(coworkerId);
+        ChatGuidList chatGuidList = new ChatGuidList();
+        ChatUserContext userCtx = new ChatUserContext(coworker);
+
+        await Clients.Caller.MessageReceived(chatGuidList, userCtx);
     }
 }
 
@@ -112,6 +123,7 @@ public class ChatUserContext
         LastName = appUser.LastName;
         AssignedRole = appUser.AssignedRole;
         ProfilePicture = appUser.ProfilePicture;
+        SelectUserBtnId = Guid.NewGuid().ToString();
     }
 
     public string Id { get; set; }
@@ -119,4 +131,5 @@ public class ChatUserContext
     public string LastName { get; set; }
     public string AssignedRole { get; set; }
     public string ProfilePicture { get; set; }
+    public string SelectUserBtnId { get; set; }
 }

@@ -101,6 +101,7 @@ public class LoginModel : PageModel
             new Claim("Email", userFromDb.Email),
             new Claim("Id", userFromDb.Id),
             new Claim(ClaimTypes.Role, userFromDb.AssignedRole),
+            new Claim("ProfilePicture", userFromDb.ProfilePicture),
             new Claim(ClaimTypes.NameIdentifier, userFromDb.Id)
         };
 

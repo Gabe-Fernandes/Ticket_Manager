@@ -1,33 +1,71 @@
-﻿<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-    <div class="container">
-        <a class="navbar-brand" asp-page="/Main/MyProjects">Ticket Manager</a>
-        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-            <ul class="navbar-nav flex-grow-1">
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-page="/Main/MyProjects">My Projects</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-page="/Main/DeveloperDashboard">Developer Dashboard</a>
-                </li>
-								<li class="nav-item">
-                    <a class="nav-link text-dark" asp-page="/Main/TechLeadDashboard">Team Manager</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-page="/Main/AdminDashboard">Admin Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-page="/Main/ProjectMetrics">Project Metrics</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-page="/Main/Notifications">Notifications</a>
-                </li>
-								<li class="nav-item">
-                    <a class="nav-link text-dark" asp-page="/Identity/Login">Logout</a>
-                </li>
-								<li>
-								<!--	<img src="/icons/comment.png" id="chatMenuBtn" />-->
-								</li>
-            </ul>
-        </div>
-    </div>
+﻿@using System.Security.Claims
+@inject IHttpContextAccessor _contextAccessor
+@{
+	var pfpSrc = _contextAccessor.HttpContext.User.FindFirstValue("ProfilePicture");
+}
+
+<script async src="~/js/signalr.js"></script>
+<script async src="~/js/chatHub.js"></script>
+
+<div class="chat-container" id="chatContainer">
+	<div class="chat-column" id="chatColumn">
+		<div>
+			<img tabindex="0" id="newChatBtn" src="/icons/bubble-speak.png" />
+			<span id="newChatTooltip" class="hide">New Chat Window</span>
+		</div>
+	</div>
+</div>
+
+<nav class="top-nav">
+	<div class="links">
+		<span tabindex="0">Ticket Manager</span>
+		<div tabindex="0"><a asp-page="/Main/ProjectMetrics">Project<br>Metrics</a></div>
+		<div tabindex="0"><a asp-page="/Main/DeveloperDashboard">Developer<br>Dashboard</a></div>
+		<div tabindex="0"><a asp-page="/Main/TechLeadDashboard">Team<br>Manager</a></div>
+		<div tabindex="0"><a asp-page="/Main/AdminDashboard">Admin<br>Dashboard</a></div>
+	</div>
+	<div class="buttons">
+		<div tabindex="0" id="notificationMenuBtn"><img src="/icons/bell.png" /></div>
+		<div tabindex="0" id="chatMenuBtn"><img src="/icons/comment.png" /></div>
+		<div tabindex="0" id="userMenuBtn"><img src="@pfpSrc" /></div>
+	</div>
 </nav>
+
+<section id="navbarPanel" class="panel hide">
+	<div id="notificationPanel" class="notification-panel hide">
+		<div class="search-container">
+			<input id="notificationSearch" placeholder="Search...">
+			<img src="/icons/search.png">
+		</div>
+		<div id="notificationContent" class="content">
+		</div>
+		<div class="btn-div">
+			<button tabindex="0" id="moreNotificationsBtn" class="btn">Show More</button>
+		</div>
+	</div>
+
+	<div id="chatPanel" class="chat-panel hide">
+		<div class="search-container">
+			<input id="chatSearch" placeholder="Search...">
+			<img src="/icons/search.png">
+		</div>
+		<div id="chatContent" class="content">
+		</div>
+		<div class="btn-div">
+			<button tabindex="0" id="moreChatsBtn" class="btn">Show More</button>
+		</div>
+	</div>
+
+	<div id="userPanel" class="user-panel hide">
+		<div tabindex="0">
+			<input type="checkbox" class="hide" id="darkModeToggle" checked>
+			<label for="darkModeToggle">Dark Mode</label>
+		</div>
+		<div tabindex="0">
+			<a asp-page="/Main/MyProjects" asp-route-code="normal_login"><img src="/icons/project.png">My Projects</a>
+		</div>
+		<div tabindex="0">
+			<a asp-page="/Identity/Login"><img src="/icons/refer.png">Logout</a>
+		</div>
+	</div>
+</section>

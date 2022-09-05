@@ -40,6 +40,7 @@ builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 builder.Services.AddSignalR();
 builder.Services.AddTransient<IMessageRepository, MessageRepository>();
+builder.Services.AddTransient<ITicketRepository, TicketRepository>();
 builder.Services.AddTransient<IAppUserRepository, AppUserRepository>();
 
 var app = builder.Build();
@@ -62,5 +63,6 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 app.MapHub<ChatHub>("/chatHub");
+app.MapHub<NavbarHub>("/navbarHub");
 
 app.Run();

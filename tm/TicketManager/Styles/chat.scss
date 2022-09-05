@@ -2,7 +2,7 @@
 
 .chat-container {
   @include WidthHeight(100vw, 72vh);
-  z-index: $chat;
+  z-index: $zChat;
   position: fixed;
   bottom: 0%;
   display: flex;
@@ -12,14 +12,33 @@
 
 .chat-column {
   @include WidthHeight(5vw, 72vh);
-  @include Col-Stack();
+  @include Flex-Col(center, flex-start);
+  flex-flow: column-reverse;
   margin-right: 4vw;
 
-  img {
-    @include WidthHeight(11vh, 11vh);
-    border-radius: 5.5vh;
-    margin-bottom: 1vh;
-    cursor: pointer;
+  div {
+    position: relative;
+
+    img {
+      @include Img-Round(11vh);
+      margin-bottom: 1vh;
+      cursor: pointer;
+    }
+
+    span {
+      position: absolute;
+      top: -7%;
+      right: 80%;
+      white-space: nowrap;
+      background-color: $cOffMain;
+      text-align: center;
+      border-radius: 1.5em;
+      padding: 0.5em 1em;
+      box-shadow: inset 0 0 0.5em 0.02em $cHighlight;
+      z-index: $zNavbar;
+      transition: opacity 0.65s;
+      pointer-events: none;
+    }
   }
 }
 
@@ -29,18 +48,17 @@
   background-color: white;
   border-top-left-radius: 1em;
   border-top-right-radius: 1em;
-  background-color: #0d1117;
+  background-color: $cTableMain;
 
   .top {
     height: 15%;
     box-shadow: inset 0 0 0.5em grey;
     border-top-left-radius: 1em;
     border-top-right-radius: 1em;
-    @include Row-Center();
+    @include Flex-Row(center, center);
 
     img {
-      @include WidthHeight(2.4em, 2.4em);
-      border-radius: 1.2em;
+      @include Img-Round(2.4em);
       cursor: pointer;
     }
 
@@ -50,7 +68,7 @@
       background-color: white;
       cursor: pointer;
       border-radius: 1em;
-      @include Row-Center();
+      @include Flex-Row(center, center);
     }
 
     label {
@@ -86,23 +104,20 @@
         margin: 0% 7% 5% 0%;
 
         .msg-in {
-          @include MsgStyles(#34b0e2, start);
+          @include MsgStyles($cCC2, start);
 
           div {
-            display: flex;
+            @include Flex-Row(center, flex-end);
             width: 18%;
-            justify-content: center;
-            align-items: flex-end;
 
             img {
-              @include WidthHeight(2.4em, 2.4em);
-              border-radius: 1.2em;
+              @include Img-Round(2.4em);
             }
           }
         }
 
         .msg-out {
-          @include MsgStyles(#17993c, end);
+          @include MsgStyles($cCC1, end);
         }
       }
 
@@ -110,12 +125,12 @@
         transition: background-color 0.45s;
 
         &:nth-child(odd) {
-          background-color: #22272d;
+          background-color: $cOffMain;
         }
 
         &:hover, &:focus {
           cursor: pointer;
-          background-color: #00DFBF;
+          background-color: $cHighlight;
         }
 
         div {
@@ -123,8 +138,7 @@
           padding: 5% 7%;
 
           img {
-            @include WidthHeight(2.4em, 2.4em);
-            border-radius: 1.2em;
+            @include Img-Round(2.4em);
             margin-right: 10%;
           }
         }
@@ -138,7 +152,7 @@
 
   .bot {
     height: 15%;
-    box-shadow: inset 0 0 0.5em grey;
+    box-shadow: inset 0 0 0.5em gray;
 
     input {
       @include WidthHeight(70%, 100%);
@@ -153,21 +167,4 @@
       border: 0px;
     }
   }
-}
-
-::-webkit-scrollbar {
-  width: 1em;
-}
-
-::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 0.5em grey;
-  border-radius: 0.5em;
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, #0056DF, #00DFBF);
-  border-radius: 0.5em;
-}
-
-::-webkit-scrollbar-thumb:hover {
 }

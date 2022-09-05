@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TicketManager.Data;
 
@@ -11,9 +12,10 @@ using TicketManager.Data;
 namespace TicketManager.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220902230552_pfpForMessage")]
+    partial class pfpForMessage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -277,10 +279,10 @@ namespace TicketManager.Migrations
                     b.Property<string>("From")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ReceiverName")
+                    b.Property<string>("FromProfilePicture")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SenderName")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("To")

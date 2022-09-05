@@ -32,7 +32,7 @@ public class MessageRepositoryTests
                 dbContext.Messages.Add(new Message()
                 {
                     Id = i + 1,
-                    Name = "test name",
+                    SenderName = "test name",
                     Body = "test message",
                     Date = DateTime.MaxValue
                 });
@@ -49,7 +49,7 @@ public class MessageRepositoryTests
         var message = new Message()
         {
             Id = 1,
-            Name = "test name",
+            SenderName = "test name",
             Body = "test message",
             Date = DateTime.MaxValue
         };
@@ -66,7 +66,7 @@ public class MessageRepositoryTests
         var message = new Message()
         {
             Id = 1,
-            Name = "test name",
+            SenderName = "test name",
             Body = "test message",
             Date = DateTime.MaxValue
         };
@@ -84,7 +84,7 @@ public class MessageRepositoryTests
         var message = new Message()
         {
             Id = 1,
-            Name = "test name",
+            SenderName = "test name",
             Body = "test message",
             Date = DateTime.MaxValue
         };
