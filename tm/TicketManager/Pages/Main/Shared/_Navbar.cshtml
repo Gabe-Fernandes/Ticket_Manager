@@ -5,7 +5,16 @@
 }
 
 <script async src="~/js/signalr.js"></script>
-<script async src="~/js/navbar.js"></script>
+<script async src="~/js/chatHub.js"></script>
+
+<div class="chat-container" id="chatContainer">
+	<div class="chat-column" id="chatColumn">
+		<div>
+			<img tabindex="0" id="newChatBtn" src="/icons/bubble-speak.png" />
+			<span id="newChatTooltip" class="hide">New Chat Window</span>
+		</div>
+	</div>
+</div>
 
 <nav class="top-nav">
 	<div class="links">
@@ -16,9 +25,9 @@
 		<div tabindex="0"><a asp-page="/Main/AdminDashboard">Admin<br>Dashboard</a></div>
 	</div>
 	<div class="buttons">
-		<div tabindex="0"><img src="/icons/bell.png" id="notificationMenuBtn" /></div>
-		<div tabindex="0"><img src="/icons/comment.png" id="chatMenuBtn" /></div>
-		<div tabindex="0"><img src="@pfpSrc" id="userMenuBtn" /></div>
+		<div tabindex="0" id="notificationMenuBtn"><img src="/icons/bell.png" /></div>
+		<div tabindex="0" id="chatMenuBtn"><img src="/icons/comment.png" /></div>
+		<div tabindex="0" id="userMenuBtn"><img src="@pfpSrc" /></div>
 	</div>
 </nav>
 
@@ -53,12 +62,10 @@
 			<label for="darkModeToggle">Dark Mode</label>
 		</div>
 		<div tabindex="0">
-			<img src="/icons/project.png">
-			<a asp-page="/Main/MyProjects" asp-route-code="normal_login">My Projects</a>
+			<a asp-page="/Main/MyProjects" asp-route-code="normal_login"><img src="/icons/project.png">My Projects</a>
 		</div>
 		<div tabindex="0">
-			<img src="/icons/refer.png">
-			<a asp-page="/Identity/Login">Logout</a>
+			<a asp-page="/Identity/Login"><img src="/icons/refer.png">Logout</a>
 		</div>
 	</div>
 </section>

@@ -17,19 +17,23 @@
 
     div {
       @include WidthHeight(12%, 100%);
-      @include Flex-Row(center, center);
-      text-align: center;
-      cursor: pointer;
       transition: transform 0.39s, box-shadow 0.39s, background-color 0.39s;
 
       &:hover {
         background-color: $cHighlight;
         box-shadow: 4px 3px 22px 2px rgba(0,0,0, 0.5);
         transform: scale(1.02);
+        cursor: pointer;
       }
 
       &:active {
         transform: scale(0.94);
+      }
+
+      a {
+        @include WidthHeight(100%, 100%);
+        @include Flex-Row(center, center);
+        text-align: center;
       }
     }
   }
@@ -99,8 +103,13 @@
       }
 
       &:hover {
-        filter: brightness(125%);
+        filter: brightness(130%);
         cursor: pointer;
+      }
+
+      a {
+        @include WidthHeight(100%, 100%);
+        @include Flex-Row(flex-start, center);
       }
     }
 

@@ -16,10 +16,29 @@
   flex-flow: column-reverse;
   margin-right: 4vw;
 
-  img {
-    @include Img-Round(11vh);
-    margin-bottom: 1vh;
-    cursor: pointer;
+  div {
+    position: relative;
+
+    img {
+      @include Img-Round(11vh);
+      margin-bottom: 1vh;
+      cursor: pointer;
+    }
+
+    span {
+      position: absolute;
+      top: -7%;
+      right: 80%;
+      white-space: nowrap;
+      background-color: $cOffMain;
+      text-align: center;
+      border-radius: 1.5em;
+      padding: 0.5em 1em;
+      box-shadow: inset 0 0 0.5em 0.02em $cHighlight;
+      z-index: $zNavbar;
+      transition: opacity 0.65s;
+      pointer-events: none;
+    }
   }
 }
 

@@ -71,7 +71,7 @@ $cError: #781d1d;
   @include Flex-Row(center, center);
   cursor: pointer;
   position: relative;
-  margin: 0.8em;
+  margin: 0.8em 0em 0.8em 0.8em;
   transition: color 0.4s;
 
   &::before {

@@ -26,9 +26,10 @@ public class NavbarHub : Hub<INavbarHub>
         _appUserRepository = appUserRepository;
     }
 
-    public async Task GetData(string contentId, bool clearContent, bool calledFromSearchMethod)
+    public async Task GetData(string contentId, bool clearContent, int startIndex = 0)
     {
         var dataToDisplay = new List<PanelData>();
+        bool hideShowMoreBtn = false;
         if (contentId == "chatContent")
         {
             const int numOfChatsLoadedCap = 5;
@@ -37,20 +38,21 @@ public class NavbarHub : Hub<INavbarHub>
             var myMessages = messagesFromProject.Where(
                 m => m.To == myId || m.From == myId).ToList();
 
-            var test = new List<string>();
+            var usersToDisplay = new List<string>();
             var myConversations = new List<Message>();
-            GetMessages(myMessages, test, numOfChatsLoadedCap, myId, myConversations);
-            await PopulatePanelData(myConversations, test, numOfChatsLoadedCap, dataToDisplay);
+            GetMessages(myMessages, usersToDisplay, numOfChatsLoadedCap + startIndex, myId, myConversations);
+            hideShowMoreBtn = await PopulatePanelData(
+                myConversations, usersToDisplay, numOfChatsLoadedCap, dataToDisplay, startIndex);
         }
 
-        await Clients.Caller.PanelDataReceiver(contentId, dataToDisplay, clearContent, calledFromSearchMethod);
+        await Clients.Caller.PanelDataReceiver(contentId, dataToDisplay, clearContent, hideShowMoreBtn);
     }
 
     public async Task FilterContent(string contentId, string filterString)
     {
         if (string.IsNullOrEmpty(filterString))
         {
-            await GetData(contentId, true, true);
+            await GetData(contentId, true);
             return;
         }
 
@@ -62,24 +64,23 @@ public class NavbarHub : Hub<INavbarHub>
             m => (m.To == myId && m.SenderName.ToUpper().Contains(filterString)) ||
             m.From == myId && m.ReceiverName.ToUpper().Contains(filterString)).ToList();
 
-        var test = new List<string>();
+        var usersToDisplay = new List<string>();
         var myConversations = new List<Message>();
-        GetMessages(myMessages, test, 100, myId, myConversations);
+        GetMessages(myMessages, usersToDisplay, 100, myId, myConversations);
         var dataToDisplay = new List<PanelData>();
-        await PopulatePanelData(myConversations, test, 100, dataToDisplay);
+        await PopulatePanelData(myConversations, usersToDisplay, 100, dataToDisplay);
 
-
-        await Clients.Caller.PanelDataReceiver(contentId, dataToDisplay, true, false);
+        await Clients.Caller.PanelDataReceiver(contentId, dataToDisplay, true, true);
     }
 
     private void GetMessages(
-        List<Message> myMessages, List<string> test,
+        List<Message> myMessages, List<string> usersToDisplay,
         int numOfChatsLoadedCap, string myId, List<Message> myConversations)
     {
         for (int i = myMessages.Count() - 1; i >= 0; i--)
         {
             bool redundantMsg = false;
-            foreach (var id in test)
+            foreach (var id in usersToDisplay)
             {
                 if (myMessages[i].To == id || myMessages[i].From == id)
                 {
@@ -91,36 +92,45 @@ public class NavbarHub : Hub<INavbarHub>
             myConversations.Add(myMessages[i]);
 
             string newUserId = (myMessages[i].To == myId) ? myMessages[i].From : myMessages[i].To;
-            test.Add(newUserId);
+            usersToDisplay.Add(newUserId);
 
-            if (test.Count == numOfChatsLoadedCap) { break; }
+            if (usersToDisplay.Count == numOfChatsLoadedCap) { break; }
         }
     }
 
-    private async Task PopulatePanelData(List<Message> myConversations, List<string> test,
-        int numOfChatsLoadedCap, List<PanelData> dataToDisplay)
+    private async Task<bool> PopulatePanelData(List<Message> myConversations, List<string> usersToDisplay,
+        int numOfChatsLoadedCap, List<PanelData> dataToDisplay, int startIndex = 0)
     {
-        int numOfLoops = (test.Count < numOfChatsLoadedCap) ? test.Count : numOfChatsLoadedCap;
-        for (int i = 0; i < numOfLoops; i++)
+        int endIndex = (usersToDisplay.Count < numOfChatsLoadedCap) ?
+            usersToDisplay.Count : numOfChatsLoadedCap;
+        endIndex += startIndex;
+
+        for (int i = startIndex; i < endIndex; i++)
         {
-            var coworker = await _appUserRepository.GetByIdAsync(test[i]);
+            if (i == usersToDisplay.Count) { return true; }
+            var coworker = await _appUserRepository.GetByIdAsync(usersToDisplay[i]);
 
             PanelData data = new PanelData
             {
+                coworkerId = coworker.Id,
                 Title = coworker.FirstName + " " + coworker.LastName,
                 ImgSrc = coworker.ProfilePicture,
                 Description = myConversations[i].Body,
-                Time = myConversations[i].Date.ToString("MM/dd/yy - hh:mm tt")
+                Time = myConversations[i].Date.ToString("MM/dd/yy - hh:mm tt"),
+                SelectNavMenuOptionId = Guid.NewGuid().ToString()
             };
             dataToDisplay.Add(data);
         }
+        return false;
     }
 }
 
 public class PanelData
 {
+    public string coworkerId { get; set; }
     public string Title { get; set; }
     public string ImgSrc { get; set; }
     public string Description { get; set; }
     public string Time { get; set; }
+    public string SelectNavMenuOptionId { get; set; }
 }

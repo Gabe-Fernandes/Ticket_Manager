@@ -6,5 +6,5 @@ public interface INavbarHub
         string contentId,
         IEnumerable<PanelData> panelData,
         bool clearContent,
-        bool calledFromSearchMethod);
+        bool hideShowMoreBtn);
 }

@@ -55,7 +55,7 @@ public class ChatHub : Hub<IChatHub>
             (m.To == coworkerId && m.From == myId) ||
             (m.To == myId && m.From == coworkerId)).ToList();
         
-        await Clients.Caller.MessagesLoaded(ourMessages);
+        await Clients.Caller.MessagesLoaded(ourMessages, coworkerId);
     }
 
     public async Task SendMessage(string recipientId, string messageBody)
@@ -87,6 +87,15 @@ public class ChatHub : Hub<IChatHub>
         ChatGuidList chatGuidList = new ChatGuidList();
         await Clients.Caller.RenderSearchWindow(chatGuidList);
     }
+    
+    public async Task OpenChatFromNav(string coworkerId)
+    {
+        var coworker = await _appUserRepo.GetByIdAsync(coworkerId);
+        ChatGuidList chatGuidList = new ChatGuidList();
+        ChatUserContext userCtx = new ChatUserContext(coworker);
+
+        await Clients.Caller.MessageReceived(chatGuidList, userCtx);
+    }
 }
 
 public class ChatGuidList
@@ -114,6 +123,7 @@ public class ChatUserContext
         LastName = appUser.LastName;
         AssignedRole = appUser.AssignedRole;
         ProfilePicture = appUser.ProfilePicture;
+        SelectUserBtnId = Guid.NewGuid().ToString();
     }
 
     public string Id { get; set; }
@@ -121,4 +131,5 @@ public class ChatUserContext
     public string LastName { get; set; }
     public string AssignedRole { get; set; }
     public string ProfilePicture { get; set; }
+    public string SelectUserBtnId { get; set; }
 }
