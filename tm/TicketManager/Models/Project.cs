@@ -16,12 +16,14 @@ public class Project
     public string GitHubLink { get; set; }
 
     [Required]
-    public DateTime StartDate { get; set; }
+    public string StartDate { get; set; }
 
     [Required]
-    public DateTime EndDate { get; set; }
+    public string EndDate { get; set; }
 
-    public int EmployeeCount { get; set; }
-    public int NotificationCount { get; set; }
-    public int MessageCount { get; set; }
+    public string ProjectCode { get; set; }
+
+    public int TeamMemberCount { get; set; }
+
+    public ICollection<Ticket> Tickets { get; set; }
 }

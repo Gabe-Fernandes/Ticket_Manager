@@ -14,4 +14,10 @@ public class AppUser : IdentityUser
     public string AssignedRole { get; set; }
 
     public string ProfilePicture { get; set; }
+
+    public int NotificationCount { get; set; }
+    public int MessageCount { get; set; }
+
+    public ICollection<Ticket> Tickets { get; set; }
+    public ICollection<Message> Messages { get; set; }
 }

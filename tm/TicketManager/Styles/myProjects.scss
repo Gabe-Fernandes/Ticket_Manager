@@ -1,0 +1,228 @@
+﻿@import "_library.scss";
+
+$tPageLoad: 2s;
+$tModalShow: 0.4s;
+main{
+  overflow: hidden;
+  transition: opacity $tPageLoad, background-color $tModalShow;
+    @include Flex-Col(center, center);
+}
+.background{
+  @include WidthHeight(100vw, 100vh);
+  position: fixed;
+  z-index: $zBackground;
+}
+h1{
+  @include Flex-Row(center, center);
+  margin: 8vh;
+}
+.btn-wrap{
+  @include Flex-Row(center, center);
+  input{
+    @include WidthHeight(20vw, 6.5vh);
+    margin-left: 3vw;
+    text-indent: 8%;
+    font-size: 1.2em;
+    border-radius: 0.5em;
+  }
+}
+.codeErr{
+  position: absolute;
+  top: 22%;
+  right: 11%;
+  font-size: 1.4em;
+  padding: 0.4em 1em;
+  border-radius: 0.4em;
+  background-color: $cError;
+  transition: opacity 0.3s;
+}
+.searchbox{
+  @include WidthHeight(20vw, 6.5vh);
+  @include Flex-Col(center, center);
+  position: absolute;
+  top: 9vh;
+  left: 4vw;
+  input{
+    @include WidthHeight(100%, 100%);
+    font-size: 1.2em;
+    border-radius: 0.5em;
+    text-indent: 16%;
+  }
+  img{
+    @include Img-Round(1.6em);
+    position: absolute;
+    left: 2.5%;
+  }
+}
+.create-proj-btn{
+  position: absolute;
+  top: 9vh;
+  right: 4vw;
+}
+.article-full{
+  @include WidthHeight(24vw, 50vh);
+}
+article{
+  @include WidthHeight(0vw, 0vh);
+  @include Flex-Col(center, center);
+  border-radius: 2em;
+  background-color: $cOffMain;
+  box-shadow: 0 0 0.5em 0.2em $cCC2;
+  transition: width $tPageLoad, height $tPageLoad,
+  filter 0.3s, transform 0.55s;
+  position: relative;
+  &:hover{
+    transform: scale(110%);
+    filter: brightness(115%);
+  }
+  .title{
+    @include WidthHeight(100%, 19%);
+    @include Flex-Row(center, center);
+    font-size: 2em;
+  }
+  .top{
+    @include WidthHeight(100%, 27%);
+    @include Flex-Row(center, center);
+    div{
+      @include WidthHeight(3em, 3em);
+      position: relative;
+      margin: 0em 0.5em;
+      img{
+        @include Img-Round(3em);
+      }
+    }
+    span{
+      @include Img-Round(1.6em);
+      @include Flex-Row(center, center);
+      background-color: $cError;
+      position: absolute;
+      right: 0%;
+      top: 0%;
+    }
+    .user-span{
+      background-color: $cWhite;
+      color: black;
+    }
+    .pfp-div{
+      img{
+        margin: 0em -0.5em;
+      }
+      img+img{
+        z-index: 1;
+      }
+    }
+    p{
+      text-align: center;
+      font-size: 1em;
+    }
+  }
+  .mid{
+    @include WidthHeight(100%, 27%);
+    @include Flex-Row(center, center);
+      button{
+        background: initial;
+        background-color: $cCC1;
+        border-radius: 0.25em;
+        margin-right: 1vw;
+        font-size: 1em;
+      }
+      input{
+        @include WidthHeight(40%, 40%);
+        border-radius: 0.3em;
+        background-color: $cMain;
+        font-size: 1em;
+        color: $cWhite;
+        text-align: center;
+      }
+  }
+  .bot{
+    @include WidthHeight(100%, 27%);
+    @include Flex-Row(center, center);
+    a{
+      margin: 0vh 1vw;
+      z-index: 2;
+    }
+  }
+}
+.proj-cards{
+  @include Grid-Col(1fr 1fr 1fr, 7vh, 4vw);
+  margin: 7vh 0vw;
+  text-align: center;
+}
+.empty-msg{
+  position: absolute;
+  top: 40vh;
+  left: 50vw;
+  transform: translate(-50%, 0%);
+  text-align: center;
+  font-size: 1.5em;
+}
+
+.new-proj-modal{
+  @include WidthHeight(30vw, 60vh);
+  @include Flex-Col(center, center);
+  position: absolute;
+  top: 20vh;
+  left: 35vw;
+  background-color: $cOffMain;
+  box-shadow: 0 0 0.5em 0.2em $cCC1;
+  z-index: $zModal;
+  border-radius: 1em;
+  pointer-events: auto;
+  transition: opacity 0.4s;
+  *{
+    margin-top: 0.6em;
+  }
+  input{
+    text-indent: 3%;
+    border-radius: 0.2em;
+    font-size: 1em;
+  }
+  .date-container{
+    @include Flex-Row(center, center);
+    div{
+      @include Flex-Col(center, center);
+      margin: 0vh 1vw;
+    }
+  }
+  .btn-background{
+    @include WidthHeight(1.4em, 1.4em);
+    @include Flex-Row(center, center);
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    margin: 0em 0.5em;
+    background-color: white;
+    cursor: pointer;
+    border-radius: 1em;
+  }
+  img{
+    @include Img-Round(2.4em);
+  }
+  button{
+    margin-top: 5vh;
+  }
+}
+.del-proj-modal{
+  @include WidthHeight(26vw, 30vh);
+  @include Flex-Col(center, center);
+  position: absolute;
+  top: 35vh;
+  left: 37vw;
+  background-color: $cOffMain;
+  box-shadow: 0 0 0.5em 0.2em $cError;
+  z-index: $zModal;
+  border-radius: 1em;
+  pointer-events: auto;
+  transition: opacity 0.4s;
+  span{
+    font-size: 1.3em;
+    margin: 3vh 0vw;
+  }
+  div{
+    @include Flex-Row(center, center);
+    button{
+      margin: 3vh 2vw;
+    }
+  }
+}

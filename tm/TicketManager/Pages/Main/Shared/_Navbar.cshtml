@@ -4,9 +4,6 @@
 	var pfpSrc = _contextAccessor.HttpContext.User.FindFirstValue("ProfilePicture");
 }
 
-<script async src="~/js/signalr.js"></script>
-<script async src="~/js/chatHub.js"></script>
-
 <div class="chat-container" id="chatContainer">
 	<div class="chat-column" id="chatColumn">
 		<div>
@@ -62,7 +59,7 @@
 			<label for="darkModeToggle">Dark Mode</label>
 		</div>
 		<div tabindex="0">
-			<a asp-page="/Main/MyProjects" asp-route-code="normal_login"><img src="/icons/project.png">My Projects</a>
+			<a asp-page="/MyProjects" asp-route-code="normal_login"><img src="/icons/project.png">My Projects</a>
 		</div>
 		<div tabindex="0">
 			<a asp-page="/Identity/Login"><img src="/icons/refer.png">Logout</a>

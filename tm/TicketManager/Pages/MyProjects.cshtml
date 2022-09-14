@@ -1,0 +1,74 @@
+﻿@page "/"
+@using TicketManager
+@using TicketManager.Pages.Identity
+@namespace TicketManager.Pages.Main
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model MyProjectsModel
+@{ ViewData["Title"] = "My Projects"; }
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"]  - TicketManager</title>
+	<link rel="icon" href="/icons/programmer.png">
+	<link rel="stylesheet" href="~/css/myProjects.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<script src="~/lib/jquery/jquery.js" asp-append-version="true"></script>
+	<script async src="~/js/signalr.js"></script>
+	<script async src="~/js/myProjectsHub.js"></script>
+</head>
+<body>
+	<img class="background" src="/mountains\mountain0.jpg">
+	<main class="hide" id="myProjMain">
+		<h1>My Projects</h1>
+		<div class="searchbox">
+			<input id="projSearch" placeholder="search...">
+			<img src="/icons/search.png">
+		</div>
+		<section class="btn-wrap">
+			<button id="joinProjBtn" class="btn">Join Project</button>
+			<input id="projCodeTxt" placeholder="project code...">
+		</section>
+		@{
+			if (User.IsInRole(LoginModel.Admin)){
+				<button id="openCreateProjBtn" class="btn create-proj-btn">Create Project</button>
+			}
+		}
+		<span id="invalidCodeErr" class="codeErr hide">Invalid project code</span>
+		<span id="repeatCodeErr" class="codeErr hide">Project code<br/>already submitted</span>
+
+		<section class="del-proj-modal hide" id="deleteConfirmationModal">
+			<span>Are you sure?</span>
+			<div>
+				<aside id="yesDelBtnWrap"></aside>
+				<button tabindex="0" class="btn" id="noDelBtn">Cancel</button>
+			</div>
+		</section>
+
+		<section class="proj-cards" id="projCardDiv"></section>
+		<span class="empty-msg hide" id="noProjMsg">* no projects to display *</span>
+
+		<section id="newProjModal" class="new-proj-modal hide">
+			<h2>New Project</h2>
+			<input type="text" id="projTitleTxt" placeholder="Project title">
+			<input type="text" id="gitHubLinkTxt" placeholder="GitHub link (optional)">
+			<div class="date-container">
+				<div>
+					<span>Start Date</span>
+					<input id="startDate" type="date" />
+				</div>
+				<div>
+					<span>End Date</span>
+					<input id="endDate" type="date" />
+				</div>
+			</div>
+			<button type="button" class="btn" tabindex="0" id="createBtn">Create</button>
+			<div class="btn-background"><img src="/icons/cancel.png" tabindex="0" id="closeBtn" /></div>
+			<div class="err-summary"></div>
+		</section>
+
+	</main>
+</body>
+</html>

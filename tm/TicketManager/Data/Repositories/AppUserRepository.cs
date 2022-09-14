@@ -34,6 +34,16 @@ public class AppUserRepository : IAppUserRepository
     {
         return await _db.Users.FindAsync(id);
     }
+    public AppUser GetById(string id)
+    {
+        return _db.Users.Find(id);
+    }
+
+    public async Task<string> GetPfpAsync(string id)
+    {
+        var user = await _db.Users.FindAsync(id);
+        return user.ProfilePicture;
+    }
 
     public bool Save()
     {

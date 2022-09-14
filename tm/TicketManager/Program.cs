@@ -39,9 +39,11 @@ builder.Services.AddRazorPages();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 builder.Services.AddSignalR();
+builder.Services.AddTransient<IProjectRepository, ProjectRepository>();
 builder.Services.AddTransient<IMessageRepository, MessageRepository>();
 builder.Services.AddTransient<ITicketRepository, TicketRepository>();
 builder.Services.AddTransient<IAppUserRepository, AppUserRepository>();
+builder.Services.AddTransient<IProject_AppUsersRepository, Project_AppUsersRepository>();
 
 var app = builder.Build();
 
@@ -62,6 +64,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
+app.MapHub<MyProjectsHub>("/myProjectsHub");
 app.MapHub<ChatHub>("/chatHub");
 app.MapHub<NavbarHub>("/navbarHub");
 

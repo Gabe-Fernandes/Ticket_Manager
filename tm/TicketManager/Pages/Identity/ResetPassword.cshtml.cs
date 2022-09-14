@@ -87,7 +87,7 @@ public class ResetPasswordModel : PageModel
             await _signInManager.PasswordSignInAsync(
                 user.Email, Input.Password, isPersistent: false, lockoutOnFailure: false);
             await _loginModel.GenerateSecurityContextAsync(Input.Email, HttpContext);
-            return RedirectToPage("/Main/MyProjects", new { code = "reset_password_login" });
+            return RedirectToPage("/MyProjects", new { code = "reset_password_login" });
         }
 
         foreach (var error in result.Errors)

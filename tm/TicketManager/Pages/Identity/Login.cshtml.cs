@@ -34,9 +34,9 @@ public class LoginModel : PageModel
     public string ErrorMessage { get; set; }
 
     public static string Cookie = "cookie";
-    public static string Admin = "admin";
-    public static string TechLead = "techLead";
-    public static string Developer = "developer";
+    public static string Admin = "Admin";
+    public static string TechLead = "TechLead";
+    public static string Developer = "Developer";
 
     public class InputModel
     {
@@ -78,7 +78,7 @@ public class LoginModel : PageModel
             if (result.Succeeded)
             {
                 await GenerateSecurityContextAsync(Input.Email, HttpContext);
-                return RedirectToPage("/Main/MyProjects", new { code = "normal_login" });
+                return RedirectToPage("/MyProjects", new { code = "normal_login" });
             }
             else
             {
