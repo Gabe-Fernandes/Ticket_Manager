@@ -46,4 +46,9 @@ public class ProjectRepository : IProjectRepository
         _db.Update(project);
         return Save();
     }
+
+    public int Count()
+    {
+        return _db.Projects.Count();
+    }
 }

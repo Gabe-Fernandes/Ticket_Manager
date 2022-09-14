@@ -34,8 +34,8 @@ public class ProjectRepositoryTests
                     Id = i + 1,
                     Name = "test name",
                     GitHubLink = "testlink",
-                    StartDate = DateTime.Now,
-                    EndDate = DateTime.Now
+                    StartDate = "testDate",
+                    EndDate = "testDate"
                 });
                 dbContext.SaveChangesAsync();
             }
@@ -52,8 +52,8 @@ public class ProjectRepositoryTests
             Id = 1,
             Name = "test name",
             GitHubLink = "testlink",
-            StartDate = DateTime.Now,
-            EndDate = DateTime.Now
+            StartDate = "testDate",
+            EndDate = "testDate"
         };
         // Act
         var result = _projectRepository.Add(project);
@@ -70,8 +70,8 @@ public class ProjectRepositoryTests
             Id = 1,
             Name = "test name",
             GitHubLink = "testlink",
-            StartDate = DateTime.Now,
-            EndDate = DateTime.Now
+            StartDate = "testDate",
+            EndDate = "testDate"
         };
         _projectRepository.Add(project);
         // Act
@@ -89,8 +89,8 @@ public class ProjectRepositoryTests
             Id = 1,
             Name = "test name",
             GitHubLink = "testlink",
-            StartDate = DateTime.Now,
-            EndDate = DateTime.Now
+            StartDate = "testDate",
+            EndDate = "testDate"
         };
         _projectRepository.Add(project);
         // Act

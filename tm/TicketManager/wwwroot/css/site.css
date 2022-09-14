@@ -14,10 +14,19 @@ body {
   background-color: #161b22;
 }
 
+input {
+  color: black;
+}
+
 .hide {
   opacity: 0%;
   pointer-events: none;
   position: absolute;
+}
+
+.disable {
+  filter: brightness(50%);
+  pointer-events: none;
 }
 
 .btn {
@@ -33,8 +42,24 @@ body {
 }
 .btn:active {
   transform: scale(0.94);
-  transform: translateY(4px);
+  transform: translateY(5%);
   box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+}
+
+.screen-tint {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 3;
+  pointer-events: none;
+}
+
+.err-input {
+  border: 0.2em solid #781d1d;
+  box-shadow: 0 0 0.4em 0.2em #781d1d;
 }
 
 ::-webkit-scrollbar {

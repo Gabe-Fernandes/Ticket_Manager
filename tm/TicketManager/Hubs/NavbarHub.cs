@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using TicketManager.Interfaces;
 using TicketManager.Models;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace TicketManager.Hubs;
 

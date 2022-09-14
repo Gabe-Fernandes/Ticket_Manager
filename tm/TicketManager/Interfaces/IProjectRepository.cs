@@ -10,4 +10,5 @@ public interface IProjectRepository
     bool Update(Project project);
     bool Delete(Project project);
     bool Save();
+    int Count();
 }
