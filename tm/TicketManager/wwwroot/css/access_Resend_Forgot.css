@@ -1,0 +1,74 @@
+.access-denied-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.access-denied-main * {
+  margin: 14vh;
+}
+.access-denied-main h1 {
+  border-radius: 1em;
+  padding: 0.2em 0.6em;
+}
+
+.forgot-pass-main, .resend-email-main {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.forgot-pass-main form, .resend-email-main form {
+  width: 30vw;
+  height: 40vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #22272d;
+  box-shadow: 0 0 0.3em 0.3em #34b0e2;
+}
+.forgot-pass-main form .confirmation, .resend-email-main form .confirmation {
+  height: 6em;
+  width: 6em;
+  min-height: 6em;
+  min-width: 6em;
+  border-radius: 50%;
+  background-color: #17993c;
+  position: relative;
+}
+.forgot-pass-main form .confirmation div, .resend-email-main form .confirmation div {
+  background-color: white;
+  border-radius: 0.4em;
+  position: absolute;
+  width: 0.498em;
+  height: 1.998em;
+  top: 72%;
+  left: 19%;
+  transform: translate(-20%, -65%) rotate(-45deg);
+}
+.forgot-pass-main form .confirmation div + div, .resend-email-main form .confirmation div + div {
+  width: 0.498em;
+  height: 4.5em;
+  top: 15%;
+  left: 55%;
+  transform: translate(-55%, 0%) rotate(45deg);
+}
+.forgot-pass-main form input, .forgot-pass-main form .btn-wrap, .forgot-pass-main form h1, .resend-email-main form input, .resend-email-main form .btn-wrap, .resend-email-main form h1 {
+  margin: 2vh 0vw;
+}
+.forgot-pass-main form h1, .resend-email-main form h1 {
+  text-align: center;
+}
+.forgot-pass-main form button, .forgot-pass-main form a, .resend-email-main form button, .resend-email-main form a {
+  margin: 0vh 1vw;
+}
+.forgot-pass-main form input, .resend-email-main form input {
+  font-size: 1.4em;
+  text-indent: 7%;
+  border-radius: 0.4em;
+}
+
+/*# sourceMappingURL=access_Resend_Forgot.css.map */

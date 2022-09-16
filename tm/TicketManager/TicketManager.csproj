@@ -26,6 +26,8 @@
     <Exec Command="sass $(ProjectDir)Styles\chat.scss $(ProjectDir)wwwroot\css\chat.css" />
     <Exec Command="sass $(ProjectDir)Styles\navbar.scss $(ProjectDir)wwwroot\css\navbar.css" />
     <Exec Command="sass $(ProjectDir)Styles\myProjects.scss $(ProjectDir)wwwroot\css\myProjects.css" />
+    <Exec Command="sass $(ProjectDir)Styles\access_Resend_Forgot.scss $(ProjectDir)wwwroot\css\access_Resend_Forgot.css" />
+    <Exec Command="sass $(ProjectDir)Styles\login.scss $(ProjectDir)wwwroot\css\login.css" />
   </Target>
     
   <ItemGroup>

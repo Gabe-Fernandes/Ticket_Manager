@@ -40,7 +40,7 @@ public class ForgotPasswordModel : PageModel
             var user = await _userManager.FindByEmailAsync(Input.Email);
             if (user == null || !await _userManager.IsEmailConfirmedAsync(user))
             {
-                // Add temporary data
+                TempData["resend_email_confirmation"] = "Email Sent";
                 return Page();
             }
 
@@ -57,10 +57,8 @@ public class ForgotPasswordModel : PageModel
                 "Reset Password",
                 $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-            // Add temporary data
-            return Page();
+            TempData["resend_email_confirmation"] = "Email Sent";
         }
-
         return Page();
     }
 }
