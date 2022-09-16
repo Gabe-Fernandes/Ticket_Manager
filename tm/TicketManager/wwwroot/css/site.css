@@ -19,9 +19,9 @@ input {
 }
 
 .hide {
-  opacity: 0%;
-  pointer-events: none;
-  position: absolute;
+  opacity: 0% !important;
+  pointer-events: none !important;
+  position: absolute !important;
 }
 
 .disable {

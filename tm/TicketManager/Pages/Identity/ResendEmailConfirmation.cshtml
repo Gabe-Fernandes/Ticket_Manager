@@ -1,20 +1,26 @@
 ﻿@page
 @model ResendEmailConfirmationModel
-@{ ViewData["Title"] = "Resend email confirmation"; }
-<a asp-page="/Identity/Login">back</a>
-<h1>@ViewData["Title"]</h1>
-<h2>Enter your email.</h2>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-floating">
-                <input asp-for="Input.Email" class="form-control" aria-required="true" />
-                <label asp-for="Input.Email" class="form-label"></label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <button type="submit" class="w-100 btn btn-lg btn-primary">Resend</button>
-        </form>
-    </div>
-</div>
+@{
+	ViewData["Title"] = "Resend email confirmation";
+	var result = TempData["resend_email_confirmation"] ?? "Resend Email Confirmation";
+}
+
+<main class="resend-email-main">
+	<form method="post">
+		<h1>@result</h1>
+		@{
+			if ((string)result == "Email Sent")
+			{
+				<div class="confirmation"><div></div><div></div></div>
+			}
+			else{
+				<input asp-for="Input.Email" placeholder="email..." aria-required="true" />
+				<span asp-validation-for="Input.Email"></span>
+				<div class="btn-wrap">
+					<button type="submit" class="btn" tabindex="0">Resend Email</button>
+					<a class="btn" asp-page="/Identity/Login">Back</a>
+				</div>
+			}
+		}
+	</form>
+</main>

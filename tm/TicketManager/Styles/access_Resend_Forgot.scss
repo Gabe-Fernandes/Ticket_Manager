@@ -1,0 +1,38 @@
+﻿@import "_library.scss";
+
+.access-denied-main{
+  @include Flex-Col(center, center);
+  *{
+    margin: 14vh;
+  }
+  h1{
+    border-radius: 1em;
+    padding: 0.2em 0.6em;
+  }
+}
+
+.forgot-pass-main, .resend-email-main{
+  @include WidthHeight(100vw, 100vh);
+  @include Flex-Col(center, center);
+  form{
+    @include WidthHeight(30vw, 40vh);
+    @include Flex-Col(center, center);
+    background-color: $cOffMain;
+    box-shadow: 0 0 0.3em 0.3em $cCC2;
+    .confirmation{
+      @include Confirmation(6em);
+    }
+    input, .btn-wrap, h1{
+      margin: 2vh 0vw;
+    }
+    h1{text-align: center;}
+    button, a{
+      margin: 0vh 1vw;
+    }
+    input{
+      font-size: 1.4em;
+      text-indent: 7%;
+      border-radius: 0.4em;
+    }
+  }
+}

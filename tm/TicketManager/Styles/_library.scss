@@ -113,3 +113,39 @@ $cWhite: white;
   top: 0%;
   left: 0%;
 }
+@mixin Confirmation($size) {
+  @include Img-Round($size);
+  background-color: $cCC1;
+  position: relative;
+  div{
+    background-color: $cWhite;
+    border-radius: 0.4em;
+    position: absolute;
+    @include WidthHeight(0.083 * $size, 0.333 * $size);
+    top: 72%;
+    left: 19%;
+    transform: translate(-20%, -65%) rotate(-45deg);
+  }
+  div+div{
+    @include WidthHeight(0.083 * $size, 0.75 * $size);
+    top: 15%;
+    left: 55%;
+    transform: translate(-55%, 0%) rotate(45deg);
+  }
+}
+@mixin Invalid($size) {
+  @include Img-Round($size);
+  background-color: $cError;
+  position: relative;
+  box-shadow: inset 0 0 0.1em 0.1em $cOffMain;
+  div{
+    @include WidthHeight(0.083 * $size, 0.7143 * $size);
+    background-color: $cWhite;
+    border-radius: 0.4em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+  div+div{ transform: translate(-50%, -50%) rotate(45deg); }
+}

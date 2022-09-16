@@ -1,0 +1,145 @@
+﻿@import "_library.scss";
+
+.login-main{
+  h1{
+    @include Flex-Row(center, center);
+    margin: 7vh;
+  }
+  form{
+    @include WidthHeight(26vw, 60vh);
+    @include Flex-Col(center, center);
+    margin: 0 auto;
+    background-color: $cOffMain;
+    box-shadow: 0 0 0.4em 0.2em $cCC2;
+    border-radius: 0.6em;
+    input{
+     @include WidthHeight(80%, 5vh);
+     margin: 2vh 0vw;
+     border-radius: 0.6em; 
+     text-indent: 5%;
+     font-size: 1em;
+    }
+    button{
+      @include WidthHeight(80%, 7vh);
+      margin: 1vh 0vw;
+      border-radius: 0.25em;
+      padding: 0px;
+    }
+    a{
+      font-size: 0.9em;
+      text-align: center;
+      text-decoration: underline;
+    }
+    section{
+      @include Flex-Row(center, center);
+      @include WidthHeight(80%, 6vh);
+      margin-top: 2vh;
+    }
+    .link-wrap{
+      @include Flex-Row(center, center);
+      @include WidthHeight(80%, 12vh);
+      div{
+        @include WidthHeight(50%, 100%);
+        @include Flex-Row(flex-start, center);
+      }
+      div + div{ @include Flex-Row(flex-end, center); }
+    }
+  }
+}
+
+
+.register-main{
+  h1{
+    @include Flex-Row(center, center);
+    margin: 7vh;
+  }
+  form{
+    @include Flex-Row(center, center);
+    section{
+      @include WidthHeight(26vw, 60vh);
+      @include Flex-Col(center, center);
+      margin: 0vh 5vw;
+      background-color: $cOffMain;
+      box-shadow: 0 0 0.4em 0.2em $cCC2;
+      border-radius: 0.6em;
+      h2{
+        margin-bottom: 1vh;
+      }
+      input[type=text]{
+        @include WidthHeight(80%, 5vh);
+        margin: 2vh 0vw;
+        border-radius: 0.6em; 
+        text-indent: 5%;
+        font-size: 1em;
+      }
+      .radio-wrap{
+        @include Flex-Col(flex-start, center);
+        margin-top: 2vh;
+        label{
+          font-size: 1.2em;
+          margin: 1vh 0vw;
+        }
+      }
+      .pass-title{
+        margin-bottom: 1vh;
+      }
+      .requirements{
+        @include Flex-Col(flex-start, center);
+        .requirement-wrap{
+          @include Flex-Row(center, center);
+          margin: 0.85vh 0vw;
+          .confirmation{
+            @include Confirmation(1.8em);
+            margin-right: 1vw;
+          }
+          .invalid{
+            @include Invalid(1.8em);
+            margin-right: 1vw;
+          }
+        }
+      }
+    }
+    .backBtn{
+      position: absolute;
+      bottom: 7vh;
+      left: 4vw;
+    }
+  }
+}
+
+.reset-password-main{
+  h1{
+    @include Flex-Row(center, center);
+    margin: 7vh;
+  }
+  form{
+    @include WidthHeight(26vw, 60vh);
+    @include Flex-Col(center, center);
+    margin: 0vh auto;
+    background-color: $cOffMain;
+    box-shadow: 0 0 0.4em 0.2em $cCC2;
+    border-radius: 0.6em;
+    input[type=text]{
+      @include WidthHeight(80%, 5vh);
+      margin: 2vh 0vw;
+      border-radius: 0.6em; 
+      text-indent: 5%;
+      font-size: 1em;
+    }
+    .requirements{
+      @include Flex-Col(flex-start, center);
+      .requirement-wrap{
+        @include Flex-Row(center, center);
+        margin: 0.85vh 0vw;
+        .confirmation{
+          @include Confirmation(1.8em);
+          margin-right: 1vw;
+        }
+        .invalid{
+          @include Invalid(1.8em);
+          margin-right: 1vw;
+        }
+      }
+    }
+  }
+}

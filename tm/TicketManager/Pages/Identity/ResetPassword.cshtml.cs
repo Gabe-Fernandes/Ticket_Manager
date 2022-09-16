@@ -52,18 +52,18 @@ public class ResetPasswordModel : PageModel
 
     public IActionResult OnGet(string code = null)
     {
-        if (code == null)
-        {
-            return BadRequest("A code must be supplied for password reset.");
-        }
-        else
-        {
-            Input = new InputModel
-            {
-                Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code))
-            };
+        //if (code == null)
+        //{
+        //    return BadRequest("A code must be supplied for password reset.");
+        //}
+        //else
+        //{
+            //Input = new InputModel
+            //{
+            //    Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code))
+            //};
             return Page();
-        }
+        //}
     }
 
     public async Task<IActionResult> OnPostAsync()
