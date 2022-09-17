@@ -84,6 +84,7 @@
       font-size: 1.4em;
       background-color: transparent;
       border: none;
+      color: $cWhite;
     }
   }
 
@@ -98,7 +99,7 @@
     ol {
       @include WidthHeight(100%, 100%);
       list-style: none;
-      overflow-y: scroll;
+      overflow-y: auto;
 
       .conversation {
         margin: 0% 7% 5% 0%;
@@ -160,6 +161,7 @@
       text-indent: 10%;
       overflow-y: scroll;
       background-color: transparent;
+      color: $cWhite;
     }
 
     button {

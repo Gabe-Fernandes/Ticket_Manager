@@ -1,0 +1,172 @@
+.admin-dash-main .sp-nav {
+  width: 100vw;
+  height: 10vh;
+  background-color: #22272d;
+}
+.admin-dash-main h2 {
+  width: 100%;
+  height: 22%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.admin-dash-main .content {
+  width: 100vw;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #22272d;
+}
+.admin-dash-main .team-section {
+  width: 50vw;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #161b22;
+  box-shadow: 0 0 0.3em 0.2em #34b0e2;
+  margin-left: 5vw;
+}
+.admin-dash-main .team-section .team-div {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-auto-rows: 18vh;
+  row-gap: 2vh;
+  column-gap: 0.4vw;
+  width: 84%;
+  height: 75%;
+  overflow-y: auto;
+}
+.admin-dash-main article {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #22272d;
+  border-radius: 0.2em;
+}
+.admin-dash-main article .name-div {
+  width: 100%;
+  height: 60%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.admin-dash-main article .name-div img {
+  height: 2em;
+  width: 2em;
+  min-height: 2em;
+  min-width: 2em;
+  border-radius: 50%;
+  margin: 0vh 1vw;
+}
+.admin-dash-main article .name-div span {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 1em;
+}
+.admin-dash-main article .options-div {
+  width: 100%;
+  height: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.admin-dash-main article .options-div .confirm {
+  height: 2em;
+  width: 2em;
+  min-height: 2em;
+  min-width: 2em;
+  border-radius: 50%;
+  background-color: #17993c;
+  position: relative;
+  margin-right: 0.5vw;
+  transition: filter 0.3s;
+}
+.admin-dash-main article .options-div .confirm div {
+  background-color: white;
+  border-radius: 0.4em;
+  position: absolute;
+  width: 0.166em;
+  height: 0.666em;
+  top: 72%;
+  left: 19%;
+  transform: translate(-20%, -65%) rotate(-45deg);
+}
+.admin-dash-main article .options-div .confirm div + div {
+  width: 0.166em;
+  height: 1.5em;
+  top: 15%;
+  left: 55%;
+  transform: translate(-55%, 0%) rotate(45deg);
+}
+.admin-dash-main article .options-div .confirm:hover {
+  filter: brightness(120%);
+  cursor: pointer;
+}
+.admin-dash-main article .options-div .invalid {
+  height: 2em;
+  width: 2em;
+  min-height: 2em;
+  min-width: 2em;
+  border-radius: 50%;
+  background-color: #781d1d;
+  position: relative;
+  box-shadow: inset 0 0 0.1em 0.1em #22272d;
+  margin-left: 0.5vw;
+  transition: filter 0.3s;
+}
+.admin-dash-main article .options-div .invalid div {
+  width: 0.166em;
+  height: 1.4286em;
+  background-color: white;
+  border-radius: 0.4em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+.admin-dash-main article .options-div .invalid div + div {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.admin-dash-main article .options-div .invalid:hover {
+  filter: brightness(120%);
+  cursor: pointer;
+}
+.admin-dash-main article .options-div button {
+  font-size: 0.8em;
+}
+.admin-dash-main .pending-section {
+  width: 18vw;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: top;
+  background-color: #161b22;
+  box-shadow: 0 0 0.3em 0.2em #34b0e2;
+}
+.admin-dash-main .pending-section .new-users-div {
+  width: 84%;
+  height: 72%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: top;
+  overflow-y: auto;
+}
+.admin-dash-main .pending-section .new-users-div article {
+  width: 100%;
+  height: 18vh;
+  min-height: 18vh;
+  margin-bottom: 1vh;
+}
+.admin-dash-main .pending-section .new-users-div article .options-div {
+  align-items: flex-start;
+}
+
+/*# sourceMappingURL=adminDash.css.map */

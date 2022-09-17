@@ -28,6 +28,7 @@
     <Exec Command="sass $(ProjectDir)Styles\myProjects.scss $(ProjectDir)wwwroot\css\myProjects.css" />
     <Exec Command="sass $(ProjectDir)Styles\access_Resend_Forgot.scss $(ProjectDir)wwwroot\css\access_Resend_Forgot.css" />
     <Exec Command="sass $(ProjectDir)Styles\login.scss $(ProjectDir)wwwroot\css\login.css" />
+    <Exec Command="sass $(ProjectDir)Styles\adminDash.scss $(ProjectDir)wwwroot\css\adminDash.css" />
   </Target>
     
   <ItemGroup>

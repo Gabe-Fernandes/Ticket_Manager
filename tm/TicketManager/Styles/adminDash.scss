@@ -1,0 +1,91 @@
+﻿@import "_library.scss";
+
+.admin-dash-main{
+  .sp-nav{
+    @include WidthHeight(100vw, 10vh);
+    background-color: $cOffMain;
+  }
+  h2{
+    @include WidthHeight(100%, 22%);
+    @include Flex-Row(center, center);
+    text-align: center;
+  }
+  .content{
+    @include WidthHeight(100vw, 90vh);
+    @include Flex-Row(center, center);
+    background-color: $cOffMain;
+  }
+  .team-section{
+    @include WidthHeight(50vw, 70vh);
+    @include Flex-Col(center, center);
+    background-color: $cMain;
+    box-shadow: 0 0 0.3em 0.2em $cCC2;
+    margin-left: 5vw;
+    .team-div{
+      @include Grid-Col(1fr 1fr 1fr, 18vh, 2vh, 0.4vw);
+      @include WidthHeight(84%, 75%);
+      overflow-y: auto;
+    }
+  }
+  article{
+    @include Flex-Col(center, center);
+    background-color: $cOffMain;
+    border-radius: 0.2em;
+    .name-div{
+      @include WidthHeight(100%, 60%);
+      @include Flex-Row(flex-start, center);
+      img{
+        @include Img-Round(2em);
+        margin: 0vh 1vw;
+      }
+      span{
+        @include TextEllipsis();
+        font-size: 1em;
+      }
+    }
+    .options-div{
+      @include WidthHeight(100%, 40%);
+      @include Flex-Row(center, center);
+      .confirm{
+        @include Confirmation(2em);
+        margin-right: 0.5vw;
+        transition: filter 0.3s;
+        &:hover{
+          filter: brightness(120%);
+          cursor: pointer;
+        }
+      }
+      .invalid{
+        @include Invalid(2em);
+        margin-left: 0.5vw;
+        transition: filter 0.3s;
+        &:hover{
+          filter: brightness(120%);
+          cursor: pointer;
+        }
+      }
+      button{
+        font-size: 0.8em;
+      }
+    }
+  }
+  .pending-section{
+    @include WidthHeight(18vw, 70vh);
+    @include Flex-Col(center, top);
+    background-color: $cMain;
+    box-shadow: 0 0 0.3em 0.2em $cCC2;
+    .new-users-div{
+      @include WidthHeight(84%, 72%);
+      @include Flex-Col(center, top);
+      overflow-y: auto;
+      article{
+        @include WidthHeight(100%, 18vh);
+        min-height: 18vh;
+        margin-bottom: 1vh;
+        .options-div{
+          align-items: flex-start;
+        }
+      }
+    }
+  }
+}

@@ -145,7 +145,7 @@ article{
   }
 }
 .proj-cards{
-  @include Grid-Col(1fr 1fr 1fr, 7vh, 4vw);
+  @include Grid-Col(1fr 1fr 1fr, initial, 7vh, 4vw);
   margin: 7vh 0vw;
   text-align: center;
 }

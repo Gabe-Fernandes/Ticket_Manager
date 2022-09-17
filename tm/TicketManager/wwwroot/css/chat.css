@@ -98,6 +98,7 @@
   font-size: 1.4em;
   background-color: transparent;
   border: none;
+  color: white;
 }
 .chat-window .mid {
   height: 70%;
@@ -110,7 +111,7 @@
   width: 100%;
   height: 100%;
   list-style: none;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 .chat-window .mid ol .conversation {
   margin: 0% 7% 5% 0%;
@@ -184,6 +185,7 @@
   text-indent: 10%;
   overflow-y: scroll;
   background-color: transparent;
+  color: white;
 }
 .chat-window .bot button {
   width: 30%;

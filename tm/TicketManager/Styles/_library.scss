@@ -35,9 +35,10 @@ $cWhite: white;
   align-items: $align;
   justify-content: $justify;
 }
-@mixin Grid-Col($spacing, $rowGap, $colGap) {
+@mixin Grid-Col($spacing, $rowSize, $rowGap, $colGap) {
   display: grid;
   grid-template-columns: $spacing;
+    grid-auto-rows: $rowSize;
   row-gap: $rowGap;
   column-gap: $colGap;
 }

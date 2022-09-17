@@ -266,7 +266,9 @@
 
   $(document).click(function (event) { //close navbar panel when clicking anywhere not listed here
     const $target = $(event.target);
-    if (!$target.closest("#navbarPanel").length &&
+    if (!$target.closest("#notificationPanel").length &&
+      !$target.closest("#chatPanel").length &&
+      !$target.closest("#userPanel").length &&
       !$target.closest("#notificationMenuBtn").length &&
       !$target.closest("#chatMenuBtn").length &&
       !$target.closest("#userMenuBtn").length) {
@@ -275,7 +277,6 @@
   });
 
   function ClearPanels() {
-    $("#navbarPanel").addClass("hide");
     $("#notificationPanel").addClass("hide");
     $("#chatPanel").addClass("hide");
     $("#userPanel").addClass("hide");
@@ -284,27 +285,24 @@
     showMoreIndex = 0;
   }
 
-  function SwitchNavbarPanel(myPanel, panel1, panel2, smallPanel = false) {
+  function SwitchNavbarPanel(myPanel, panel1, panel2) {
     if ($(`#${myPanel}`).hasClass("hide")) { //open panel
-      $("#navbarPanel").removeClass("hide");
-      $("#moreNotificationsBtn").removeClass("hide");
-      $("#moreChatsBtn").removeClass("hide");
-      if (smallPanel) { $("#navbarPanel").addClass("small-panel") }
-      else { $("#navbarPanel").removeClass("small-panel") }
       $(`#${myPanel}`).removeClass("hide");
       $(`#${panel1}`).addClass("hide");
       $(`#${panel2}`).addClass("hide");
+
+      $("#moreNotificationsBtn").removeClass("hide");
+      $("#moreChatsBtn").removeClass("hide");
       NavMessenger.send("GetData", "chatContent", true, 0); // generalize later ----------------------------
     }
     else { //close panel
-      $("#navbarPanel").addClass("hide");
       $(`#${myPanel}`).addClass("hide");
       showMoreIndex = 0;
     }
   }
 
   $("#userMenuBtn").on("click", () => {
-    SwitchNavbarPanel("userPanel", "notificationPanel", "chatPanel", true);
+    SwitchNavbarPanel("userPanel", "notificationPanel", "chatPanel");
   });
 
   // notification events
