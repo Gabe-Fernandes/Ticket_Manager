@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
@@ -133,6 +132,12 @@ public class MyProjectsHub : Hub<IMyProjectsHub>
         await Clients.Caller.DeleteProjCard(projectId);
     }
 
+    public void OpenProject(int projectId)
+    {
+        _user.CurrentProjectId = projectId;
+        _appUserRepo.Update(_user);
+    }
+
     private async Task<List<ProjCardCtx>> GetProjCardCtxList(List<Project> projList)
     {
         List<ProjCardCtx> projCardCtxList = new List < ProjCardCtx >();
@@ -153,7 +158,7 @@ public class MyProjectsHub : Hub<IMyProjectsHub>
         for (int i = 0; i < projList.Count; i++)
         {
             List<string> teamMembers =
-                await _project_AppUserRepository.GetTeamMembersAsync(projList[i].Id);
+                await _project_AppUserRepository.GetTeamMemberIdsAsync(projList[i].Id);
 
             int endIndex = (teamMembers.Count < 3) ? teamMembers.Count : 3;
             string[] randPfps = new string[endIndex];
@@ -189,7 +194,7 @@ public class MyProjectsHub : Hub<IMyProjectsHub>
         for (int i = 0; i < 6; i++)
         {
             int rndIndex = rnd.Next(36);
-            projectCode += $"{charArr[rndIndex]} ";
+            projectCode += $"{charArr[rndIndex]}";
         }
 
         return projectCode;
@@ -221,19 +226,19 @@ public class ProjCardCtx
         ProjCodeResult = projCodeResult;
     }
 
-    public string Role { get; set; }
-    public int NotificationCount { get; set; }
-    public int MessageCount { get; set; }
-    public bool ClearBeforeRendering { get; set; }
-    public string TitleId { get; set; } = Guid.NewGuid().ToString();
-    public string TopDivId { get; set; } = Guid.NewGuid().ToString();
-    public string NotiCountId { get; set; } = Guid.NewGuid().ToString();
-    public string MsgCountId { get; set; } = Guid.NewGuid().ToString();
-    public string PfpDivId { get; set; } = Guid.NewGuid().ToString();
-    public string CopyBtnId { get; set; } = Guid.NewGuid().ToString();
-    public string ProjectCodeId { get; set; } = Guid.NewGuid().ToString();
-    public string ProjCodeResult { get; set; }
-    public string LeaveBtnId { get; set; } = Guid.NewGuid().ToString();
-    public string YesDelBtn { get; set; } = Guid.NewGuid().ToString();
-    public string OpenBtnId { get; set; } = Guid.NewGuid().ToString();
+    public string Role { get; }
+    public int NotificationCount { get; }
+    public int MessageCount { get; }
+    public bool ClearBeforeRendering { get; }
+    public string TitleId { get; } = Guid.NewGuid().ToString();
+    public string TopDivId { get; } = Guid.NewGuid().ToString();
+    public string NotiCountId { get; } = Guid.NewGuid().ToString();
+    public string MsgCountId { get; } = Guid.NewGuid().ToString();
+    public string PfpDivId { get; } = Guid.NewGuid().ToString();
+    public string CopyBtnId { get; } = Guid.NewGuid().ToString();
+    public string ProjectCodeId { get; } = Guid.NewGuid().ToString();
+    public string ProjCodeResult { get; }
+    public string LeaveBtnId { get; } = Guid.NewGuid().ToString();
+    public string YesDelBtn { get; } = Guid.NewGuid().ToString();
+    public string OpenBtnId { get; } = Guid.NewGuid().ToString();
 }

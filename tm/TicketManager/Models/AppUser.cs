@@ -15,6 +15,7 @@ public class AppUser : IdentityUser
 
     public string ProfilePicture { get; set; }
 
+    public int CurrentProjectId { get; set; }
     public int NotificationCount { get; set; }
     public int MessageCount { get; set; }
 

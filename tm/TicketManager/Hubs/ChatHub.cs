@@ -9,28 +9,32 @@ namespace TicketManager.Hubs;
 [Authorize]
 public class ChatHub : Hub<IChatHub>
 {
+    private readonly IProject_AppUsersRepository _paRepo;
     private readonly IMessageRepository _messageRepo;
     private readonly IAppUserRepository _appUserRepo;
     private readonly IHttpContextAccessor _contextAccessor;
+    private readonly AppUser _user;
 
     public ChatHub(IMessageRepository messageRepo,
         IAppUserRepository appUserRepo,
-        IHttpContextAccessor contextAccessor)
+        IHttpContextAccessor contextAccessor,
+        IProject_AppUsersRepository paRepo)
     {
         _messageRepo = messageRepo;
         _appUserRepo = appUserRepo;
         _contextAccessor = contextAccessor;
+        _paRepo = paRepo;
+        _user = GetUser();
     }
 
     public async Task FilterUsers(string filterText, List<string> usersInActiveWindows)
     {
         filterText = filterText.ToUpper();
-        string myId = _contextAccessor.HttpContext.User.FindFirstValue("Id");
 
-        var UsersFromProject = await _appUserRepo.GetAllAsync(); // Make this the collection of users on this project
-        var filteredUsers = UsersFromProject.Where(
+        var usersFromProject = await _paRepo.GetTeamMembersAsync(_user.CurrentProjectId);
+        var filteredUsers = usersFromProject.Where(
             u => (u.FirstName + " " + u.LastName).ToUpper().Contains(filterText)
-            && u.Id != myId).ToList();
+            && u.Id != _user.Id).ToList();
 
         // we don't want to send sensitive data from appuser to the client
         var userCtxList = new List<ChatUserContext>();
@@ -46,39 +50,36 @@ public class ChatHub : Hub<IChatHub>
         await Clients.Caller.UsersFiltered(userCtxList);
     }
 
-    public async Task LoadMessages(string coworkerId) // algo could improve
+    public async Task LoadMessages(string coworkerId)
     {
-        string myId = _contextAccessor.HttpContext.User.FindFirstValue("Id");
-
-        var allMessages = await _messageRepo.GetAllAsync(); //Limit to project 
+        var allMessages = await _messageRepo.GetAllFromProjAsync(_user.CurrentProjectId);
         var ourMessages = allMessages.Where(m =>
-            (m.To == coworkerId && m.From == myId) ||
-            (m.To == myId && m.From == coworkerId)).ToList();
+            (m.SenderId == coworkerId && m.RecipientId == _user.Id) ||
+            (m.SenderId == _user.Id && m.RecipientId == coworkerId)).ToList();
         
         await Clients.Caller.MessagesLoaded(ourMessages, coworkerId);
     }
 
     public async Task SendMessage(string recipientId, string messageBody)
     {
-        var senderId = _contextAccessor.HttpContext.User.FindFirstValue("Id");
-        var sender = await _appUserRepo.GetByIdAsync(senderId);
         var recipient = await _appUserRepo.GetByIdAsync(recipientId);
 
         Message message = new Message
         {
-            SenderName = sender.FirstName + " " + sender.LastName,
-            ReceiverName = recipient.FirstName + " " + recipient.LastName,
+            SenderName = _user.FirstName + " " + _user.LastName,
+            RecipientName = recipient.FirstName + " " + recipient.LastName,
             Body = messageBody,
             Date = DateTime.Now,
-            From = senderId,
-            To = recipientId
+            RecipientId = recipientId,
+            SenderId = _user.Id,
+            ProjectId = _user.CurrentProjectId
         };
         _messageRepo.Add(message);
 
         ChatGuidList chatGuidList = new ChatGuidList();
-        ChatUserContext userCtx = new ChatUserContext(sender);
+        ChatUserContext userCtx = new ChatUserContext(_user);
 
-        await Clients.User(senderId).MessageSent(message);
+        await Clients.User(_user.Id).MessageSent(message);
         await Clients.User(recipientId).MessageReceived(chatGuidList, userCtx);
     }
 
@@ -95,6 +96,12 @@ public class ChatHub : Hub<IChatHub>
         ChatUserContext userCtx = new ChatUserContext(coworker);
 
         await Clients.Caller.MessageReceived(chatGuidList, userCtx);
+    }
+
+    private AppUser GetUser()
+    {
+        string myId = _contextAccessor.HttpContext.User.FindFirstValue("Id");
+        return _appUserRepo.GetById(myId);
     }
 }
 

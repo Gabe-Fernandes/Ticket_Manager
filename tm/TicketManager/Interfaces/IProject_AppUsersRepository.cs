@@ -5,7 +5,9 @@ namespace TicketManager.Interfaces;
 public interface IProject_AppUsersRepository
 {
     Task<IEnumerable<Project_AppUsers>> GetAllAsync();
-    Task<List<string>> GetTeamMembersAsync(int projId);
+    Task<List<string>> GetTeamMemberIdsAsync(int projId);
+    Task<List<AppUser>> GetTeamMembersAsync(int projId);
+    Task<List<string>> GetAdminIdsAsync(int projId);
     Task<List<Project>> GetMyProjectsAsync(string userId);
     Task<Project_AppUsers> GetByIdAsync(int projId, string userId);
     Task<bool> IsApproved(int projId, string userId);

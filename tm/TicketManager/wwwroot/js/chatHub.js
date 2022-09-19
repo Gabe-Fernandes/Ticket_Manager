@@ -118,7 +118,7 @@
   });
 
   function RenderMessage(msg, chatCtx) {
-    if (msg.from === chatCtx.id) { // incoming message
+    if (msg.senderId === chatCtx.id) { // incoming message
       $(`#${chatCtx.contentListId}`).prepend(`<li class='conversation'><div class='msg-in'>
       <div><img src='${chatCtx.profilePicture}'></div><p>${msg.body}`);
     }
@@ -143,8 +143,9 @@
 
   ChatMessenger.on("MessageReceived", (guidList, coworker) => {
     const chatCtx = Object.assign(coworker, guidList);
+    const index = CloseChatWindow(chatCtx); // does nothing if DNE
     CloseMinimizedChatWindow(chatCtx); // does nothing if DNE
-    RenderChatWindow(chatCtx);
+    RenderChatWindow(chatCtx, index);
   });
 
   //4
@@ -215,14 +216,14 @@
         <ol class='message-col' id='${chatCtx.contentListId}'></div>
       <div class='bot' id='${chatCtx.botId}'>
         <input placeholder='message...' id='${chatCtx.messageInputId}'><button
-        id='${chatCtx.sendBtnId}' class='btn' tabindex="0">Send`
-
+        id='${chatCtx.sendBtnId}' class='btn' tabindex="0">Send</button></div>`
 
     if (index === chatWindows.length) {
       $("#chatContainer").append(renderString);
     }
     else {
-      $(renderString).insertBefore(`#${chatWindows[index].id}`);
+      const id = chatWindows[index].id ?? chatWindows[index].chatWindowId;
+      $(renderString).insertBefore(`#${id}`);
     }
 
     if (loadingNewPage === false) {
@@ -266,7 +267,9 @@
 
   $(document).click(function (event) { //close navbar panel when clicking anywhere not listed here
     const $target = $(event.target);
-    if (!$target.closest("#navbarPanel").length &&
+    if (!$target.closest("#notificationPanel").length &&
+      !$target.closest("#chatPanel").length &&
+      !$target.closest("#userPanel").length &&
       !$target.closest("#notificationMenuBtn").length &&
       !$target.closest("#chatMenuBtn").length &&
       !$target.closest("#userMenuBtn").length) {
@@ -275,7 +278,6 @@
   });
 
   function ClearPanels() {
-    $("#navbarPanel").addClass("hide");
     $("#notificationPanel").addClass("hide");
     $("#chatPanel").addClass("hide");
     $("#userPanel").addClass("hide");
@@ -284,27 +286,24 @@
     showMoreIndex = 0;
   }
 
-  function SwitchNavbarPanel(myPanel, panel1, panel2, smallPanel = false) {
+  function SwitchNavbarPanel(myPanel, panel1, panel2) {
     if ($(`#${myPanel}`).hasClass("hide")) { //open panel
-      $("#navbarPanel").removeClass("hide");
-      $("#moreNotificationsBtn").removeClass("hide");
-      $("#moreChatsBtn").removeClass("hide");
-      if (smallPanel) { $("#navbarPanel").addClass("small-panel") }
-      else { $("#navbarPanel").removeClass("small-panel") }
       $(`#${myPanel}`).removeClass("hide");
       $(`#${panel1}`).addClass("hide");
       $(`#${panel2}`).addClass("hide");
+
+      $("#moreNotificationsBtn").removeClass("hide");
+      $("#moreChatsBtn").removeClass("hide");
       NavMessenger.send("GetData", "chatContent", true, 0); // generalize later ----------------------------
     }
     else { //close panel
-      $("#navbarPanel").addClass("hide");
       $(`#${myPanel}`).addClass("hide");
       showMoreIndex = 0;
     }
   }
 
   $("#userMenuBtn").on("click", () => {
-    SwitchNavbarPanel("userPanel", "notificationPanel", "chatPanel", true);
+    SwitchNavbarPanel("userPanel", "notificationPanel", "chatPanel");
   });
 
   // notification events

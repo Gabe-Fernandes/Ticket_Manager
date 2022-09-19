@@ -9,7 +9,7 @@ public class Ticket
 
     [Required]
     [StringLength(20, ErrorMessage = "Maximum length reached")]
-    public string Name { get; set; }
+    public string Title { get; set; }
 
     [Required]
     [StringLength(400, ErrorMessage = "Maximum length reached")]
@@ -28,12 +28,12 @@ public class Ticket
     public DateTime EndDate { get; set; }
 
     [Required]
-    public string AssignedTo { get; set; }
-    public string AssignedFrom { get; set; }
+    public string SenderName { get; set; }
 
-    public ICollection<Comment> Comments { get; set; }
+    [Required]
+    public string RecipientName { get; set; }
+
+    public string SenderId { get; set; }
+    public string RecipientId { get; set; }
     public int ProjectId { get; set; }
-    public Project Project { get; set; }
-    public string AppUserId { get; set; }
-    public AppUser AppUser { get; set; }
 }

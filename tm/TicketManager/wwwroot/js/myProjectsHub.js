@@ -17,7 +17,7 @@
     }
   });
 
-  function RenderProjCard(proj, pfpArr, projCardCtx) {
+  function RenderProjCard(proj, pfpArr, projCardCtx) { //title asp
     $("#projCardDiv").prepend(
       `<article id="${proj.id}">
       <a id="${projCardCtx.titleId}" class="title" href="/Main/${projCardCtx.role}Dashboard">${proj.name}</a>
@@ -42,10 +42,12 @@
         <button tabindex="0" class="btn" id="${projCardCtx.leaveBtnId}">Leave</button>
         <a class="btn" href="${proj.gitHubLink}">GitHub</a>
         <a id="${projCardCtx.openBtnId}" class="btn" href="/Main/${projCardCtx.role}Dashboard">Open</a>
+
       </div>
     </article>`);
     for (let i = 0; i < pfpArr.length; i++) {
-      $(`#${projCardCtx.pfpDivId}`).append(`<img src="${pfpArr[i]}">`);
+      const pfpClass = (pfpArr.length === 1) ? "single-pfp" : `pfp${i}`;
+      $(`#${projCardCtx.pfpDivId}`).append(`<img class="${pfpClass}" src="${pfpArr[i]}">`);
     }
     $(`#${proj.id}`).addClass("article-full");
     if (projCardCtx.messageCount === 0) {
@@ -74,6 +76,12 @@
         $("#yesDelBtnWrap")[0].innerHTML = "";
         MyProjConnection.send("LeaveProject", proj.id);
       });
+    });
+    $(`#${projCardCtx.openBtnId}`).on("click", () => {
+      MyProjConnection.send("OpenProject", proj.id);
+    });
+    $(`#${projCardCtx.titleId}`).on("click", () => {
+      MyProjConnection.send("OpenProject", proj.id);
     });
   }
 

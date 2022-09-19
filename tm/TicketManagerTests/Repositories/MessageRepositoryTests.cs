@@ -120,9 +120,10 @@ public class MessageRepositoryTests
     public async void GetAllAsync_ReturnsIEnumerableMessageTask()
     {
         // Arrange (empty)
+        int projId = 5;
         // Act
-        var result = _messageRepository.GetAllAsync();
+        var result = _messageRepository.GetAllFromProjAsync(projId);
         // Assert
-        await Assert.IsType<Task<IEnumerable<Message>>>(result);
+        await Assert.IsType<Task<List<Message>>>(result);
     }
 }

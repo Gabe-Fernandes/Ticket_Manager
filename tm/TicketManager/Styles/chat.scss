@@ -8,23 +8,21 @@
   display: flex;
   flex-flow: row-reverse;
   justify-content: flex-start;
+  pointer-events: none;
 }
-
 .chat-column {
   @include WidthHeight(5vw, 72vh);
   @include Flex-Col(center, flex-start);
   flex-flow: column-reverse;
   margin-right: 4vw;
-
   div {
     position: relative;
-
+    pointer-events: auto;
     img {
       @include Img-Round(11vh);
       margin-bottom: 1vh;
       cursor: pointer;
     }
-
     span {
       position: absolute;
       top: -7%;
@@ -41,7 +39,6 @@
     }
   }
 }
-
 .chat-window {
   @include WidthHeight(25%, 100%);
   margin-right: 2%;
@@ -49,19 +46,17 @@
   border-top-left-radius: 1em;
   border-top-right-radius: 1em;
   background-color: $cTableMain;
-
+  pointer-events: auto;
   .top {
     height: 15%;
     box-shadow: inset 0 0 0.5em grey;
     border-top-left-radius: 1em;
     border-top-right-radius: 1em;
     @include Flex-Row(center, center);
-
     img {
       @include Img-Round(2.4em);
       cursor: pointer;
     }
-
     div {
       @include WidthHeight(1.4em, 1.4em);
       margin: 0em 0.5em;
@@ -70,73 +65,59 @@
       border-radius: 1em;
       @include Flex-Row(center, center);
     }
-
     label {
       width: 55%;
       text-indent: 10%;
       font-size: 1.4em;
       @include TextEllipsis();
     }
-
     input {
       @include WidthHeight(70%, 100%);
       text-indent: 10%;
       font-size: 1.4em;
       background-color: transparent;
       border: none;
+      color: $cWhite;
     }
   }
-
   .mid {
     height: 70%;
-
     .message-col {
       display: flex;
       flex-direction: column-reverse;
     }
-
     ol {
       @include WidthHeight(100%, 100%);
       list-style: none;
-      overflow-y: scroll;
-
+      overflow-y: auto;
       .conversation {
         margin: 0% 7% 5% 0%;
-
         .msg-in {
           @include MsgStyles($cCC2, start);
-
           div {
             @include Flex-Row(center, flex-end);
             width: 18%;
-
             img {
               @include Img-Round(2.4em);
             }
           }
         }
-
         .msg-out {
           @include MsgStyles($cCC1, end);
         }
       }
-
       .search-result {
         transition: background-color 0.45s;
-
         &:nth-child(odd) {
           background-color: $cOffMain;
         }
-
         &:hover, &:focus {
           cursor: pointer;
           background-color: $cHighlight;
         }
-
         div {
           display: flex;
           padding: 5% 7%;
-
           img {
             @include Img-Round(2.4em);
             margin-right: 10%;
@@ -145,23 +126,20 @@
       }
     }
   }
-
   .extend-mid {
     height: 85%;
   }
-
   .bot {
     height: 15%;
     box-shadow: inset 0 0 0.5em gray;
-
     input {
       @include WidthHeight(70%, 100%);
       border: 0px;
       text-indent: 10%;
       overflow-y: scroll;
       background-color: transparent;
+      color: $cWhite;
     }
-
     button {
       @include WidthHeight(30%, 70%);
       border: 0px;

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TicketManager.Data;
 
@@ -11,9 +12,10 @@ using TicketManager.Data;
 namespace TicketManager.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220917164508_appUserPropAdded")]
+    partial class appUserPropAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -269,6 +271,8 @@ namespace TicketManager.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("TicketId");
+
                     b.ToTable("Comments");
                 });
 
@@ -289,19 +293,16 @@ namespace TicketManager.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RecipientId")
+                    b.Property<string>("From")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RecipientName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SenderId")
+                    b.Property<string>("ReceiverName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SenderName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("To")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -381,6 +382,13 @@ namespace TicketManager.Migrations
                     b.Property<string>("AppUserId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("AssignedFrom")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AssignedTo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(400)
@@ -389,6 +397,11 @@ namespace TicketManager.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
                     b.Property<string>("PriorityLevel")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -396,31 +409,12 @@ namespace TicketManager.Migrations
                     b.Property<int>("ProjectId")
                         .HasColumnType("int");
 
-                    b.Property<string>("RecipientId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RecipientName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SenderId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SenderName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
@@ -482,24 +476,41 @@ namespace TicketManager.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("TicketManager.Models.Comment", b =>
+                {
+                    b.HasOne("TicketManager.Models.Ticket", "Ticket")
+                        .WithMany("Comments")
+                        .HasForeignKey("TicketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Ticket");
+                });
+
             modelBuilder.Entity("TicketManager.Models.Message", b =>
                 {
-                    b.HasOne("TicketManager.Models.AppUser", null)
+                    b.HasOne("TicketManager.Models.AppUser", "AppUser")
                         .WithMany("Messages")
                         .HasForeignKey("AppUserId");
+
+                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("TicketManager.Models.Ticket", b =>
                 {
-                    b.HasOne("TicketManager.Models.AppUser", null)
+                    b.HasOne("TicketManager.Models.AppUser", "AppUser")
                         .WithMany("Tickets")
                         .HasForeignKey("AppUserId");
 
-                    b.HasOne("TicketManager.Models.Project", null)
+                    b.HasOne("TicketManager.Models.Project", "Project")
                         .WithMany("Tickets")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("TicketManager.Models.AppUser", b =>
@@ -512,6 +523,11 @@ namespace TicketManager.Migrations
             modelBuilder.Entity("TicketManager.Models.Project", b =>
                 {
                     b.Navigation("Tickets");
+                });
+
+            modelBuilder.Entity("TicketManager.Models.Ticket", b =>
+                {
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }
