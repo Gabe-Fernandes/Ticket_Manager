@@ -9,16 +9,13 @@ public class Message
 
     public string SenderName { get; set; }
 
-    public string ReceiverName { get; set; }
+    public string RecipientName { get; set; }
 
     public string Body { get; set; }
 
     public DateTime Date { get; set; }
 
-    public string From { get; set; }
-
-    public string To { get; set; }
-
-    public string AppUserId { get; set; }
-    public AppUser AppUser { get; set; }
+    public string SenderId { get; set; }
+    public string RecipientId { get; set; }
+    public int ProjectId { get; set; }
 }

@@ -25,12 +25,12 @@ public class MessageRepository : IMessageRepository
         return Save();
     }
 
-    public async Task<IEnumerable<Message>> GetAllAsync()
+    public async Task<List<Message>> GetAllFromProjAsync(int projId)
     {
-        return await _db.Messages.ToListAsync();
+        return await _db.Messages.Where(m => m.ProjectId == projId).ToListAsync();
     }
 
-    public async Task<Message> GetByIdAsync(int? id)
+    public async Task<Message> GetByIdAsync(int id)
     {
         return await _db.Messages.FindAsync(id);
     }

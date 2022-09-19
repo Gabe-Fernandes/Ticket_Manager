@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TicketManager.Interfaces;
 using TicketManager.Models;
+using TicketManager.Pages.Identity;
 
 namespace TicketManager.Data.Repositories;
 
@@ -13,15 +14,40 @@ public class Project_AppUsersRepository : IProject_AppUsersRepository
         _db = db;
     }
 
-    public async Task<List<string>> GetTeamMembersAsync(int projId)
+    public async Task<List<string>> GetTeamMemberIdsAsync(int projId)
     {
         var projectIdList = await _db.Project_AppUsers.Where(p => p.ProjectId == projId).ToListAsync();
-        List<string> teamMembers = new List<string>();
+        List<string> teamMemberIds = new List<string>();
         foreach (var project in projectIdList)
         {
-            teamMembers.Add(project.AppUserId);
+            teamMemberIds.Add(project.AppUserId);
+        }
+        return teamMemberIds;
+    }
+
+    public async Task<List<AppUser>> GetTeamMembersAsync(int projId)
+    {
+        List<string> teamMemberIds = await GetTeamMemberIdsAsync(projId);
+
+        List<AppUser> teamMembers = new List<AppUser>();
+        foreach (var id in teamMemberIds)
+        {
+            AppUser appUser = await _db.Users.FindAsync(id);
+            teamMembers.Add(appUser);
         }
         return teamMembers;
+    }
+
+    public async Task<List<string>> GetAdminIdsAsync(int projId)
+    {
+        var teamMembers = await GetTeamMembersAsync(projId);
+        var admins = teamMembers.Where(t => t.AssignedRole == LoginModel.Admin).ToList();
+        List<string> adminIdList = new List<string>();
+        foreach (var admin in admins)
+        {
+            adminIdList.Add(admin.Id);
+        }
+        return adminIdList;
     }
 
     public async Task<List<Project>> GetMyProjectsAsync(string userId)

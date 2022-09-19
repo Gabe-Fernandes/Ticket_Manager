@@ -32,13 +32,17 @@ public class TicketRepositoryTests
                 dbContext.Tickets.Add(new Ticket()
                 {
                     Id = i + 1,
-                    Name = "test name",
+                    Title = "test name",
                     Description = "test description",
                     PriorityLevel = "Medium",
                     Status = "Open",
                     StartDate = DateTime.Now,
                     EndDate = DateTime.Now,
-                    AssignedTo = "test name"
+                    RecipientName = "test name",
+                    SenderName = "test name",
+                    RecipientId = "k1",
+                    SenderId = "j1",
+                    ProjectId = 5
                 });
                 dbContext.SaveChangesAsync();
             }
@@ -53,13 +57,17 @@ public class TicketRepositoryTests
         var ticket = new Ticket()
         {
             Id = 1,
-            Name = "test name",
+            Title = "test name",
             Description = "test description",
             PriorityLevel = "Medium",
             Status = "Open",
             StartDate = DateTime.Now,
             EndDate = DateTime.Now,
-            AssignedTo = "test name"
+            RecipientName = "test name",
+            SenderName = "test name",
+            RecipientId = "k1",
+            SenderId = "j1",
+            ProjectId = 5
         };
         // Act
         var result = _ticketRepository.Add(ticket);
@@ -74,13 +82,17 @@ public class TicketRepositoryTests
         var ticket = new Ticket()
         {
             Id = 1,
-            Name = "test name",
+            Title = "test name",
             Description = "test description",
             PriorityLevel = "Medium",
             Status = "Open",
             StartDate = DateTime.Now,
             EndDate = DateTime.Now,
-            AssignedTo = "test name"
+            RecipientName = "test name",
+            SenderName = "test name",
+            RecipientId = "k1",
+            SenderId = "j1",
+            ProjectId = 5
         };
         _ticketRepository.Add(ticket);
         // Act
@@ -96,13 +108,17 @@ public class TicketRepositoryTests
         var ticket = new Ticket()
         {
             Id = 1,
-            Name = "test name",
+            Title = "test name",
             Description = "test description",
             PriorityLevel = "Medium",
             Status = "Open",
             StartDate = DateTime.Now,
             EndDate = DateTime.Now,
-            AssignedTo = "test name"
+            RecipientName = "test name",
+            SenderName = "test name",
+            RecipientId = "k1",
+            SenderId = "j1",
+            ProjectId = 5
         };
         _ticketRepository.Add(ticket);
         // Act

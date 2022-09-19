@@ -22,7 +22,7 @@ builder.Services.AddAuthentication(LoginModel.Cookie).AddCookie(LoginModel.Cooki
     options.Cookie.Name = LoginModel.Cookie;
     options.LoginPath = "/Identity/Login";
     options.AccessDeniedPath = "/Identity/AccessDenied";
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
 });
 
 builder.Services.AddAuthorization(options =>
@@ -30,8 +30,7 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("AdminOnly", policy => policy.RequireRole(LoginModel.Admin));
     options.AddPolicy("Management", policy =>
     {
-        policy.RequireRole(LoginModel.Admin);
-        policy.RequireRole(LoginModel.TechLead);
+        policy.RequireRole(LoginModel.Admin, LoginModel.TechLead);
     });
 });
 

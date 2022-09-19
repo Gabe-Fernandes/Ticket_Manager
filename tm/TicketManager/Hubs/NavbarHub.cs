@@ -13,6 +13,7 @@ public class NavbarHub : Hub<INavbarHub>
     private readonly IAppUserRepository _appUserRepository;
     private readonly IMessageRepository _messageRepo;
     private readonly IHttpContextAccessor _contextAccessor;
+    private readonly AppUser _user;
 
     public NavbarHub(IMessageRepository messageRepo,
         IHttpContextAccessor contextAccessor,
@@ -23,6 +24,7 @@ public class NavbarHub : Hub<INavbarHub>
         _contextAccessor = contextAccessor;
         _ticketRepository = ticketRepository;
         _appUserRepository = appUserRepository;
+        _user = GetUser();
     }
 
     public async Task GetData(string contentId, bool clearContent, int startIndex = 0)
@@ -33,9 +35,9 @@ public class NavbarHub : Hub<INavbarHub>
         {
             const int numOfChatsLoadedCap = 5;
             string myId = _contextAccessor.HttpContext.User.FindFirstValue("Id");
-            var messagesFromProject = await _messageRepo.GetAllAsync();
+            var messagesFromProject = await _messageRepo.GetAllFromProjAsync(_user.CurrentProjectId);
             var myMessages = messagesFromProject.Where(
-                m => m.To == myId || m.From == myId).ToList();
+                m => m.SenderId == myId || m.RecipientId == myId).ToList();
 
             var usersToDisplay = new List<string>();
             var myConversations = new List<Message>();
@@ -58,10 +60,10 @@ public class NavbarHub : Hub<INavbarHub>
         filterString = filterString.ToUpper();
         string myId = _contextAccessor.HttpContext.User.FindFirstValue("Id");
 
-        var messagesFromProject = await _messageRepo.GetAllAsync();
+        var messagesFromProject = await _messageRepo.GetAllFromProjAsync(_user.CurrentProjectId);
         var myMessages = messagesFromProject.Where(
-            m => (m.To == myId && m.SenderName.ToUpper().Contains(filterString)) ||
-            m.From == myId && m.ReceiverName.ToUpper().Contains(filterString)).ToList();
+            m => (m.RecipientId == myId && m.SenderName.ToUpper().Contains(filterString)) ||
+            m.SenderId == myId && m.RecipientName.ToUpper().Contains(filterString)).ToList();
 
         var usersToDisplay = new List<string>();
         var myConversations = new List<Message>();
@@ -81,7 +83,7 @@ public class NavbarHub : Hub<INavbarHub>
             bool redundantMsg = false;
             foreach (var id in usersToDisplay)
             {
-                if (myMessages[i].To == id || myMessages[i].From == id)
+                if (myMessages[i].SenderId == id || myMessages[i].RecipientId == id)
                 {
                     redundantMsg = true;
                     break;
@@ -90,15 +92,20 @@ public class NavbarHub : Hub<INavbarHub>
             if (redundantMsg) { continue; }
             myConversations.Add(myMessages[i]);
 
-            string newUserId = (myMessages[i].To == myId) ? myMessages[i].From : myMessages[i].To;
+            string newUserId = 
+                (myMessages[i].SenderId == myId) ? myMessages[i].RecipientId : myMessages[i].SenderId;
             usersToDisplay.Add(newUserId);
 
             if (usersToDisplay.Count == numOfChatsLoadedCap) { break; }
         }
     }
 
-    private async Task<bool> PopulatePanelData(List<Message> myConversations, List<string> usersToDisplay,
-        int numOfChatsLoadedCap, List<PanelData> dataToDisplay, int startIndex = 0)
+    private async Task<bool> PopulatePanelData(
+        List<Message> myConversations,
+        List<string> usersToDisplay,
+        int numOfChatsLoadedCap,
+        List<PanelData> dataToDisplay,
+        int startIndex = 0)
     {
         int endIndex = (usersToDisplay.Count < numOfChatsLoadedCap) ?
             usersToDisplay.Count : numOfChatsLoadedCap;
@@ -121,6 +128,12 @@ public class NavbarHub : Hub<INavbarHub>
             dataToDisplay.Add(data);
         }
         return false;
+    }
+
+    private AppUser GetUser()
+    {
+        string myId = _contextAccessor.HttpContext.User.FindFirstValue("Id");
+        return _appUserRepository.GetById(myId);
     }
 }
 

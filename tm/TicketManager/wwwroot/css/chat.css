@@ -7,6 +7,7 @@
   display: flex;
   flex-flow: row-reverse;
   justify-content: flex-start;
+  pointer-events: none;
 }
 
 .chat-column {
@@ -21,6 +22,7 @@
 }
 .chat-column div {
   position: relative;
+  pointer-events: auto;
 }
 .chat-column div img {
   height: 11vh;
@@ -54,6 +56,7 @@
   border-top-left-radius: 1em;
   border-top-right-radius: 1em;
   background-color: #0d1117;
+  pointer-events: auto;
 }
 .chat-window .top {
   height: 15%;

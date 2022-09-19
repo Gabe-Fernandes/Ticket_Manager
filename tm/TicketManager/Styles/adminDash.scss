@@ -71,12 +71,12 @@
   }
   .pending-section{
     @include WidthHeight(18vw, 70vh);
-    @include Flex-Col(center, top);
+    @include Flex-Col(center, flex-start);
     background-color: $cMain;
     box-shadow: 0 0 0.3em 0.2em $cCC2;
     .new-users-div{
       @include WidthHeight(84%, 72%);
-      @include Flex-Col(center, top);
+      @include Flex-Col(center, flex-start);
       overflow-y: auto;
       article{
         @include WidthHeight(100%, 18vh);
