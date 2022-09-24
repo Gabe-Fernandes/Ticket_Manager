@@ -9,7 +9,7 @@
 }
 
 body {
-  background-color: #161b22;
+  background-color: #212325;
 }
 
 input {
@@ -51,8 +51,13 @@ input {
   top: 0%;
   left: 0%;
   background-color: rgba(0, 0, 0, 0.6);
-  z-index: 3;
+  z-index: 4;
+  transition: opacity 0.4s;
+}
+
+.modal-block {
   pointer-events: none;
+  filter: blur(0.3em);
 }
 
 .err-input {

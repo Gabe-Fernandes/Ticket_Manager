@@ -29,8 +29,9 @@
     <Exec Command="sass $(ProjectDir)Styles\access_Resend_Forgot.scss $(ProjectDir)wwwroot\css\access_Resend_Forgot.css" />
     <Exec Command="sass $(ProjectDir)Styles\login.scss $(ProjectDir)wwwroot\css\login.css" />
     <Exec Command="sass $(ProjectDir)Styles\adminDash.scss $(ProjectDir)wwwroot\css\adminDash.css" />
+    <Exec Command="sass $(ProjectDir)Styles\tleadDash.scss $(ProjectDir)wwwroot\css\tleadDash.css" />
   </Target>
-    
+  
   <ItemGroup>
     <Folder Include="wwwroot\lib\microsoft\signalr\dist\browser\" />
   </ItemGroup>

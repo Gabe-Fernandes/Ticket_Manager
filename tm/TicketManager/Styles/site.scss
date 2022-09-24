@@ -10,7 +10,7 @@
   color: white;
 }
 body {
-  background-color: $cMain;
+  background-color: $cBackground;
 }
 input{
   color: black;
@@ -47,7 +47,11 @@ input{
   left: 0%;
   background-color: rgba(0,0,0, 0.6);
   z-index: $zScreenTint;
+  transition: opacity 0.4s;
+}
+.modal-block{
   pointer-events: none;
+  filter: blur(0.3em);
 }
 .err-input{
   border: 0.2em solid $cError;

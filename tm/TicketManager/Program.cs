@@ -67,5 +67,6 @@ app.MapHub<MyProjectsHub>("/myProjectsHub");
 app.MapHub<ChatHub>("/chatHub");
 app.MapHub<NavbarHub>("/navbarHub");
 app.MapHub<AdminDashHub>("/adminDashHub");
+app.MapHub<AdminDashHub>("/tleadDashHub");
 
 app.Run();

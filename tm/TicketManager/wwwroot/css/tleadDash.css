@@ -1,0 +1,357 @@
+.tlead-dash-main {
+  transition: filter 0.4s;
+}
+.tlead-dash-main .sp-nav {
+  width: 100vw;
+  height: 10vh;
+}
+.tlead-dash-main .content {
+  width: 100vw;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  max-width: 100vw;
+}
+.tlead-dash-main .content .btn-panel {
+  width: 85vw;
+  height: 10vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 5vh 0vw;
+}
+.tlead-dash-main .content .btn-panel button {
+  background: none;
+  background-color: #17993c;
+  box-shadow: inset 0 0 0.1em 0.1em #161b22;
+  margin-right: 5vw;
+}
+.tlead-dash-main .content .btn-panel .search-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 20vw;
+  height: 6vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.tlead-dash-main .content .btn-panel .search-div input {
+  width: 100%;
+  height: 100%;
+  font-size: 1em;
+  border-radius: 0.417em;
+  text-indent: 16%;
+}
+.tlead-dash-main .content .btn-panel .search-div img {
+  height: 1.333em;
+  width: 1.333em;
+  min-height: 1.333em;
+  min-width: 1.333em;
+  border-radius: 50%;
+  position: absolute;
+  left: 2.5%;
+}
+.tlead-dash-main .content .tbl-wrap {
+  width: 90vw;
+  height: 60vh;
+  display: block;
+  border-radius: 0.5em;
+  background-color: #22272d;
+  overflow: hidden;
+  scrollbar-width: none;
+  overflow-y: auto;
+}
+.tlead-dash-main .content .tbl-wrap::-webkit-scrollbar {
+  display: none;
+}
+.tlead-dash-main .content .tbl-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.tlead-dash-main .content .tbl-wrap table th {
+  padding: 1em;
+  background-color: #17993c;
+  position: sticky;
+  top: 0px;
+  z-index: 1;
+}
+.tlead-dash-main .content .tbl-wrap table tr:nth-child(odd) {
+  background-color: #161b22;
+}
+.tlead-dash-main .content .tbl-wrap table tr {
+  transition: background-color 0.3s;
+}
+.tlead-dash-main .content .tbl-wrap table tr:hover {
+  background-color: #243c37;
+}
+.tlead-dash-main .content .tbl-wrap table td {
+  padding: 1em;
+  max-width: 5vw;
+  text-align: center;
+}
+.tlead-dash-main .content .tbl-wrap table td button {
+  font-size: 0.8em;
+}
+.tlead-dash-main .content .tbl-wrap td:not(.btn-td) {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.tlead-dash-main .content .tbl-wrap .resolved {
+  height: 2em;
+  width: 2em;
+  min-height: 2em;
+  min-width: 2em;
+  border-radius: 50%;
+  background-color: #17993c;
+  position: relative;
+  margin: 0 auto;
+}
+.tlead-dash-main .content .tbl-wrap .resolved div {
+  background-color: white;
+  border-radius: 0.4em;
+  position: absolute;
+  width: 0.166em;
+  height: 0.666em;
+  top: 72%;
+  left: 19%;
+  transform: translate(-20%, -65%) rotate(-45deg);
+}
+.tlead-dash-main .content .tbl-wrap .resolved div + div {
+  width: 0.166em;
+  height: 1.5em;
+  top: 15%;
+  left: 55%;
+  transform: translate(-55%, 0%) rotate(45deg);
+}
+.tlead-dash-main .content .tbl-wrap .open {
+  height: 2em;
+  width: 2em;
+  min-height: 2em;
+  min-width: 2em;
+  border-radius: 50%;
+  background-color: #781d1d;
+  position: relative;
+  box-shadow: inset 0 0 0.1em 0.1em #22272d;
+  margin: 0 auto;
+}
+.tlead-dash-main .content .tbl-wrap .open div {
+  width: 0.166em;
+  height: 1.4286em;
+  background-color: white;
+  border-radius: 0.4em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+.tlead-dash-main .content .tbl-wrap .open div + div {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.tlead-dash-main .content .tbl-wrap .review {
+  height: 2em;
+  width: 2em;
+  min-height: 2em;
+  min-width: 2em;
+  border-radius: 50%;
+  background-color: #FDDA16;
+  position: relative;
+  margin: 0 auto;
+}
+.tlead-dash-main .content .tbl-wrap .review div {
+  width: 1.4286em;
+  height: 0.2em;
+  background-color: white;
+  border: 0.07em solid #161b22;
+  border-radius: 0.4em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.tlead-dash-main .content .tbl-wrap .review div + div {
+  opacity: 0%;
+}
+
+.new-ticket-modal {
+  width: 50vw;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  background-color: #22272d;
+  border-radius: 1em;
+  box-shadow: 0 0 0.2em 0.1em #34b0e2;
+}
+.new-ticket-modal h2 {
+  width: 100%;
+  height: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.4em;
+}
+.new-ticket-modal .content {
+  width: 100%;
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.new-ticket-modal .content .left {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.new-ticket-modal .content .left .top {
+  width: 100%;
+  height: 85%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.new-ticket-modal .content .left .top input {
+  width: 70%;
+  height: 12%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 1em;
+  border-radius: 0.5em;
+  margin-bottom: 3%;
+  text-indent: 5%;
+}
+.new-ticket-modal .content .left .top textarea {
+  width: 90%;
+  height: 85%;
+  font-size: 0.8em;
+  resize: none;
+  color: black;
+  border-radius: 0.5em;
+  text-indent: 3%;
+  overflow-y: auto;
+}
+.new-ticket-modal .content .left .bot {
+  width: 100%;
+  height: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.new-ticket-modal .content .left .bot label {
+  text-align: center;
+  margin: 0vh 1vw;
+}
+.new-ticket-modal .content .left .bot label select {
+  color: black;
+}
+.new-ticket-modal .content .left .bot label select option {
+  color: black;
+}
+.new-ticket-modal .content .right {
+  width: 100%;
+  height: 100%;
+}
+.new-ticket-modal .content .right .top {
+  width: 100%;
+  height: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.new-ticket-modal .content .right .bot {
+  width: 100%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.new-ticket-modal .content .right .bot .team-members {
+  width: 80%;
+  height: 100%;
+  background-color: #161b22;
+  border-radius: 0.3em;
+  overflow-y: auto;
+}
+.new-ticket-modal .content .right .bot .team-members .user:nth-child(odd) {
+  background-color: #0d1117;
+}
+.new-ticket-modal .content .right .bot .team-members .user {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 20%;
+  transition: background-color 0.25s;
+}
+.new-ticket-modal .content .right .bot .team-members .user:hover {
+  background-color: rgba(43, 230, 255, 0.5803921569);
+}
+.new-ticket-modal .content .right .bot .team-members .user input {
+  width: 1.4em;
+  height: 1.4em;
+  margin: 0vh 1vw;
+  border-radius: 0.3em;
+}
+.new-ticket-modal .content .right .bot .team-members .user img {
+  height: 2.4em;
+  width: 2.4em;
+  min-height: 2.4em;
+  min-width: 2.4em;
+  border-radius: 50%;
+  margin-right: 1vw;
+}
+.new-ticket-modal .content .right .bot .team-members .user span {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 1.5em;
+}
+.new-ticket-modal .btn-wrap {
+  width: 100%;
+  height: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.new-ticket-modal .close-btn {
+  width: 1.2em;
+  height: 1.2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  margin: 0em 0.5em;
+  background-color: white;
+  cursor: pointer;
+  border-radius: 1em;
+}
+.new-ticket-modal .close-btn img {
+  height: 2.4em;
+  width: 2.4em;
+  min-height: 2.4em;
+  min-width: 2.4em;
+  border-radius: 50%;
+}
+
+/*# sourceMappingURL=tleadDash.css.map */

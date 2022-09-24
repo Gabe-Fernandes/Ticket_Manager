@@ -1,18 +1,22 @@
 ﻿// z-indecies
 $zBackground: -1;
 $zInitial: auto;
-$zChat: 1;
-$zNavbar: 2;
-$zScreenTint: 3;
-$zModal: 4;
+$zZup: 1;
+$zChat: 2;
+$zNavbar: 3;
+$zScreenTint: 4;
+$zModal: 5;
 // color pallete
-$cHighlight: #00DFBF;
+$cBackground: #212325;
+$cHighlight2: #243c37;
+$cHighlight: #2be6ff94;
 $cMain: #161b22;
 $cOffMain: #22272d;
 $cTableMain: #0d1117;
 $cCC1: #17993c;
 $cCC2: #34b0e2;
 $cError: #781d1d;
+$cNeutral: #FDDA16;
 $cWhite: white;
 
 @mixin WidthHeight($w, $h) {
@@ -134,6 +138,22 @@ $cWhite: white;
     transform: translate(-55%, 0%) rotate(45deg);
   }
 }
+@mixin Neutral($size) {
+  @include Img-Round($size);
+  background-color: $cNeutral;
+  position: relative;
+  div{
+    @include WidthHeight(0.7143 * $size, 0.1 * $size);
+    background-color: $cWhite;
+    border: 0.07em solid $cMain;
+    border-radius: 0.4em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  div+div{ opacity: 0%; }
+}
 @mixin Invalid($size) {
   @include Img-Round($size);
   background-color: $cError;
@@ -149,4 +169,88 @@ $cWhite: white;
     transform: translate(-50%, -50%) rotate(-45deg);
   }
   div+div{ transform: translate(-50%, -50%) rotate(45deg); }
+}
+@mixin SearchDiv($fontSize, $w, $h) {
+  @include WidthHeight($w, $h);
+  @include Flex-Col(center, center);
+  position: relative;
+  input{
+    @include WidthHeight(100%, 100%);
+    font-size: $fontSize;
+    border-radius: 0.417 * $fontSize;
+    text-indent: 16%;
+  }
+  img{
+    @include Img-Round(1.333 * $fontSize);
+    position: absolute;
+    left: 2.5%;
+  }
+}
+@mixin Modal($w, $h, $boxShadowColor) {
+  @include WidthHeight($w, $h);
+  @include Flex-Col(center, flex-start);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: $zModal;
+  background-color: $cOffMain;
+  border-radius: 1em;
+  box-shadow: 0 0 0.2em 0.1em $boxShadowColor;
+}
+@mixin CloseBtn($size) {
+  @include WidthHeight(0.5 * $size, 0.5 * $size);
+  @include Flex-Row(center, center);
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  margin: 0em 0.5em;
+  background-color: white;
+  cursor: pointer;
+  border-radius: 1em;
+  img{
+    @include Img-Round($size);
+  }
+}
+@mixin TableWrap($w, $h, $c1, $c2, $cHead, $cHover, $hideScroll: false) {
+  @include WidthHeight($w, $h);
+  display: block;
+  border-radius: 0.5em;
+  background-color: $c1;
+  @if $hideScroll{
+    overflow: hidden;
+    &::-webkit-scrollbar{
+      display: none;
+    }
+    scrollbar-width: none;
+  }
+  overflow-y: auto;
+  table{
+    width: 100%;
+    border-collapse: collapse;
+    th{
+      padding: 1em;
+      background-color: $cHead;
+      position: sticky;
+      top: 0px;
+      z-index: $zZup;
+    }
+    tr:nth-child(odd){
+      background-color: $c2;
+    }
+    tr{
+      transition: background-color 0.3s;
+      &:hover{
+        background-color: $cHover;
+      }
+    }
+    td{
+      padding: 1em;
+      max-width: 5vw;
+      text-align: center;
+      button{
+        font-size: 0.8em;
+      }
+    }
+  }
 }
