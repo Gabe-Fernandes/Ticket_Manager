@@ -22,18 +22,20 @@ public class Ticket
     public string PriorityLevel { get; set; }
 
     [Required]
-    public DateTime StartDate { get; set; }
-
-    [Required]
-    public DateTime EndDate { get; set; }
-
-    [Required]
-    public string SenderName { get; set; }
+    public DateTime TempDate { get; set; }
 
     [Required]
     public string RecipientName { get; set; }
 
-    public string SenderId { get; set; }
     public string RecipientId { get; set; }
+
+    public string SenderName { get; set; }
+
+    public string SenderId { get; set; }
+
+    public string StartDate { get; set; }
+
+    public string EndDate { get; set; }
+
     public int ProjectId { get; set; }
 }

@@ -1,4 +1,82 @@
 ﻿@page
 @model TicketManager.Pages.Main.TechLeadDashboardModel
-@{
-}
+<script async src="~/js/tleadDashHub.js"></script>
+
+<main id="tleadDashMain" class="tlead-dash-main">
+	<div class="sp-nav"></div>
+	<div class="content">
+		<div class="btn-panel">
+			<button id="newTicketBtn" class="btn" tabindex="0">New Ticket</button>
+			<div class="search-div">
+				<input id="ticketSearchTxt" type="text" placeholder="search...">
+				<img src="/icons/search.png" alt="">
+			</div>
+		</div>
+		<div class="tbl-wrap">
+			<table class="ticket-tbl">
+				<thead>
+					<tr>
+						<th>Title</th>
+						<th>Description</th>
+						<th>Status</th>
+						<th>Priority</th>
+						<th>Start Date</th>
+						<th>End Date</th>
+						<th>Sender</th>
+						<th>Recipient</th>
+						<th>Review</th>
+					</tr>
+				</thead>
+				<tbody id="ticketTbody">
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+</main>
+<section id="newTicketModal" class="screen-tint hide">
+	<form class="new-ticket-modal">
+		<h2>New Ticket</h2>
+		<div class="content">
+			<div class="left">
+				<div class="top">
+					<input type="text" id="tktTitle" placeholder="title" value="test">
+					<textarea id="tktDescription" placeholder="description">testing</textarea>
+				</div>
+				<div class="bot">
+					<label>
+						Status<br>
+						<select name="" id="tktStatus">
+							<option value="Open" selected>Open</option>
+							<option value="Review">Review</option>
+							<option value="Resolved">Resolved</option>
+						</select>
+					</label>
+					<label>
+						Priority<br>
+						<select name="" id="tktPriority">
+							<option value="Low" selected>Low</option>
+							<option value="Medium">Medium</option>
+							<option value="High">High</option>
+						</select>
+					</label>
+				</div>
+			</div>
+			<div class="right">
+				<div class="top">
+					<span>Due Date</span>
+					<input id="dueDate" type="date" />
+				</div>
+				<div class="bot">
+					<div class="team-members" id="teamMemberList">
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="btn-wrap">
+			<button type="button" id="assignBtn" class="btn" tabindex="0">Assign</button>
+		</div>
+		<div class="close-btn"><img src="/icons/cancel.png" tabindex="0" id="closeBtn" /></div>
+	</form>
+</section>

@@ -5,7 +5,7 @@
   justify-content: center;
   align-items: center;
   position: fixed;
-  z-index: 2;
+  z-index: 3;
   background-color: #34b0e2;
 }
 .top-nav .links {
@@ -24,7 +24,7 @@
   transition: transform 0.39s, box-shadow 0.39s, background-color 0.39s;
 }
 .top-nav .links div:hover {
-  background-color: #00DFBF;
+  background-color: rgba(43, 230, 255, 0.5803921569);
   box-shadow: 4px 3px 22px 2px rgba(0, 0, 0, 0.5);
   transform: scale(1.02);
   cursor: pointer;
@@ -82,7 +82,7 @@
   position: fixed;
   top: 12vh;
   right: 1vw;
-  z-index: 2;
+  z-index: 3;
   background-color: #0d1117;
   border-radius: 1em;
   box-shadow: inset 0 0 0.5em grey;
@@ -182,18 +182,23 @@
 }
 .panel .notification-panel .search-container input, .panel .chat-panel .search-container input {
   width: 100%;
-  height: 50%;
-  border-radius: 1em;
+  height: 100%;
+  font-size: 1em;
+  border-radius: 0.417em;
   text-indent: 16%;
 }
 .panel .notification-panel .search-container img, .panel .chat-panel .search-container img {
-  height: 1.4em;
-  width: 1.4em;
-  min-height: 1.4em;
-  min-width: 1.4em;
+  height: 1.333em;
+  width: 1.333em;
+  min-height: 1.333em;
+  min-width: 1.333em;
   border-radius: 50%;
   position: absolute;
-  left: 3%;
+  left: 2.5%;
+}
+.panel .notification-panel .search-container input, .panel .chat-panel .search-container input {
+  height: 50%;
+  border-radius: 1em;
 }
 .panel .notification-panel .content, .panel .chat-panel .content {
   width: 80%;
@@ -213,7 +218,7 @@
 }
 .panel .notification-panel .content .row:hover, .panel .notification-panel .content .row:focus, .panel .chat-panel .content .row:hover, .panel .chat-panel .content .row:focus {
   cursor: pointer;
-  background-color: #00DFBF;
+  background-color: rgba(43, 230, 255, 0.5803921569);
 }
 .panel .notification-panel .content .row img, .panel .chat-panel .content .row img {
   height: 2.5em;

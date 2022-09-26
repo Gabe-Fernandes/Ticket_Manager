@@ -38,22 +38,10 @@ h1{
   transition: opacity 0.3s;
 }
 .searchbox{
-  @include WidthHeight(20vw, 6.5vh);
-  @include Flex-Col(center, center);
+  @include SearchDiv(1.2em, 20vw, 6.5vh);
   position: absolute;
   top: 9vh;
   left: 4vw;
-  input{
-    @include WidthHeight(100%, 100%);
-    font-size: 1.2em;
-    border-radius: 0.5em;
-    text-indent: 16%;
-  }
-  img{
-    @include Img-Round(1.6em);
-    position: absolute;
-    left: 2.5%;
-  }
 }
 .create-proj-btn{
   position: absolute;
@@ -203,18 +191,7 @@ article{
     }
   }
   .btn-background{
-    @include WidthHeight(1.4em, 1.4em);
-    @include Flex-Row(center, center);
-    position: absolute;
-    top: 5%;
-    right: 5%;
-    margin: 0em 0.5em;
-    background-color: white;
-    cursor: pointer;
-    border-radius: 1em;
-  }
-  img{
-    @include Img-Round(2.4em);
+    @include CloseBtn(2.4em);
   }
   button{
     margin-top: 5vh;

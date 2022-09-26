@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.SignalR;
 using TicketManager.Interfaces;
 using TicketManager.Models;
+using TicketManager.Pages.Identity;
 
 namespace TicketManager.Hubs;
 
@@ -48,7 +49,8 @@ public class AdminDashHub : Hub<IAdminDashHub>
         _paRepo.Update(PA);
 
         MemberCtx memberCtx = new MemberCtx(pendingMember, PA);
-        List<string> adminIdList = await _paRepo.GetAdminIdsAsync(_user.CurrentProjectId);
+        List<string> adminIdList =
+            await _paRepo.GetIdsOfRoleAsync(_user.CurrentProjectId, LoginModel.Admin);
         await Clients.Users(adminIdList).AddTeamMember(memberCtx);
     }
 

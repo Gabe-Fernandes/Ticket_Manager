@@ -1,0 +1,145 @@
+﻿@import "_library.scss";
+
+.tlead-dash-main{
+  transition: filter 0.4s;
+  .sp-nav{
+    @include WidthHeight(100vw, 10vh);
+  }
+  .content{
+    @include WidthHeight(100vw, 90vh);
+    @include Flex-Col(center, flex-start);
+    max-width: 100vw;
+    .btn-panel{
+      @include WidthHeight(85vw, 10vh);
+      @include Flex-Row(flex-start, center);
+      margin: 5vh 0vw;
+      button{
+        background: none;
+        background-color: $cCC1;
+        box-shadow: inset 0 0 0.1em 0.1em $cMain;
+        margin-right: 5vw;
+      }
+      .search-div{
+        @include Flex-Col(center, center);
+        @include SearchDiv(1em, 20vw, 6vh);
+      }
+    }
+    .tbl-wrap{
+      @include TableWrap(90vw, 60vh, $cOffMain, $cMain, $cCC1, $cHighlight2, $hideScroll: true);
+      td:not(.btn-td){
+        @include TextEllipsis();
+      }
+      .Resolved{
+        @include Confirmation(2em);
+        margin: 0 auto;
+      }
+      .Open{
+        @include Invalid(2em);
+        margin: 0 auto;
+      }
+      .Review{
+        @include Neutral(2em);
+        margin: 0 auto;
+      }
+    }
+  }
+}
+.new-ticket-modal{
+  @include Modal(50vw, 80vh, $cCC2);
+  h2{
+    @include WidthHeight(100%, 15%);
+    @include Flex-Row(center, center);
+    font-size: 1.4em;
+  }
+  .content{
+    @include WidthHeight(100%, 70%);
+    @include Flex-Row(center, center);
+    .left{
+      @include WidthHeight(100%, 100%);
+      @include Flex-Col(center, flex-start);
+      .top{
+        @include WidthHeight(100%, 85%);
+        @include Flex-Col(center, flex-start);
+        input{
+          @include WidthHeight(70%, 12%);
+          @include TextEllipsis();
+          font-size: 1em;
+          border-radius: 0.5em;
+          margin-bottom: 3%;
+          text-indent: 5%;
+        }
+        textarea{
+         @include WidthHeight(90%, 85%);
+          font-size: 0.8em;
+          resize: none;
+          color: black;
+          border-radius: 0.5em;
+          text-indent: 3%;
+          overflow-y: auto;
+        }
+      }
+      .bot{
+        @include WidthHeight(100%, 15%);
+        @include Flex-Row(center, center);
+        label{
+          text-align: center;
+          margin: 0vh 1vw;
+          select{
+            color: black;
+            option{
+              color: black;
+            }
+          }
+        }
+      }
+    }
+    .right{
+      @include WidthHeight(100%, 100%);
+      .top{
+        @include WidthHeight(100%, 20%);
+        @include Flex-Col(center, center);
+      }
+      .bot{
+        @include WidthHeight(100%, 80%);
+        @include Flex-Col(center, center);
+        .team-members{
+          @include WidthHeight(80%, 100%);
+          background-color: $cMain;
+          border-radius: 0.3em;
+          overflow-y: auto;
+          .user:nth-child(odd){
+            background-color: $cTableMain;
+          }
+          .user{
+            @include Flex-Row(flex-start, center);
+            @include WidthHeight(100%, 20%);
+            transition: background-color 0.25s;
+            &:hover{
+              background-color: $cHighlight;
+            }
+            input{
+              @include WidthHeight(1.4em, 1.4em);
+              margin: 0vh 1vw;
+              border-radius: 0.3em;
+            }
+            img{
+              @include Img-Round(2.4em);
+              margin-right: 1vw;
+            }
+            span{
+              @include TextEllipsis();
+              font-size: 1.1em;
+            }
+          }
+        }
+      }
+    }
+  }
+  .btn-wrap{
+    @include WidthHeight(100%, 15%);
+    @include Flex-Row(center, center);
+  }
+  .close-btn{
+    @include CloseBtn(2.4em);
+  }
+}
