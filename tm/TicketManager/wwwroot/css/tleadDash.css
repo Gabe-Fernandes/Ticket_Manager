@@ -103,7 +103,7 @@
   overflow: hidden;
   white-space: nowrap;
 }
-.tlead-dash-main .content .tbl-wrap .resolved {
+.tlead-dash-main .content .tbl-wrap .Resolved {
   height: 2em;
   width: 2em;
   min-height: 2em;
@@ -113,7 +113,7 @@
   position: relative;
   margin: 0 auto;
 }
-.tlead-dash-main .content .tbl-wrap .resolved div {
+.tlead-dash-main .content .tbl-wrap .Resolved div {
   background-color: white;
   border-radius: 0.4em;
   position: absolute;
@@ -123,14 +123,14 @@
   left: 19%;
   transform: translate(-20%, -65%) rotate(-45deg);
 }
-.tlead-dash-main .content .tbl-wrap .resolved div + div {
+.tlead-dash-main .content .tbl-wrap .Resolved div + div {
   width: 0.166em;
   height: 1.5em;
   top: 15%;
   left: 55%;
   transform: translate(-55%, 0%) rotate(45deg);
 }
-.tlead-dash-main .content .tbl-wrap .open {
+.tlead-dash-main .content .tbl-wrap .Open {
   height: 2em;
   width: 2em;
   min-height: 2em;
@@ -141,7 +141,7 @@
   box-shadow: inset 0 0 0.1em 0.1em #22272d;
   margin: 0 auto;
 }
-.tlead-dash-main .content .tbl-wrap .open div {
+.tlead-dash-main .content .tbl-wrap .Open div {
   width: 0.166em;
   height: 1.4286em;
   background-color: white;
@@ -151,10 +151,10 @@
   left: 50%;
   transform: translate(-50%, -50%) rotate(-45deg);
 }
-.tlead-dash-main .content .tbl-wrap .open div + div {
+.tlead-dash-main .content .tbl-wrap .Open div + div {
   transform: translate(-50%, -50%) rotate(45deg);
 }
-.tlead-dash-main .content .tbl-wrap .review {
+.tlead-dash-main .content .tbl-wrap .Review {
   height: 2em;
   width: 2em;
   min-height: 2em;
@@ -164,7 +164,7 @@
   position: relative;
   margin: 0 auto;
 }
-.tlead-dash-main .content .tbl-wrap .review div {
+.tlead-dash-main .content .tbl-wrap .Review div {
   width: 1.4286em;
   height: 0.2em;
   background-color: white;
@@ -175,7 +175,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.tlead-dash-main .content .tbl-wrap .review div + div {
+.tlead-dash-main .content .tbl-wrap .Review div + div {
   opacity: 0%;
 }
 

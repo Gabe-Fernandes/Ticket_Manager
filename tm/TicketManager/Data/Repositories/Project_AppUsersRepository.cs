@@ -38,16 +38,16 @@ public class Project_AppUsersRepository : IProject_AppUsersRepository
         return teamMembers;
     }
 
-    public async Task<List<string>> GetAdminIdsAsync(int projId)
+    public async Task<List<string>> GetIdsOfRoleAsync(int projId, string role)
     {
         var teamMembers = await GetTeamMembersAsync(projId);
-        var admins = teamMembers.Where(t => t.AssignedRole == LoginModel.Admin).ToList();
-        List<string> adminIdList = new List<string>();
-        foreach (var admin in admins)
+        var users = teamMembers.Where(t => t.AssignedRole == role).ToList();
+        List<string> idList = new List<string>();
+        foreach (var user in users)
         {
-            adminIdList.Add(admin.Id);
+            idList.Add(user.Id);
         }
-        return adminIdList;
+        return idList;
     }
 
     public async Task<List<Project>> GetMyProjectsAsync(string userId)
@@ -61,6 +61,11 @@ public class Project_AppUsersRepository : IProject_AppUsersRepository
             myProjects.Add(proj);
         }
         return myProjects;
+    }
+
+    public async Task<List<Ticket>> GetTicketsFromProjAsync(int projId)
+    {
+        return await _db.Tickets.Where(t => t.ProjectId == projId).ToListAsync();
     }
 
     public async Task<bool> IsApproved(int projId, string userId)

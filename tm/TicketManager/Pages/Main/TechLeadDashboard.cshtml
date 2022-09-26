@@ -27,73 +27,8 @@
 						<th>Review</th>
 					</tr>
 				</thead>
-				<tbody>
-					<tr>
-						<td>title ex</td>
-						<td>please fix xyz Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum incidunt illo exercitationem odio molestiae illum, magni vel asperiores laborum numquam voluptas dolorem pariatur error. Neque delectus quis ea dolor pariatur.</td>
-						<td><div class="open"><div></div><div></div></div></td>
-						<td>medium</td>
-						<td>9/20/22</td>
-						<td>9/24/22</td>
-						<td>gabriel</td>
-						<td>alexander</td>
-						<td class="btn-td"><button class="btn" tabindex="0">details</button></td>
-					</tr>
-					<tr>
-						<td>title ex</td>
-						<td>please fix xyz</td>
-						<td><div class="review"><div></div><div></div></div></td>
-						<td>high</td>
-						<td>9/20/22</td>
-						<td>9/24/22</td>
-						<td>gabriel</td>
-						<td>alexander</td>
-						<td class="btn-td"><button class="btn" tabindex="0">details</button></td>
-					</tr>
-					<tr>
-						<td>title ex</td>
-						<td>please fix xyz</td>
-						<td><div class="resolved"><div></div><div></div></div></td>
-						<td>low</td>
-						<td>9/20/22</td>
-						<td>9/24/22</td>
-						<td>gabriel</td>
-						<td>alexander</td>
-						<td class="btn-td"><button class="btn" tabindex="0">details</button></td>
-					</tr>
-					<tr>
-						<td>title ex</td>
-						<td>please fix xyz</td>
-						<td><div class="resolved"><div></div><div></div></div></td>
-						<td>low</td>
-						<td>9/20/22</td>
-						<td>9/24/22</td>
-						<td>gabriel</td>
-						<td>alexander</td>
-						<td class="btn-td"><button class="btn" tabindex="0">details</button></td>
-					</tr>
-					<tr>
-						<td>title ex</td>
-						<td>please fix xyz</td>
-						<td><div class="resolved"><div></div><div></div></div></td>
-						<td>low</td>
-						<td>9/20/22</td>
-						<td>9/24/22</td>
-						<td>gabriel</td>
-						<td>alexander</td>
-						<td class="btn-td"><button class="btn" tabindex="0">details</button></td>
-					</tr>
-					<tr>
-						<td>title ex</td>
-						<td>please fix xyz</td>
-						<td><div class="resolved"><div></div><div></div></div></td>
-						<td>low</td>
-						<td>9/20/22</td>
-						<td>9/24/22</td>
-						<td>gabriel</td>
-						<td>alexander</td>
-						<td class="btn-td"><button class="btn" tabindex="0">details</button></td>
-					</tr>
+				<tbody id="ticketTbody">
+
 				</tbody>
 			</table>
 		</div>
@@ -105,24 +40,24 @@
 		<div class="content">
 			<div class="left">
 				<div class="top">
-					<input type="text" placeholder="title">
-					<textarea placeholder="description"></textarea>
+					<input type="text" id="tktTitle" placeholder="title" value="test">
+					<textarea id="tktDescription" placeholder="description">testing</textarea>
 				</div>
 				<div class="bot">
 					<label>
 						Status<br>
-						<select name="" id="">
-							<option selected>Open</option>
-							<option>Review</option>
-							<option>Resolved</option>
+						<select name="" id="tktStatus">
+							<option value="Open" selected>Open</option>
+							<option value="Review">Review</option>
+							<option value="Resolved">Resolved</option>
 						</select>
 					</label>
 					<label>
 						Priority<br>
-						<select name="" id="">
-							<option selected>Low</option>
-							<option>Medium</option>
-							<option>High</option>
+						<select name="" id="tktPriority">
+							<option value="Low" selected>Low</option>
+							<option value="Medium">Medium</option>
+							<option value="High">High</option>
 						</select>
 					</label>
 				</div>
@@ -133,37 +68,8 @@
 					<input id="dueDate" type="date" />
 				</div>
 				<div class="bot">
-					<div class="team-members">
-						<div class="user">
-							<input type="radio" name="user">
-							<img src="/pfps/0.jpg">
-							<span>first last</span>
-						</div>
-						<div class="user">
-							<input type="radio" name="user">
-							<img src="/pfps/0.jpg">
-							<span>first last</span>
-						</div>
-						<div class="user">
-							<input type="radio" name="user">
-							<img src="/pfps/0.jpg">
-							<span>first last</span>
-						</div>
-						<div class="user">
-							<input type="radio" name="user">
-							<img src="/pfps/0.jpg">
-							<span>first last</span>
-						</div>
-						<div class="user">
-							<input type="radio" name="user">
-							<img src="/pfps/0.jpg">
-							<span>first last</span>
-						</div>
-						<div class="user">
-							<input type="radio" name="user">
-							<img src="/pfps/0.jpg">
-							<span>first last</span>
-						</div>
+					<div class="team-members" id="teamMemberList">
+
 					</div>
 				</div>
 			</div>
