@@ -43,6 +43,8 @@ public class TicketRepositoryTests
                     SenderName = "test name",
                     RecipientId = "k1",
                     SenderId = "j1",
+                    RecipientPfp = "pfpr",
+                    SenderPfp = "pfps",
                     ProjectId = 5
                 });
                 dbContext.SaveChangesAsync();
@@ -69,6 +71,8 @@ public class TicketRepositoryTests
             SenderName = "test name",
             RecipientId = "k1",
             SenderId = "j1",
+            RecipientPfp = "pfpr",
+            SenderPfp = "pfps",
             ProjectId = 5
         };
         // Act
@@ -95,6 +99,8 @@ public class TicketRepositoryTests
             SenderName = "test name",
             RecipientId = "k1",
             SenderId = "j1",
+            RecipientPfp = "pfpr",
+            SenderPfp = "pfps",
             ProjectId = 5
         };
         _ticketRepository.Add(ticket);
@@ -122,6 +128,8 @@ public class TicketRepositoryTests
             SenderName = "test name",
             RecipientId = "k1",
             SenderId = "j1",
+            RecipientPfp = "pfpr",
+            SenderPfp = "pfps",
             ProjectId = 5
         };
         _ticketRepository.Add(ticket);

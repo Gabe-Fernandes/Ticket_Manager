@@ -20,6 +20,7 @@ input {
   opacity: 0% !important;
   pointer-events: none !important;
   position: absolute !important;
+  display: none;
 }
 
 .disable {
@@ -47,15 +48,16 @@ input {
 .screen-tint {
   width: 100vw;
   height: 100vh;
+  display: initial;
   position: fixed;
   top: 0%;
   left: 0%;
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 4;
-  transition: opacity 0.4s;
+  transition: opacity 0.3s, background-color 0.3s;
 }
 
-.modal-block {
+.unclickable {
   pointer-events: none;
   filter: blur(0.3em);
 }
@@ -66,7 +68,7 @@ input {
 }
 
 ::-webkit-scrollbar {
-  width: 1em;
+  width: 0.7em;
 }
 
 ::-webkit-scrollbar-track {
@@ -77,6 +79,17 @@ input {
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(45deg, #0056DF, #00DFBF);
   border-radius: 0.5em;
+}
+
+.sp-nav {
+  width: 100vw;
+  height: 10vh;
+}
+
+.backBtn {
+  position: absolute;
+  bottom: 7vh;
+  left: 4vw;
 }
 
 /*# sourceMappingURL=site.css.map */

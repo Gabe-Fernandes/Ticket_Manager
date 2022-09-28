@@ -19,6 +19,7 @@ input{
   opacity: 0% !important;
   pointer-events: none !important;
   position: absolute !important;
+  display: none;
 }
 .disable{
   filter: brightness(50%);
@@ -42,14 +43,15 @@ input{
 }
 .screen-tint{
   @include WidthHeight(100vw, 100vh);
+  display: initial;
   position: fixed;
   top: 0%;
   left: 0%;
   background-color: rgba(0,0,0, 0.6);
   z-index: $zScreenTint;
-  transition: opacity 0.4s;
+  transition: opacity 0.3s, background-color 0.3s;
 }
-.modal-block{
+.unclickable{
   pointer-events: none;
   filter: blur(0.3em);
 }
@@ -58,7 +60,7 @@ input{
   box-shadow: 0 0 0.4em 0.2em $cError;
 }
 ::-webkit-scrollbar {
-  width: 1em;
+  width: 0.7em;
 }
 ::-webkit-scrollbar-track {
   box-shadow: inset 0 0 0.5em grey;
@@ -67,4 +69,12 @@ input{
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(45deg, #0056DF, #00DFBF);
   border-radius: 0.5em;
+}
+.sp-nav{
+  @include WidthHeight(100vw, 10vh);
+}
+.backBtn{
+  position: absolute;
+  bottom: 7vh;
+  left: 4vw;
 }

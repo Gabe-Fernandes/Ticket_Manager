@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TicketManager.Data;
 
@@ -11,9 +12,10 @@ using TicketManager.Data;
 namespace TicketManager.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220927144004_ticketPfpUpdate")]
+    partial class ticketPfpUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -386,9 +388,6 @@ namespace TicketManager.Migrations
                         .HasMaxLength(400)
                         .HasColumnType("nvarchar(400)");
 
-                    b.Property<string>("DetailsBtnId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("EndDate")
                         .HasColumnType("nvarchar(max)");
 
@@ -423,9 +422,6 @@ namespace TicketManager.Migrations
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TableRowId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("TempDate")

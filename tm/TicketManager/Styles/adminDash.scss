@@ -1,10 +1,6 @@
 ﻿@import "_library.scss";
 
 .admin-dash-main{
-  .sp-nav{
-    @include WidthHeight(100vw, 10vh);
-    background-color: $cOffMain;
-  }
   h2{
     @include WidthHeight(100%, 22%);
     @include Flex-Row(center, center);

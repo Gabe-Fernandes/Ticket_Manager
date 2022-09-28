@@ -175,11 +175,6 @@
 .register-main form section .requirements .requirement-wrap .invalid div + div {
   transform: translate(-50%, -50%) rotate(45deg);
 }
-.register-main form .backBtn {
-  position: absolute;
-  bottom: 7vh;
-  left: 4vw;
-}
 
 .reset-password-main h1 {
   display: flex;
