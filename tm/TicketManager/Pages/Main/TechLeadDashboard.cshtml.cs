@@ -8,5 +8,6 @@ public class TechLeadDashboardModel : PageModel
 {
     public void OnGet()
     {
+
     }
 }

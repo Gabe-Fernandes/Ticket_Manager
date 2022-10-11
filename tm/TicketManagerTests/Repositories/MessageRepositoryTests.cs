@@ -117,7 +117,7 @@ public class MessageRepositoryTests
     }
 
     [Fact]
-    public async void GetAllAsync_ReturnsIEnumerableMessageTask()
+    public async void GetAllFromProjAsync_ReturnsIEnumerableMessageTask()
     {
         // Arrange (empty)
         int projId = 5;

@@ -1,4 +1,32 @@
 ﻿@page
-@model TicketManager.Pages.Main.DeveloperDashboardModel
-@{
-}
+<script async src="~/js/tleadDashHub.js"></script>
+
+<main id="tleadDashMain" class="tlead-dash-main">
+	<div class="content">
+		<div class="btn-panel">
+			<div class="search-div">
+				<input id="ticketSearchTxt" type="text" placeholder="search...">
+				<img src="/icons/search.png" alt="">
+			</div>
+		</div>
+		<div class="tbl-wrap">
+			<table class="ticket-tbl">
+				<thead>
+					<tr>
+						<th>Title</th>
+						<th>Description</th>
+						<th>Status</th>
+						<th>Priority</th>
+						<th>Start Date</th>
+						<th>End Date</th>
+						<th>Sender</th>
+						<th>Recipient</th>
+					</tr>
+				</thead>
+				<tbody id="ticketTbody">
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+</main>

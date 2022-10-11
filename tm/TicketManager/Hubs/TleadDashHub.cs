@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
 using TicketManager.Interfaces;
@@ -6,8 +7,10 @@ using TicketManager.Models;
 
 namespace TicketManager.Hubs;
 
+[Authorize]
 public class TleadDashHub : Hub<ITleadDashHub>
 {
+    private readonly ICommentRepository _commentRepository;
     private readonly ITicketRepository _ticketRepository;
     private readonly IProject_AppUsersRepository _paRepo;
     private readonly IAppUserRepository _appUserRepo;
@@ -17,13 +20,15 @@ public class TleadDashHub : Hub<ITleadDashHub>
     public TleadDashHub(IProject_AppUsersRepository paRepo,
         IHttpContextAccessor contextAccessor,
         IAppUserRepository appUserRepo,
-        ITicketRepository ticketRepository)
+        ITicketRepository ticketRepository,
+        ICommentRepository commentRepository)
     {
         _paRepo = paRepo;
         _contextAccessor = contextAccessor;
         _appUserRepo = appUserRepo;
         _user = GetUser();
         _ticketRepository = ticketRepository;
+        _commentRepository = commentRepository;
     }
 
     public async Task LoadTickets(string filterString)
@@ -55,12 +60,12 @@ public class TleadDashHub : Hub<ITleadDashHub>
         string formDataString = formData.ToString();
         Ticket ticket = JsonConvert.DeserializeObject<Ticket>(formDataString);
         var recipient = await _appUserRepo.GetByIdAsync(ticket.RecipientId);
-        ticket.RecipientName = recipient.FirstName;
+        ticket.RecipientName = $"{recipient.FirstName} {recipient.LastName}";
         ticket.RecipientPfp = recipient.ProfilePicture;
         ticket.StartDate = DateTime.Now.ToString("MM/dd");
         ticket.EndDate = ticket.TempDate.ToString("MM/dd");
         ticket.SenderId = _user.Id;
-        ticket.SenderName = _user.FirstName;
+        ticket.SenderName = $"{_user.FirstName} {_user.LastName}";
         ticket.SenderPfp = _user.ProfilePicture;
         ticket.TableRowId = Guid.NewGuid().ToString();
         ticket.DetailsBtnId = Guid.NewGuid().ToString();
@@ -105,6 +110,30 @@ public class TleadDashHub : Hub<ITleadDashHub>
         ticket.Status = "Resolved";
         _ticketRepository.Update(ticket);
         await Clients.All.UpdateTicket(ticket);
+    }
+
+    public async Task LoadComments(int ticketId)
+    {
+        List<Comment> comments = await _commentRepository.GetAllAsync(ticketId);
+        await Clients.Caller.PostComment(comments);
+    }
+
+    public async Task PostComment(string commentBody, int ticketId, string tableRowId)
+    {
+        Comment comment = new Comment
+        {
+            FirstName = _user.FirstName,
+            LastName = _user.LastName,
+            Pfp = _user.ProfilePicture,
+            Body = commentBody,
+            Date = DateTime.Now.ToString("MM/dd - hh:mm tt"),
+            TicketId = ticketId,
+            TableRowId = tableRowId
+        };
+        _commentRepository.Add(comment);
+        List<Comment> commentList = new List<Comment> { comment };
+
+        await Clients.All.PostComment(commentList);
     }
 
     private AppUser GetUser()

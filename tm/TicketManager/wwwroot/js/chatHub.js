@@ -292,9 +292,14 @@
       $(`#${panel1}`).addClass("hide");
       $(`#${panel2}`).addClass("hide");
 
-      $("#moreNotificationsBtn").removeClass("hide");
-      $("#moreChatsBtn").removeClass("hide");
-      NavMessenger.send("GetData", "chatContent", true, 0); // generalize later ----------------------------
+      if (myPanel === "notificationPanel") {
+        $("#moreNotificationsBtn").removeClass("hide");
+        NavMessenger.send("GetData", "notificationContent", true, 0);
+      }
+      else if (myPanel === "chatPanel") {
+        $("#moreChatsBtn").removeClass("hide");
+        NavMessenger.send("GetData", "chatContent", true, 0);
+      }
     }
     else { //close panel
       $(`#${myPanel}`).addClass("hide");
@@ -356,9 +361,10 @@
     if (panelData.length === 0) {
       $(`#${contentId}`).append("<span>No conversations to display...");
     }
+
     for (let i = 0; i < panelData.length; i++) {
       $(`#${contentId}`).append(`
-      <div tabindex="0" id="${panelData[i].selectNavMenuOptionId}" class="row">
+      <a href="/Main/TechLeadDashboard" tabindex="0" id="${panelData[i].selectNavMenuOptionId}" class="row">
         <img src="${panelData[i].imgSrc}">
         <div>
           <span>${panelData[i].title}<br>
@@ -368,6 +374,11 @@
         $(`#${panelData[i].selectNavMenuOptionId}`).on("click", () => {
           ClearPanels();
           ChatMessenger.send("OpenChatFromNav", panelData[i].coworkerId);
+        });
+      }
+      if (contentId === "notificationContent") {
+        $(`#${panelData[i].selectNavMenuOptionId}`).on("click", () => {
+          ClearPanels();
         });
       }
     }

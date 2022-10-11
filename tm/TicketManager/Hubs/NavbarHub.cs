@@ -31,22 +31,28 @@ public class NavbarHub : Hub<INavbarHub>
     {
         var dataToDisplay = new List<PanelData>();
         bool hideShowMoreBtn = false;
+        const int numOfItemsLoadedCap = 5;
         if (contentId == "chatContent")
         {
-            const int numOfChatsLoadedCap = 5;
-            string myId = _contextAccessor.HttpContext.User.FindFirstValue("Id");
             var messagesFromProject = await _messageRepo.GetAllFromProjAsync(_user.CurrentProjectId);
             var myMessages = messagesFromProject.Where(
-                m => m.SenderId == myId || m.RecipientId == myId).ToList();
+                m => m.SenderId == _user.Id || m.RecipientId == _user.Id).ToList();
 
             var usersToDisplay = new List<string>();
             var myConversations = new List<Message>();
-            GetMessages(myMessages, usersToDisplay, numOfChatsLoadedCap + startIndex, myId, myConversations);
-            hideShowMoreBtn = await PopulatePanelData(
-                myConversations, usersToDisplay, numOfChatsLoadedCap, dataToDisplay, startIndex);
+            GetMessages(myMessages, usersToDisplay, numOfItemsLoadedCap + startIndex, _user.Id, myConversations);
+            hideShowMoreBtn = await PopulateChatPanelData(
+                myConversations, usersToDisplay, numOfItemsLoadedCap, dataToDisplay, startIndex);
+            await Clients.Caller.PanelDataReceiver(contentId, dataToDisplay, clearContent, hideShowMoreBtn);
         }
-
-        await Clients.Caller.PanelDataReceiver(contentId, dataToDisplay, clearContent, hideShowMoreBtn);
+        else if (contentId == "notificationContent")
+        {
+            var ticketsFromProject = await _ticketRepository.GetAllFromProjectAsync(_user.CurrentProjectId);
+            var myTickets = ticketsFromProject.Where(t => t.RecipientId == _user.Id).ToList();
+            hideShowMoreBtn = PopulateTicketPanelData(
+                dataToDisplay, myTickets, numOfItemsLoadedCap, startIndex);
+            await Clients.Caller.PanelDataReceiver(contentId, dataToDisplay, clearContent, hideShowMoreBtn);
+        }
     }
 
     public async Task FilterContent(string contentId, string filterString)
@@ -56,22 +62,32 @@ public class NavbarHub : Hub<INavbarHub>
             await GetData(contentId, true);
             return;
         }
-
         filterString = filterString.ToUpper();
-        string myId = _contextAccessor.HttpContext.User.FindFirstValue("Id");
-
-        var messagesFromProject = await _messageRepo.GetAllFromProjAsync(_user.CurrentProjectId);
-        var myMessages = messagesFromProject.Where(
-            m => (m.RecipientId == myId && m.SenderName.ToUpper().Contains(filterString)) ||
-            m.SenderId == myId && m.RecipientName.ToUpper().Contains(filterString)).ToList();
-
-        var usersToDisplay = new List<string>();
-        var myConversations = new List<Message>();
-        GetMessages(myMessages, usersToDisplay, 100, myId, myConversations);
         var dataToDisplay = new List<PanelData>();
-        await PopulatePanelData(myConversations, usersToDisplay, 100, dataToDisplay);
 
-        await Clients.Caller.PanelDataReceiver(contentId, dataToDisplay, true, true);
+        if (contentId == "chatContent")
+        {
+            var messagesFromProject = await _messageRepo.GetAllFromProjAsync(_user.CurrentProjectId);
+            var myMessages = messagesFromProject.Where(
+                m => (m.RecipientId == _user.Id && m.SenderName.ToUpper().Contains(filterString)) ||
+                m.SenderId == _user.Id && m.RecipientName.ToUpper().Contains(filterString)).ToList();
+
+            var usersToDisplay = new List<string>();
+            var myConversations = new List<Message>();
+            GetMessages(myMessages, usersToDisplay, numOfChatsLoadedCap: 100, _user.Id, myConversations);
+            await PopulateChatPanelData(
+                myConversations, usersToDisplay, numOfChatsLoadedCap: 100, dataToDisplay);
+        }
+        else if (contentId == "notificationContent")
+        {
+            var ticketsFromProject = await _ticketRepository.GetAllFromProjectAsync(_user.CurrentProjectId);
+            var myTickets = ticketsFromProject.Where(
+                t => t.RecipientId == _user.Id && t.Description.ToUpper().Contains(filterString)).ToList();
+            PopulateTicketPanelData(dataToDisplay, myTickets, numOfItemsLoadedCap: 100);
+        }
+
+        await Clients.Caller.PanelDataReceiver(
+            contentId, dataToDisplay, clearContent: true, hideShowMoreBtn: true);
     }
 
     private void GetMessages(
@@ -100,7 +116,7 @@ public class NavbarHub : Hub<INavbarHub>
         }
     }
 
-    private async Task<bool> PopulatePanelData(
+    private async Task<bool> PopulateChatPanelData(
         List<Message> myConversations,
         List<string> usersToDisplay,
         int numOfChatsLoadedCap,
@@ -123,6 +139,31 @@ public class NavbarHub : Hub<INavbarHub>
                 ImgSrc = coworker.ProfilePicture,
                 Description = myConversations[i].Body,
                 Time = myConversations[i].Date.ToString("MM/dd/yy - hh:mm tt"),
+                SelectNavMenuOptionId = Guid.NewGuid().ToString()
+            };
+            dataToDisplay.Add(data);
+        }
+        return false;
+    }
+
+    private bool PopulateTicketPanelData(List<PanelData> dataToDisplay, List<Ticket> myTickets,
+        int numOfItemsLoadedCap, int startIndex = 0)
+    {
+        int endIndex = (myTickets.Count < numOfItemsLoadedCap) ?
+            myTickets.Count : numOfItemsLoadedCap;
+        endIndex += startIndex;
+
+        for (int i = startIndex; i < endIndex; i++)
+        {
+            if (i == myTickets.Count) { return true; }
+
+            PanelData data = new PanelData
+            {
+                coworkerId = myTickets[i].SenderId,
+                Title = myTickets[i].SenderName,
+                ImgSrc = "/icons/ticketIcon.png",
+                Description = myTickets[i].Description,
+                Time = myTickets[i].EndDate,
                 SelectNavMenuOptionId = Guid.NewGuid().ToString()
             };
             dataToDisplay.Add(data);

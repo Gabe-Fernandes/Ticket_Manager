@@ -1,5 +1,4 @@
 ﻿@page
-@model TicketManager.Pages.Main.TechLeadDashboardModel
 <script async src="~/js/tleadDashHub.js"></script>
 
 <main id="tleadDashMain" class="tlead-dash-main">
@@ -109,7 +108,7 @@
 			</div>
 			<div class="post-comment">
 				<textarea id="commentTxt"></textarea>
-				<button id="commentBtn" class="btn">Comment</button>
+				<button id="commentBtn" class="btn disable">Comment</button>
 			</div>
 		</div>
 	</section>
@@ -120,7 +119,6 @@
 		</div>
 	</section>
 </main>
-
 <section id="updateTicketModal" class="screen-tint hide">
 	<form class="new-ticket-modal">
 		<h2>Update Ticket</h2>

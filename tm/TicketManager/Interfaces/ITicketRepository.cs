@@ -4,8 +4,8 @@ namespace TicketManager.Interfaces;
 
 public interface ITicketRepository
 {
-    Task<IEnumerable<Ticket>> GetAllAsync();
-    Task<Ticket> GetByIdAsync(int? id);
+    Task<List<Ticket>> GetAllFromProjectAsync(int projId);
+    Task<Ticket> GetByIdAsync(int id);
     bool Add(Ticket ticket);
     bool Update(Ticket ticket);
     bool Delete(Ticket ticket);

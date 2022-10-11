@@ -25,12 +25,12 @@ public class CommentRepository : ICommentRepository
         return Save();
     }
 
-    public async Task<IEnumerable<Comment>> GetAllAsync()
+    public async Task<List<Comment>> GetAllAsync(int ticketId)
     {
-        return await _db.Comments.ToListAsync();
+        return await _db.Comments.Where(c => c.TicketId == ticketId).ToListAsync();
     }
 
-    public async Task<Comment> GetByIdAsync(int? id)
+    public async Task<Comment> GetByIdAsync(int id)
     {
         return await _db.Comments.FindAsync(id);
     }

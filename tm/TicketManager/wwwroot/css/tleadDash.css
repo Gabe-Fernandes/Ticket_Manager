@@ -492,6 +492,7 @@
   border-radius: 0.4em;
   overflow-y: auto;
   resize: none;
+  padding: 1em;
 }
 .ticket-details-main .left .bot-details {
   width: 100%;
@@ -538,6 +539,7 @@
   resize: none;
   overflow-y: auto;
   margin: 0em 1em;
+  padding: 1em;
 }
 .ticket-details-main .right {
   width: 50vw;

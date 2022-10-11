@@ -8,4 +8,5 @@ public interface ITleadDashHub
     Task GetTeamMembers(List<TicketMemberCtx> ticketMemberCtxList);
     Task UpdateTicket(Ticket ticket);
     Task DeleteTicket(Ticket ticket);
+    Task PostComment(List<Comment> commentList);
 }
