@@ -41,6 +41,7 @@ builder.Services.AddSignalR();
 builder.Services.AddTransient<IProjectRepository, ProjectRepository>();
 builder.Services.AddTransient<IMessageRepository, MessageRepository>();
 builder.Services.AddTransient<ITicketRepository, TicketRepository>();
+builder.Services.AddTransient<ICommentRepository, CommentRepository>();
 builder.Services.AddTransient<IAppUserRepository, AppUserRepository>();
 builder.Services.AddTransient<IProject_AppUsersRepository, Project_AppUsersRepository>();
 
@@ -68,5 +69,6 @@ app.MapHub<ChatHub>("/chatHub");
 app.MapHub<NavbarHub>("/navbarHub");
 app.MapHub<AdminDashHub>("/adminDashHub");
 app.MapHub<TleadDashHub>("/tleadDashHub");
+app.MapHub<TleadDashHub>("/devDashHub");
 
 app.Run();

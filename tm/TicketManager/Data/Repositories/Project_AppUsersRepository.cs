@@ -50,6 +50,13 @@ public class Project_AppUsersRepository : IProject_AppUsersRepository
         return idList;
     }
 
+    public async Task<List<string>> GetManagers(int projId)
+    {
+        List<string> admins = await GetIdsOfRoleAsync(projId, LoginModel.Admin);
+        List<string> techLeads = await GetIdsOfRoleAsync(projId, LoginModel.TechLead);
+        return admins.Concat(techLeads).ToList();
+    }
+
     public async Task<List<Project>> GetMyProjectsAsync(string userId)
     {
         var myProjAppUserRelations =

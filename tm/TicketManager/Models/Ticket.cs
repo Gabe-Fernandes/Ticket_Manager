@@ -26,16 +26,17 @@ public class Ticket
 
     [Required]
     public string RecipientName { get; set; }
-
+    public string RecipientPfp { get; set; }
     public string RecipientId { get; set; }
 
     public string SenderName { get; set; }
-
+    public string SenderPfp { get; set; }
     public string SenderId { get; set; }
 
     public string StartDate { get; set; }
-
     public string EndDate { get; set; }
 
+    public string DetailsBtnId { get; set; }
+    public string TableRowId { get; set; }
     public int ProjectId { get; set; }
 }

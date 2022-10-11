@@ -1,9 +1,7 @@
 ﻿@page
-@model TicketManager.Pages.Main.TechLeadDashboardModel
 <script async src="~/js/tleadDashHub.js"></script>
 
 <main id="tleadDashMain" class="tlead-dash-main">
-	<div class="sp-nav"></div>
 	<div class="content">
 		<div class="btn-panel">
 			<button id="newTicketBtn" class="btn" tabindex="0">New Ticket</button>
@@ -40,8 +38,8 @@
 		<div class="content">
 			<div class="left">
 				<div class="top">
-					<input type="text" id="tktTitle" placeholder="title" value="test">
-					<textarea id="tktDescription" placeholder="description">testing</textarea>
+					<input type="text" id="tktTitle" placeholder="title">
+					<textarea id="tktDescription" placeholder="description"></textarea>
 				</div>
 				<div class="bot">
 					<label>
@@ -78,5 +76,91 @@
 			<button type="button" id="assignBtn" class="btn" tabindex="0">Assign</button>
 		</div>
 		<div class="close-btn"><img src="/icons/cancel.png" tabindex="0" id="closeBtn" /></div>
+	</form>
+</section>
+<main id="ticketDetailsMain" class="ticket-details-main hide">
+	<section class="left">
+		<div class="info1">
+			<h1 id="detailTitle"></h1>
+			<span id="detailPriority"></span>
+			<div id="detailStatus" class=""><div></div><div></div></div>
+		</div>
+		<div class="info2">
+			<div class="img-wrap">
+				<img id="detailSenderPfp" src="">
+				<span id="detailStartDate"></span>
+			</div>
+			<div class="img-wrap">
+				<img id="detailRecipientPfp" src="">
+				<span id="detailEndDate"></span>
+			</div>
+		</div>
+		<div class="info3">
+			<textarea readonly id="detailDescription"></textarea>
+		</div>
+		<div class="bot-details">
+			<div class="btn-panel">
+				<a id="ticketBackBtn" class="btn">Back</a>
+				<button class="btn edit-btn" id="editBtn">Edit</button>
+				<button class="btn del-btn" id="deleteBtn">Delete</button>
+				<button class="btn approve-btn" id="approveBtn">Approve</button>
+				<!-- <button class="btn approve-btn" id="submitBtn">Submit</button> -->
+			</div>
+			<div class="post-comment">
+				<textarea id="commentTxt"></textarea>
+				<button id="commentBtn" class="btn disable">Comment</button>
+			</div>
+		</div>
+	</section>
+	<section class="right">
+		<h2>Comments</h2>
+		<div class="comments" id="comments">
+
+		</div>
+	</section>
+</main>
+<section id="updateTicketModal" class="screen-tint hide">
+	<form class="new-ticket-modal">
+		<h2>Update Ticket</h2>
+		<div class="content">
+			<div class="left">
+				<div class="top">
+					<input id="updateTitle" type="text" placeholder="title">
+					<textarea id="updateDescription" placeholder="description"></textarea>
+				</div>
+				<div class="bot">
+					<label>
+						Status<br>
+						<select name="" id="updateStatus">
+							<option value="Open">Open</option>
+							<option value="Review">Review</option>
+							<option value="Resolved">Resolved</option>
+						</select>
+					</label>
+					<label>
+						Priority<br>
+						<select name="" id="updatePriority">
+							<option value="Low">Low</option>
+							<option value="Medium">Medium</option>
+							<option value="High">High</option>
+						</select>
+					</label>
+				</div>
+			</div>
+			<div class="right">
+				<div class="top">
+					<span id="updateDueDate"></span>
+					<input id="updateDueDateInput" type="date" />
+				</div>
+				<div class="bot">
+					<div id="updateTeamMemberList" class="team-members">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="btn-wrap">
+			<button type="button" id="updateBtn" class="btn" tabindex="0">Update</button>
+		</div>
+		<div class="close-btn"><img src="/icons/cancel.png" tabindex="0" id="updateCloseBtn" /></div>
 	</form>
 </section>

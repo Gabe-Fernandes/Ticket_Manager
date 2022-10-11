@@ -32,9 +32,13 @@ public class CommentRepositoryTests
                 dbContext.Comments.Add(new Comment()
                 {
                     Id = i + 1,
-                    Name = "test name",
+                    FirstName = "test name",
+                    LastName = "test name",
+                    Pfp = "test pfp",
                     Body = "test comment",
-                    Date = DateTime.MaxValue
+                    Date = DateTime.MaxValue.ToString(),
+                    TableRowId = $"{i}abc",
+                    TicketId = i + 2
                 });
                 dbContext.SaveChangesAsync();
             }
@@ -49,9 +53,13 @@ public class CommentRepositoryTests
         var comment = new Comment()
         {
             Id = 1,
-            Name = "test name",
+            FirstName = "test name",
+            LastName = "test name",
+            Pfp = "test pfp",
             Body = "test comment",
-            Date = DateTime.MaxValue
+            Date = DateTime.MaxValue.ToString(),
+            TableRowId = "abc",
+            TicketId = 2
         };
         // Act
         var result = _commentRepository.Add(comment);
@@ -66,9 +74,13 @@ public class CommentRepositoryTests
         var comment = new Comment()
         {
             Id = 1,
-            Name = "test name",
+            FirstName = "test name",
+            LastName = "test name",
+            Pfp = "test pfp",
             Body = "test comment",
-            Date = DateTime.MaxValue
+            Date = DateTime.MaxValue.ToString(),
+            TableRowId = "abc",
+            TicketId = 2
         };
         _commentRepository.Add(comment);
         // Act
@@ -84,9 +96,13 @@ public class CommentRepositoryTests
         var comment = new Comment()
         {
             Id = 1,
-            Name = "test name",
+            FirstName = "test name",
+            LastName = "test name",
+            Pfp = "test pfp",
             Body = "test comment",
-            Date = DateTime.MaxValue
+            Date = DateTime.MaxValue.ToString(),
+            TableRowId = "abc",
+            TicketId = 2
         };
         _commentRepository.Add(comment);
         // Act
@@ -119,10 +135,11 @@ public class CommentRepositoryTests
     [Fact]
     public async void GetAllAsync_ReturnsIEnumerableCommentTask()
     {
-        // Arrange (empty)
+        // Arrange
+        int ticketId = 1;
         // Act
-        var result = _commentRepository.GetAllAsync();
+        var result = _commentRepository.GetAllAsync(ticketId);
         // Assert
-        await Assert.IsType<Task<IEnumerable<Comment>>>(result);
+        await Assert.IsType<Task<List<Comment>>>(result);
     }
 }

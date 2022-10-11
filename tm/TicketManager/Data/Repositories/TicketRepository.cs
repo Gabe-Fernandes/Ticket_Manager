@@ -25,12 +25,12 @@ public class TicketRepository : ITicketRepository
         return Save();
     }
 
-    public async Task<IEnumerable<Ticket>> GetAllAsync()
+    public async Task<List<Ticket>> GetAllFromProjectAsync(int projId)
     {
-        return await _db.Tickets.ToListAsync();
+        return await _db.Tickets.Where(t => t.ProjectId == projId).ToListAsync();
     }
 
-    public async Task<Ticket> GetByIdAsync(int? id)
+    public async Task<Ticket> GetByIdAsync(int id)
     {
         return await _db.Tickets.FindAsync(id);
     }

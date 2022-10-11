@@ -2,9 +2,6 @@
 
 .tlead-dash-main{
   transition: filter 0.4s;
-  .sp-nav{
-    @include WidthHeight(100vw, 10vh);
-  }
   .content{
     @include WidthHeight(100vw, 90vh);
     @include Flex-Col(center, flex-start);
@@ -141,5 +138,149 @@
   }
   .close-btn{
     @include CloseBtn(2.4em);
+  }
+}
+
+.ticket-details-main{
+  @include WidthHeight(100vw, 90vh);
+  @include Flex-Row(center, center);
+  transition: filter 0.4s;
+  .left{
+    @include WidthHeight(50vw, 90vh);
+    @include Flex-Col(center, flex-start);
+    .info1{
+      @include WidthHeight(100%, 10%);
+      @include Flex-Row(center, center);
+      h1{
+        @include Flex-Row(center, center);
+        font-size: 1.4em;
+        margin-right: 1em;
+      }
+      .Resolved{
+        @include Confirmation(2em);
+        margin: 0em 0.4em;
+      }
+      .Open{
+        @include Invalid(2em);
+        margin: 0em 0.4em;
+      }
+      .Review{
+        @include Neutral(2em);
+        margin: 0em 0.4em;
+      }
+    }
+    .info2{
+      @include WidthHeight(100%, 15%);
+      @include Flex-Row(center, center);
+      .img-wrap{
+        @include WidthHeight(30%, 50%);
+        @include Flex-Col(center, center);
+        img{
+          @include Img-Round(2.4em);
+        }
+      }
+    }
+    .info3{
+      @include WidthHeight(100%, 30%);
+      @include Flex-Col(center, flex-start);
+      textarea{
+        @include WidthHeight(80%, 100%);
+        color: black;
+        border-radius: 0.4em;
+        overflow-y: auto;
+        resize: none;
+        padding: 1em;
+      }
+    }
+    .bot-details{
+      @include WidthHeight(100%, 45%);
+      @include Flex-Col(center, center);
+      .btn-panel{
+        @include WidthHeight(100%, 40%);
+        @include Flex-Row(center, center);
+        button{
+          margin: 0em 0.4em;
+          background: none;
+          border-radius: 0.3em;
+        }
+        .edit-btn{
+          background-color: $cNeutral;
+          color: $cTableMain;
+        }
+        .del-btn{
+          background-color: $cError;
+        }
+        .approve-btn{
+          background-color: $cCC1;
+        }
+      }
+      .post-comment{
+        @include WidthHeight(100%, 60%);
+        @include Flex-Row(center, center);
+        textarea{
+          @include WidthHeight(60%, 80%);
+          color: black;
+          border-radius: 0.4em;
+          resize: none;
+          overflow-y: auto;
+          margin: 0em 1em;
+          padding: 1em;
+        }
+      }
+    }
+  }
+  .right{
+    @include WidthHeight(50vw, 90vh);
+    @include Flex-Col(center, flex-start);
+    h2{
+      @include WidthHeight(100%, 10%);
+      @include Flex-Row(center, center);
+      font-size: 1.4em;
+    }
+    .comments{
+      @include WidthHeight(80%, 90%);
+      @include Flex-Col(center, flex-start);
+      border-radius: 0.7em;
+      overflow-y: auto;
+    }
+    .comment:nth-child(even){
+      background-color: $cOffMain;
+    }
+    .comment{
+      @include Flex-Row(flex-start, flex-start);
+      width: 100%;
+      padding: 1em 0em;
+      background-color: $cMain;
+      .info{
+        @include Flex-Col(center, flex-start);
+        width: 35%;
+        margin-left: 1em;
+        span{
+          @include TextEllipsis();
+          font-size: 1em;
+        }
+        .top{
+          @include WidthHeight(100%, 50%);
+          @include Flex-Row(flex-start, center);
+          img{
+              @include Img-Round(2.4em);
+              margin-right: 0.4em;
+            }
+        }
+        .bot{
+          @include WidthHeight(100%, 50%);
+          @include Flex-Row(flex-start, center);
+          margin-top: 1em;
+        }
+      }
+      .body{
+        @include WidthHeight(65%, 100%);
+        @include Flex-Row(flex-start, flex-start);
+        p{
+          font-size: 0.85em;
+          margin-left: 1.5em;
+        }
+      }
+    }
   }
 }

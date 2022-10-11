@@ -43,6 +43,8 @@ public class TicketRepositoryTests
                     SenderName = "test name",
                     RecipientId = "k1",
                     SenderId = "j1",
+                    RecipientPfp = "pfpr",
+                    SenderPfp = "pfps",
                     ProjectId = 5
                 });
                 dbContext.SaveChangesAsync();
@@ -69,6 +71,8 @@ public class TicketRepositoryTests
             SenderName = "test name",
             RecipientId = "k1",
             SenderId = "j1",
+            RecipientPfp = "pfpr",
+            SenderPfp = "pfps",
             ProjectId = 5
         };
         // Act
@@ -95,6 +99,8 @@ public class TicketRepositoryTests
             SenderName = "test name",
             RecipientId = "k1",
             SenderId = "j1",
+            RecipientPfp = "pfpr",
+            SenderPfp = "pfps",
             ProjectId = 5
         };
         _ticketRepository.Add(ticket);
@@ -122,6 +128,8 @@ public class TicketRepositoryTests
             SenderName = "test name",
             RecipientId = "k1",
             SenderId = "j1",
+            RecipientPfp = "pfpr",
+            SenderPfp = "pfps",
             ProjectId = 5
         };
         _ticketRepository.Add(ticket);
@@ -153,12 +161,13 @@ public class TicketRepositoryTests
     }
 
     [Fact]
-    public async void GetAllAsync_ReturnsIEnumerableTicketTask()
+    public async void GetAllFromProjectAsync_ReturnsIEnumerableTicketTask()
     {
         // Arrange (empty)
+        int projId = 1;
         // Act
-        var result = _ticketRepository.GetAllAsync();
+        var result = _ticketRepository.GetAllFromProjectAsync(projId);
         // Assert
-        await Assert.IsType<Task<IEnumerable<Ticket>>>(result);
+        await Assert.IsType<Task<List<Ticket>>>(result);
     }
 }

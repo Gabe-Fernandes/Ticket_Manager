@@ -1,10 +1,6 @@
 .tlead-dash-main {
   transition: filter 0.4s;
 }
-.tlead-dash-main .sp-nav {
-  width: 100vw;
-  height: 10vh;
-}
 .tlead-dash-main .content {
   width: 100vw;
   height: 90vh;
@@ -323,7 +319,7 @@
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  font-size: 1.5em;
+  font-size: 1.1em;
 }
 .new-ticket-modal .btn-wrap {
   width: 100%;
@@ -352,6 +348,283 @@
   min-height: 2.4em;
   min-width: 2.4em;
   border-radius: 50%;
+}
+
+.ticket-details-main {
+  width: 100vw;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: filter 0.4s;
+}
+.ticket-details-main .left {
+  width: 50vw;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.ticket-details-main .left .info1 {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ticket-details-main .left .info1 h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.4em;
+  margin-right: 1em;
+}
+.ticket-details-main .left .info1 .Resolved {
+  height: 2em;
+  width: 2em;
+  min-height: 2em;
+  min-width: 2em;
+  border-radius: 50%;
+  background-color: #17993c;
+  position: relative;
+  margin: 0em 0.4em;
+}
+.ticket-details-main .left .info1 .Resolved div {
+  background-color: white;
+  border-radius: 0.4em;
+  position: absolute;
+  width: 0.166em;
+  height: 0.666em;
+  top: 72%;
+  left: 19%;
+  transform: translate(-20%, -65%) rotate(-45deg);
+}
+.ticket-details-main .left .info1 .Resolved div + div {
+  width: 0.166em;
+  height: 1.5em;
+  top: 15%;
+  left: 55%;
+  transform: translate(-55%, 0%) rotate(45deg);
+}
+.ticket-details-main .left .info1 .Open {
+  height: 2em;
+  width: 2em;
+  min-height: 2em;
+  min-width: 2em;
+  border-radius: 50%;
+  background-color: #781d1d;
+  position: relative;
+  box-shadow: inset 0 0 0.1em 0.1em #22272d;
+  margin: 0em 0.4em;
+}
+.ticket-details-main .left .info1 .Open div {
+  width: 0.166em;
+  height: 1.4286em;
+  background-color: white;
+  border-radius: 0.4em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+.ticket-details-main .left .info1 .Open div + div {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.ticket-details-main .left .info1 .Review {
+  height: 2em;
+  width: 2em;
+  min-height: 2em;
+  min-width: 2em;
+  border-radius: 50%;
+  background-color: #FDDA16;
+  position: relative;
+  margin: 0em 0.4em;
+}
+.ticket-details-main .left .info1 .Review div {
+  width: 1.4286em;
+  height: 0.2em;
+  background-color: white;
+  border: 0.07em solid #161b22;
+  border-radius: 0.4em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.ticket-details-main .left .info1 .Review div + div {
+  opacity: 0%;
+}
+.ticket-details-main .left .info2 {
+  width: 100%;
+  height: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ticket-details-main .left .info2 .img-wrap {
+  width: 30%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.ticket-details-main .left .info2 .img-wrap img {
+  height: 2.4em;
+  width: 2.4em;
+  min-height: 2.4em;
+  min-width: 2.4em;
+  border-radius: 50%;
+}
+.ticket-details-main .left .info3 {
+  width: 100%;
+  height: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.ticket-details-main .left .info3 textarea {
+  width: 80%;
+  height: 100%;
+  color: black;
+  border-radius: 0.4em;
+  overflow-y: auto;
+  resize: none;
+  padding: 1em;
+}
+.ticket-details-main .left .bot-details {
+  width: 100%;
+  height: 45%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.ticket-details-main .left .bot-details .btn-panel {
+  width: 100%;
+  height: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ticket-details-main .left .bot-details .btn-panel button {
+  margin: 0em 0.4em;
+  background: none;
+  border-radius: 0.3em;
+}
+.ticket-details-main .left .bot-details .btn-panel .edit-btn {
+  background-color: #FDDA16;
+  color: #0d1117;
+}
+.ticket-details-main .left .bot-details .btn-panel .del-btn {
+  background-color: #781d1d;
+}
+.ticket-details-main .left .bot-details .btn-panel .approve-btn {
+  background-color: #17993c;
+}
+.ticket-details-main .left .bot-details .post-comment {
+  width: 100%;
+  height: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ticket-details-main .left .bot-details .post-comment textarea {
+  width: 60%;
+  height: 80%;
+  color: black;
+  border-radius: 0.4em;
+  resize: none;
+  overflow-y: auto;
+  margin: 0em 1em;
+  padding: 1em;
+}
+.ticket-details-main .right {
+  width: 50vw;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.ticket-details-main .right h2 {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.4em;
+}
+.ticket-details-main .right .comments {
+  width: 80%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: 0.7em;
+  overflow-y: auto;
+}
+.ticket-details-main .right .comment:nth-child(even) {
+  background-color: #22272d;
+}
+.ticket-details-main .right .comment {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  padding: 1em 0em;
+  background-color: #161b22;
+}
+.ticket-details-main .right .comment .info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 35%;
+  margin-left: 1em;
+}
+.ticket-details-main .right .comment .info span {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 1em;
+}
+.ticket-details-main .right .comment .info .top {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.ticket-details-main .right .comment .info .top img {
+  height: 2.4em;
+  width: 2.4em;
+  min-height: 2.4em;
+  min-width: 2.4em;
+  border-radius: 50%;
+  margin-right: 0.4em;
+}
+.ticket-details-main .right .comment .info .bot {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 1em;
+}
+.ticket-details-main .right .comment .body {
+  width: 65%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.ticket-details-main .right .comment .body p {
+  font-size: 0.85em;
+  margin-left: 1.5em;
 }
 
 /*# sourceMappingURL=tleadDash.css.map */

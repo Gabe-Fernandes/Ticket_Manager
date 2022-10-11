@@ -4,8 +4,8 @@ namespace TicketManager.Interfaces;
 
 public interface ICommentRepository
 {
-    Task<IEnumerable<Comment>> GetAllAsync();
-    Task<Comment> GetByIdAsync(int? id);
+    Task<List<Comment>> GetAllAsync(int ticketId);
+    Task<Comment> GetByIdAsync(int id);
     bool Add(Comment comment);
     bool Update(Comment comment);
     bool Delete(Comment comment);
