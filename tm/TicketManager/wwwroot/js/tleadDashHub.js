@@ -15,6 +15,7 @@
 
   // main page ---------------------------------------------------------------------------
   TechLeadDashConnection.on("GetTickets", ticketList => {
+    $("#ticketTbody")[0].innerHTML = "";
     ticketList.forEach(ticket => {
       RenderTicket(ticket);
     });

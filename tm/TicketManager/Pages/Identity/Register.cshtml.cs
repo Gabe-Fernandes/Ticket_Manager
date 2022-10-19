@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Text.Encodings.Web;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -15,7 +14,6 @@ namespace TicketManager.Pages.Identity;
 [AllowAnonymous]
 public class RegisterModel : PageModel
 {
-    private readonly SignInManager<AppUser> _signInManager;
     private readonly UserManager<AppUser> _userManager;
     private readonly IUserStore<AppUser> _userStore;
     private readonly IUserEmailStore<AppUser> _emailStore;
@@ -25,22 +23,18 @@ public class RegisterModel : PageModel
     public RegisterModel(
         UserManager<AppUser> userManager,
         IUserStore<AppUser> userStore,
-        SignInManager<AppUser> signInManager,
         ILogger<RegisterModel> logger,
         IEmailSender emailSender)
     {
         _userManager = userManager;
         _userStore = userStore;
         _emailStore = (IUserEmailStore<AppUser>)_userStore;
-        _signInManager = signInManager;
         _logger = logger;
         _emailSender = emailSender;
     }
 
     [BindProperty]
     public InputModel Input { get; set; }
-
-    public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
     public string[] Roles = new[] { "Admin", "TechLead", "Developer" };
 
@@ -52,7 +46,7 @@ public class RegisterModel : PageModel
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 8)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
@@ -75,15 +69,8 @@ public class RegisterModel : PageModel
         public string AssingedRole { get; set; }
     }
 
-
-    public async Task OnGetAsync()
-    {
-        ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-    }
-
     public async Task<IActionResult> OnPostAsync()
     {
-        ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         if (ModelState.IsValid)
         {
             var user = Activator.CreateInstance<AppUser>();
@@ -104,7 +91,7 @@ public class RegisterModel : PageModel
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                 var callbackUrl = Url.Page(
-                    "/Main/MyProjects",
+                    "/MyProjects",
                     pageHandler: null,
                     values: new { userId, code },
                     protocol: Request.Scheme);
@@ -112,7 +99,7 @@ public class RegisterModel : PageModel
                 await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                     $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                TempData["Confirmation_Animation"] = "Confirmed";
+                TempData["Confirmation_Animation"] = "Account Created";
                 return Page();
             }
             foreach (var error in result.Errors)

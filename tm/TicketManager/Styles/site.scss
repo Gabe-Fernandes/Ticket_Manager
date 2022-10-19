@@ -57,7 +57,15 @@ input{
 }
 .err-input{
   border: 0.2em solid $cError;
-  box-shadow: 0 0 0.4em 0.2em $cError;
+  box-shadow: 0 0 0.4em 0.3em $cError;
+}
+.err{
+  position: absolute;
+  font-size: 1em;
+  padding: 0.4em 1em;
+  border-radius: 0.4em;
+  background-color: $cError;
+  transition: opacity 0.3s;
 }
 ::-webkit-scrollbar {
   width: 0.7em;

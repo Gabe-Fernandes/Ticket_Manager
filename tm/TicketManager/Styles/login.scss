@@ -46,7 +46,26 @@
     }
   }
 }
-
+.demo-modal{
+  @include Modal(30vw, 40vh, $cCC2);
+  justify-content: center;
+  h3{
+    font-size: 1.8em;
+  }
+  form{
+    width: 60%;
+    margin: 1% 0%;
+    button{
+      width: 100%;
+      border-radius: 0.3em;
+    }
+  }
+  .close-btn{
+    @include CloseBtn(2.4em);
+    margin: 0;
+    top: 10%;
+  }
+}
 
 .register-main{
   h1{
@@ -72,6 +91,22 @@
         text-indent: 5%;
         font-size: 1em;
       }
+      .errEmail{
+        top: 30.6vh;
+        left: 44vw;
+      }
+      .errFirstName{
+        top: 41vh;
+        left: 44vw;
+      }
+      .errLastName{
+        top: 50.7vh;
+        left: 44vw;
+      }
+      .errConfirmPassword{
+        top: 39vh;
+        left: 80vw;
+      }
       .radio-wrap{
         @include Flex-Col(flex-start, center);
         margin-top: 2vh;
@@ -88,7 +123,7 @@
         .requirement-wrap{
           @include Flex-Row(center, center);
           margin: 0.85vh 0vw;
-          .confirmation{
+          .valid{
             @include Confirmation(1.8em);
             margin-right: 1vw;
           }
@@ -98,6 +133,23 @@
           }
         }
       }
+    }
+  }
+  .confirmation-wrap{
+      @include WidthHeight(24vw, 40vh);
+      @include Flex-Col(center, center);
+      background-color: $cOffMain;
+      box-shadow: 0 0 0.4em 0.2em $cCC2;
+      border-radius: 0.6em;
+      margin: 0px auto;
+    span{
+      font-size: 1.2em;
+      width: 80%;
+      text-align: center;
+    }
+    .confirmation{
+      @include Confirmation(6em);
+      margin-top: 4vh;
     }
   }
 }

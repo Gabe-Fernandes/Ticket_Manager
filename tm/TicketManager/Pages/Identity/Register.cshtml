@@ -1,60 +1,71 @@
 ﻿@page
 @model RegisterModel
-@{ ViewData["Title"] = "Register"; }
-
 @{
-	@if (TempData["Confirmation_Animation"] != null){
-	@TempData["Confirmation_Animation"];
+	ViewData["Title"] = "Register";
+	var result = TempData["Confirmation_Animation"] ?? "Register";
+}
+<script async src="~/js/Validation/RegisterValidation.js"></script>
+
+<main class="register-main">
+	<h1>@result</h1>
+	@if ((string)result == "Account Created")
+	{
+		<section class="confirmation-wrap">
+			<span>Check your email to confirm your account.</span>
+			<div class="confirmation"><div></div><div></div></div>
+		</section>
 	}
 	else
 	{
-	<main class="register-main">
-				<h1>Register</h1>
-				<form method="post">
-					<section>
-						<h2>Personal Info</h2>
-						<input asp-for="Input.Email" type="text" placeholder="email">
-							<span asp-validation-for="Input.Email"></span>
-						<input asp-for="Input.FirstName" type="text" placeholder="first name">
-							<span asp-validation-for="Input.FirstName"></span>
-						<input asp-for="Input.LastName" type="text" placeholder="last name">
-							<span asp-validation-for="Input.LastName"></span>
-						<div class="radio-wrap">
-						@foreach (var role in Model.Roles){
-							<label>
-								<input asp-for="Input.AssingedRole" type="radio" value="@role" id="@role" checked="checked"> &nbsp;@role
-							</label>
-						}
-						</div>
-					</section>
-					<section>
-						<h2 class="pass-title">Password</h2>
-						<input asp-for="Input.Password" type="text" placeholder="password">
-							<span asp-validation-for="Input.Password"></span>
-						<input asp-for="Input.ConfirmPassword" type="text" placeholder="repeat password">
-							<span asp-validation-for="Input.ConfirmPassword"></span>
-						<button type="submit" class="btn hide">Create Account</button>
-						<div class="requirements">
-							<div class="requirement-wrap">
-								<div class="invalid"><div></div><div></div></div>
-								<label>at least 8 characters</label>
-							</div>
-							<div class="requirement-wrap">
-								<div class="invalid"><div></div><div></div></div>
-								<label>at least 1 lowercase letter</label>
-							</div>
-							<div class="requirement-wrap">
-								<div class="invalid"><div></div><div></div></div>
-								<label>at least 1 uppercase letter</label>
-							</div>
-							<div class="requirement-wrap">
-								<div class="invalid"><div></div><div></div></div>
-								<label>at least 1 number</label>
-							</div>
-						</div>
-					</section>
-					<a asp-page="/Identity/Login" class="btn backBtn">Back</a>
-				</form>
-	</main>
-}
-}
+		<form method="post" id="registerForm">
+			<section>
+				<h2>Personal Info</h2>
+				<input asp-for="Input.Email" id="emailInput" type="text" placeholder="email">
+					<span asp-validation-for="Input.Email"></span>
+					<span id="errEmail" class="err errEmail hide">invalid email</span>
+				<input asp-for="Input.FirstName" id="firstNameInput" type="text" placeholder="first name">
+					<span asp-validation-for="Input.FirstName"></span>
+					<span id="errFirstName" class="err errFirstName hide">required</span>
+				<input asp-for="Input.LastName" id="lastNameInput" type="text" placeholder="last name">
+					<span asp-validation-for="Input.LastName"></span>
+					<span id="errLastName" class="err errLastName hide">required</span>
+				<div class="radio-wrap">
+				@foreach (var role in Model.Roles){
+					<label>
+						<input asp-for="Input.AssingedRole" type="radio" value="@role" id="@role"
+							checked="checked"> &nbsp;@role
+					</label>
+			}
+				</div>
+			</section>
+			<section>
+				<h2 class="pass-title">Password</h2>
+				<input asp-for="Input.Password" id="passwordInput" type="text" placeholder="password">
+					<span asp-validation-for="Input.Password"></span>
+				<input asp-for="Input.ConfirmPassword" id="confirmPasswordInput" type="text" placeholder="repeat password">
+					<span asp-validation-for="Input.ConfirmPassword"></span>
+							<span id="errConfirmPassword" class="err errConfirmPassword hide">passwords must match</span>
+				<button type="submit" class="btn">Create Account</button>
+				<div class="requirements">
+					<div class="requirement-wrap">
+						<div id="charMinConfirmation" class="invalid"><div></div><div></div></div>
+						<label>at least 8 characters</label>
+					</div>
+					<div class="requirement-wrap">
+						<div id="charLowerConfirmation" class="invalid"><div></div><div></div></div>
+						<label>at least 1 lowercase letter</label>
+					</div>
+					<div class="requirement-wrap">
+						<div id="charUpperConfirmation" class="invalid"><div></div><div></div></div>
+						<label>at least 1 uppercase letter</label>
+					</div>
+					<div class="requirement-wrap">
+						<div id="charNumberConfirmation" class="invalid"><div></div><div></div></div>
+						<label>at least 1 number</label>
+					</div>
+				</div>
+			</section>
+			<a asp-page="/Identity/Login" class="btn backBtn">Back</a>
+		</form>
+	}
+</main>
