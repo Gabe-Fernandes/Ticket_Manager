@@ -39,7 +39,8 @@ public class TleadDashHub : Hub<ITleadDashHub>
             await Clients.Caller.GetTickets(ticketList);
             return;
         }
-        var filteredTickets = ticketList.Where(t => t.Title.ToUpper() == filterString.ToUpper()).ToList();
+        var filteredTickets = ticketList.Where(
+            t => t.Title.ToUpper().Contains(filterString.ToUpper())).ToList();
         await Clients.Caller.GetTickets(filteredTickets);
     }
 

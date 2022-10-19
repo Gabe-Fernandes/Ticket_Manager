@@ -64,6 +64,58 @@
   align-items: center;
 }
 
+.demo-modal {
+  width: 30vw;
+  height: 40vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  background-color: #22272d;
+  border-radius: 1em;
+  box-shadow: 0 0 0.2em 0.1em #34b0e2;
+  justify-content: center;
+}
+.demo-modal h3 {
+  font-size: 1.8em;
+}
+.demo-modal form {
+  width: 60%;
+  margin: 1% 0%;
+}
+.demo-modal form button {
+  width: 100%;
+  border-radius: 0.3em;
+}
+.demo-modal .close-btn {
+  width: 1.2em;
+  height: 1.2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  margin: 0em 0.5em;
+  background-color: white;
+  cursor: pointer;
+  border-radius: 1em;
+  margin: 0;
+  top: 10%;
+}
+.demo-modal .close-btn img {
+  height: 2.4em;
+  width: 2.4em;
+  min-height: 2.4em;
+  min-width: 2.4em;
+  border-radius: 50%;
+}
+
 .register-main h1 {
   display: flex;
   justify-content: center;
@@ -98,6 +150,22 @@
   text-indent: 5%;
   font-size: 1em;
 }
+.register-main form section .errEmail {
+  top: 30.6vh;
+  left: 44vw;
+}
+.register-main form section .errFirstName {
+  top: 41vh;
+  left: 44vw;
+}
+.register-main form section .errLastName {
+  top: 50.7vh;
+  left: 44vw;
+}
+.register-main form section .errConfirmPassword {
+  top: 39vh;
+  left: 80vw;
+}
 .register-main form section .radio-wrap {
   display: flex;
   flex-direction: column;
@@ -124,7 +192,7 @@
   align-items: center;
   margin: 0.85vh 0vw;
 }
-.register-main form section .requirements .requirement-wrap .confirmation {
+.register-main form section .requirements .requirement-wrap .valid {
   height: 1.8em;
   width: 1.8em;
   min-height: 1.8em;
@@ -134,7 +202,7 @@
   position: relative;
   margin-right: 1vw;
 }
-.register-main form section .requirements .requirement-wrap .confirmation div {
+.register-main form section .requirements .requirement-wrap .valid div {
   background-color: white;
   border-radius: 0.4em;
   position: absolute;
@@ -144,7 +212,7 @@
   left: 19%;
   transform: translate(-20%, -65%) rotate(-45deg);
 }
-.register-main form section .requirements .requirement-wrap .confirmation div + div {
+.register-main form section .requirements .requirement-wrap .valid div + div {
   width: 0.1494em;
   height: 1.35em;
   top: 15%;
@@ -174,6 +242,50 @@
 }
 .register-main form section .requirements .requirement-wrap .invalid div + div {
   transform: translate(-50%, -50%) rotate(45deg);
+}
+.register-main .confirmation-wrap {
+  width: 24vw;
+  height: 40vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #22272d;
+  box-shadow: 0 0 0.4em 0.2em #34b0e2;
+  border-radius: 0.6em;
+  margin: 0px auto;
+}
+.register-main .confirmation-wrap span {
+  font-size: 1.2em;
+  width: 80%;
+  text-align: center;
+}
+.register-main .confirmation-wrap .confirmation {
+  height: 6em;
+  width: 6em;
+  min-height: 6em;
+  min-width: 6em;
+  border-radius: 50%;
+  background-color: #17993c;
+  position: relative;
+  margin-top: 4vh;
+}
+.register-main .confirmation-wrap .confirmation div {
+  background-color: white;
+  border-radius: 0.4em;
+  position: absolute;
+  width: 0.498em;
+  height: 1.998em;
+  top: 72%;
+  left: 19%;
+  transform: translate(-20%, -65%) rotate(-45deg);
+}
+.register-main .confirmation-wrap .confirmation div + div {
+  width: 0.498em;
+  height: 4.5em;
+  top: 15%;
+  left: 55%;
+  transform: translate(-55%, 0%) rotate(45deg);
 }
 
 .reset-password-main h1 {

@@ -11,7 +11,7 @@
 		<input asp-for="Input.Password" type="text" placeholder="password">
 			<span asp-validation-for="Input.Password"></span>
 		<button class="btn" type="submit" tabindex="0">Login</button>
-		<button class="btn" type="button" tabindex="0">Demo User</button>
+		<button class="btn" type="button" tabindex="0" id="demoBtn">Demo User</button>
 		<section><a asp-page="/Identity/Register">Create Account</a></section>
 		<div class="link-wrap">
 			<div><a asp-page="/Identity/ForgotPassword">forgot<br>password?</a></div>
@@ -19,20 +19,42 @@
 		</div>
 	</form>
 </main>
-@*					<form method="post">
-						<input hidden asp-for="Input.Email" value="gabe.fernandes@verizon.net"/>
-						<input hidden asp-for="Input.Password" value="Ab34567*" />
-						<button class="btn" type="submit">dev</button>
-					</form>
-					<form method="post">
-						<input hidden asp-for="Input.Email" value="gabrielcatanifernandes@gmail.com" />
-						<input hidden asp-for="Input.Password" value="Ab34567*" />
-						<button class="btn" type="submit">tech</button>
-					</form>*@
-					<form style="
-position: absolute; top: 0; left: 0;
-" method="post">
-						<input hidden asp-for="Input.Email" value="picapau.starcraft@gmail.com" />
-						<input hidden asp-for="Input.Password" value="Ab34567*" />
-						<button class="btn" type="submit">admin</button>
-					</form>
+
+<section id="demoModal" class="screen-tint hide">
+	<div class="demo-modal">
+		<h3>Demo Role</h3>
+		<form method="post">
+			<input hidden asp-for="Input.Email" value="dev@demo.com"/>
+			<input hidden asp-for="Input.Password" value="Ab34567*" />
+			<button class="btn" type="submit">Developer</button>
+		</form>
+		<form method="post">
+			<input hidden asp-for="Input.Email" value="tlead@demo.com" />
+			<input hidden asp-for="Input.Password" value="Ab34567*" />
+			<button class="btn" type="submit">Tech Lead</button>
+		</form>
+		<form method="post">
+			<input hidden asp-for="Input.Email" value="admin@demo.com" />
+			<input hidden asp-for="Input.Password" value="Ab34567*" />
+			<button class="btn" type="submit">Admin</button>
+		</form>
+		<div class="close-btn"><img src="/icons/cancel.png" tabindex="0" id="closeBtn" /></div>
+	</div>
+</section>
+
+<script src="~/lib/jquery/jquery.js" asp-append-version="true"></script>
+<script>
+$(document).ready(function () {
+  const hide = "hide";
+
+	$("#demoBtn").on("click", ()=>{
+		$("#demoModal").removeClass(hide);
+	});
+	$("#closeBtn").on("click", ()=>{
+		$("#demoModal").addClass(hide);
+	});
+});
+</script>
+
+
+
