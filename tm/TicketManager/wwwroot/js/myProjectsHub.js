@@ -126,20 +126,24 @@
     $("#myProjMain").addClass("screen-tint");
   });
   $("#createBtn").on('click', () => {
-    $("#newProjModal").addClass(hide);
-    $("#myProjMain").removeClass("screen-tint");
-    const formData = {
-      name: $("#projTitleTxt").val(),
-      gitHubLink: $("#gitHubLinkTxt").val(),
-      startDate: $("#startDate").val(),
-      endDate: $("#endDate").val()
+    if (ValidNewProjInput()) {
+      $("#newProjModal").addClass(hide);
+      $("#myProjMain").removeClass("screen-tint");
+      const formData = {
+        name: $("#projTitleTxt").val(),
+        gitHubLink: $("#gitHubLinkTxt").val(),
+        startDate: $("#startDate").val(),
+        endDate: $("#endDate").val()
+      }
+      $("input").val("");
+      MyProjConnection.send("CreateProject", formData);
     }
-    $("input").val("");
-    MyProjConnection.send("CreateProject", formData);
   });
   $("#closeBtn").on('click', () => {
     $("#newProjModal").addClass(hide);
     $("#myProjMain").removeClass("screen-tint");
+    HideError("#projTitleTxt", "#errProjTitle");
+    HideError("#startDate", "#errStartDate");
   });
   $("#joinProjBtn").on("click", () => {
     let projectCode = $("#projCodeTxt")[0].value.toUpperCase();
@@ -150,4 +154,44 @@
     $("#myProjMain").removeClass("screen-tint");
     $("#yesDelBtnWrap")[0].innerHTML = "";
   });
+
+
+
+  function ValidNewProjInput() {
+    let errorExists = false;
+    if ($("#projTitleTxt")[0].value === "") {
+      ShowError("#projTitleTxt", "#errProjTitle");
+      errorExists = true;
+    }
+    if ($("#startDate").val() > $("#endDate").val()) {
+      ShowError("#startDate", "#errStartDate");
+      errorExists = true;
+    }
+    return !errorExists;
+  }
+
+  $("#projTitleTxt").on("input", () => {
+    HideError("#projTitleTxt", "#errProjTitle");
+  });
+
+  $("#startDate").on("input", () => {
+    HideError("#startDate", "#errStartDate");
+  });
+
+  function ShowError(inputId, errorId) {
+    $(inputId).addClass("err-input");
+    $(errorId).removeClass(hide);
+    $(inputId).on("mouseover", () => {
+      $(errorId).removeClass(hide);
+    }).on("mouseout", () => {
+      $(errorId).addClass(hide);
+    });
+  }
+
+  function HideError(inputId, errorId) {
+    $(inputId).removeClass("err-input");
+    $(inputId).off("mouseover");
+    $(inputId).off("mouseout");
+    $(errorId).addClass(hide);
+  }
 });

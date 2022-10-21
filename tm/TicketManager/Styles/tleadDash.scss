@@ -65,6 +65,10 @@
           margin-bottom: 3%;
           text-indent: 5%;
         }
+        .errTktTitle{
+          top: 12.67vh;
+          left: -5vw;
+        }
         textarea{
          @include WidthHeight(90%, 85%);
           font-size: 0.8em;
@@ -73,6 +77,10 @@
           border-radius: 0.5em;
           text-indent: 3%;
           overflow-y: auto;
+        }
+        .errTktDescription{
+          top: 23vh;
+          left: -7vw;
         }
       }
       .bot{
@@ -95,6 +103,11 @@
       .top{
         @include WidthHeight(100%, 20%);
         @include Flex-Col(center, center);
+        .errDueDate{
+          text-align: center;
+          top: 11vh;
+          right: -7vw;
+        }
       }
       .bot{
         @include WidthHeight(100%, 80%);

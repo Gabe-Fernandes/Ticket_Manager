@@ -54,6 +54,7 @@
 		<section id="newProjModal" class="new-proj-modal hide">
 			<h2>New Project</h2>
 			<input type="text" id="projTitleTxt" placeholder="Project title">
+				<span id="errProjTitle" class="err errProjTitle hide">required</span>
 			<input type="text" id="gitHubLinkTxt" placeholder="GitHub link (optional)">
 			<div class="date-container">
 				<div>
@@ -65,6 +66,7 @@
 					<input id="endDate" type="date" />
 				</div>
 			</div>
+				<span id="errStartDate" class="err errStartDate hide">start date can't be<br/>after the end date</span>
 			<button type="button" class="btn" tabindex="0" id="createBtn">Create</button>
 			<div class="btn-background"><img src="/icons/cancel.png" tabindex="0" id="closeBtn" /></div>
 			<div class="err-summary"></div>

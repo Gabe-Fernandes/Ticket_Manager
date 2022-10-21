@@ -24,6 +24,14 @@
   text-indent: 5%;
   font-size: 1em;
 }
+.login-main form .errEmail {
+  top: 23.4vh;
+  right: 28vw;
+}
+.login-main form .errPassword {
+  top: 33.4vh;
+  right: 30vw;
+}
 .login-main form button {
   width: 80%;
   height: 7vh;
@@ -314,6 +322,14 @@
   text-indent: 5%;
   font-size: 1em;
 }
+.reset-password-main form .errEmail {
+  top: 22vh;
+  right: 28vw;
+}
+.reset-password-main form .errConfirmPassword {
+  top: 40vh;
+  right: 23vw;
+}
 .reset-password-main form .requirements {
   display: flex;
   flex-direction: column;
@@ -326,7 +342,7 @@
   align-items: center;
   margin: 0.85vh 0vw;
 }
-.reset-password-main form .requirements .requirement-wrap .confirmation {
+.reset-password-main form .requirements .requirement-wrap .valid {
   height: 1.8em;
   width: 1.8em;
   min-height: 1.8em;
@@ -336,7 +352,7 @@
   position: relative;
   margin-right: 1vw;
 }
-.reset-password-main form .requirements .requirement-wrap .confirmation div {
+.reset-password-main form .requirements .requirement-wrap .valid div {
   background-color: white;
   border-radius: 0.4em;
   position: absolute;
@@ -346,7 +362,7 @@
   left: 19%;
   transform: translate(-20%, -65%) rotate(-45deg);
 }
-.reset-password-main form .requirements .requirement-wrap .confirmation div + div {
+.reset-password-main form .requirements .requirement-wrap .valid div + div {
   width: 0.1494em;
   height: 1.35em;
   top: 15%;

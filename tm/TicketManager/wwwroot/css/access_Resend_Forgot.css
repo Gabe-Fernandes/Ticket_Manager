@@ -70,5 +70,9 @@
   text-indent: 7%;
   border-radius: 0.4em;
 }
+.forgot-pass-main form .errEmail, .resend-email-main form .errEmail {
+  top: 47.1vh;
+  right: 27.5vw;
+}
 
 /*# sourceMappingURL=access_Resend_Forgot.css.map */

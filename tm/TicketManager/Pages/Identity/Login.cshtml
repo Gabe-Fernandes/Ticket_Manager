@@ -2,14 +2,17 @@
 @model LoginModel
 
 @{ ViewData["Title"] = "Login"; }
+<script async src="~/js/Validation/LoginValidation.js"></script>
 
 <main class="login-main">
 	<h1>Login</h1>
-	<form method="post">
-		<input asp-for="Input.Email" type="text" placeholder="email">
+	<form id="loginForm" method="post">
+		<input asp-for="Input.Email" type="text" id="emailInput" placeholder="email">
 			<span asp-validation-for="Input.Email"></span>
-		<input asp-for="Input.Password" type="text" placeholder="password">
+			<span id="errEmail" class="err errEmail hide">invalid email</span>
+		<input asp-for="Input.Password" type="text" id="passwordInput" placeholder="password">
 			<span asp-validation-for="Input.Password"></span>
+			<span id="errPassword" class="err errPassword hide">required</span>
 		<button class="btn" type="submit" tabindex="0">Login</button>
 		<button class="btn" type="button" tabindex="0" id="demoBtn">Demo User</button>
 		<section><a asp-page="/Identity/Register">Create Account</a></section>

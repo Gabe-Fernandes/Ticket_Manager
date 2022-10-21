@@ -4,9 +4,10 @@
 	ViewData["Title"] = "Resend email confirmation";
 	var result = TempData["resend_email_confirmation"] ?? "Resend Email Confirmation";
 }
+<script async src="~/js/Validation/EmailValidation.js"></script>
 
 <main class="resend-email-main">
-	<form method="post">
+	<form id="form" method="post">
 		<h1>@result</h1>
 		@{
 			if ((string)result == "Email Sent")
@@ -14,8 +15,9 @@
 				<div class="confirmation"><div></div><div></div></div>
 			}
 			else{
-				<input asp-for="Input.Email" placeholder="email..." aria-required="true" />
+				<input id="emailInput" asp-for="Input.Email" placeholder="email..." aria-required="true" />
 				<span asp-validation-for="Input.Email"></span>
+				<span id="errEmail" class="err errEmail hide">invalid email</span>
 				<div class="btn-wrap">
 					<button type="submit" class="btn" tabindex="0">Resend Email</button>
 					<a class="btn" asp-page="/Identity/Login">Back</a>

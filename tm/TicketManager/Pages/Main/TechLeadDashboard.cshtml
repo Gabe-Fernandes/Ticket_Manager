@@ -39,7 +39,9 @@
 			<div class="left">
 				<div class="top">
 					<input type="text" id="tktTitle" placeholder="title">
+						<span id="errTktTitle" class="err errTktTitle hide">required</span>
 					<textarea id="tktDescription" placeholder="description"></textarea>
+						<span id="errTktDescription" class="err errTktDescription hide">required</span>
 				</div>
 				<div class="bot">
 					<label>
@@ -64,6 +66,7 @@
 				<div class="top">
 					<span>Due Date</span>
 					<input id="dueDate" type="date" />
+						<span id="errDueDate" class="err errDueDate hide">due date must be<br/>today or later</span>
 				</div>
 				<div class="bot">
 					<div class="team-members" id="teamMemberList">
@@ -104,7 +107,6 @@
 				<button class="btn edit-btn" id="editBtn">Edit</button>
 				<button class="btn del-btn" id="deleteBtn">Delete</button>
 				<button class="btn approve-btn" id="approveBtn">Approve</button>
-				<!-- <button class="btn approve-btn" id="submitBtn">Submit</button> -->
 			</div>
 			<div class="post-comment">
 				<textarea id="commentTxt"></textarea>
@@ -126,7 +128,9 @@
 			<div class="left">
 				<div class="top">
 					<input id="updateTitle" type="text" placeholder="title">
+						<span id="errUpdateTitle" class="err errTktTitle hide">required</span>
 					<textarea id="updateDescription" placeholder="description"></textarea>
+						<span id="errUpdateDescription" class="err errTktDescription hide">required</span>
 				</div>
 				<div class="bot">
 					<label>
@@ -151,6 +155,7 @@
 				<div class="top">
 					<span id="updateDueDate"></span>
 					<input id="updateDueDateInput" type="date" />
+						<span id="errUpdateDueDateInput" class="err errDueDate hide">due date must be<br />today or later</span>
 				</div>
 				<div class="bot">
 					<div id="updateTeamMemberList" class="team-members">

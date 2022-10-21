@@ -256,6 +256,10 @@ article .bot a {
   border-radius: 0.2em;
   font-size: 1em;
 }
+.new-proj-modal .errProjTitle {
+  top: 15vh;
+  right: -1vw;
+}
 .new-proj-modal .date-container {
   display: flex;
   justify-content: center;
@@ -267,6 +271,10 @@ article .bot a {
   align-items: center;
   justify-content: center;
   margin: 0vh 1vw;
+}
+.new-proj-modal .errStartDate {
+  top: 30.3vh;
+  left: -11vw;
 }
 .new-proj-modal .btn-background {
   width: 1.2em;
