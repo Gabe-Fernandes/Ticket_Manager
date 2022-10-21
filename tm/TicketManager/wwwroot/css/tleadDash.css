@@ -233,6 +233,10 @@
   margin-bottom: 3%;
   text-indent: 5%;
 }
+.new-ticket-modal .content .left .top .errTktTitle {
+  top: 12.67vh;
+  left: -5vw;
+}
 .new-ticket-modal .content .left .top textarea {
   width: 90%;
   height: 85%;
@@ -242,6 +246,10 @@
   border-radius: 0.5em;
   text-indent: 3%;
   overflow-y: auto;
+}
+.new-ticket-modal .content .left .top .errTktDescription {
+  top: 23vh;
+  left: -7vw;
 }
 .new-ticket-modal .content .left .bot {
   width: 100%;
@@ -271,6 +279,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+.new-ticket-modal .content .right .top .errDueDate {
+  text-align: center;
+  top: 11vh;
+  right: -7vw;
 }
 .new-ticket-modal .content .right .bot {
   width: 100%;

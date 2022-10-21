@@ -68,6 +68,7 @@
     memberCtxList.forEach(ctx => {
       RenderTeamMember(ctx);
     });
+    $(`#${memberCtxList[0].userRadioBtnId}`)[0].checked = "checked";
   });
 
   function RenderTeamMember(ctx) {
@@ -93,21 +94,72 @@
   }
 
   $("#assignBtn").on("click", () => {
-    $("#newTicketModal").addClass(hide);
-    $("#tleadDashMain").removeClass(unclickable);
-    const formData = {
-      title: $("#tktTitle")[0].value,
-      description: $("#tktDescription")[0].value,
-      status: $("#tktStatus")[0].value,
-      priorityLevel: $("#tktPriority")[0].value,
-      tempDate: $("#dueDate")[0].value,
-      recipientId: document.querySelector('input[name="user"]:checked').value
+    if (ValidNewTicketInput()) {
+      $("#newTicketModal").addClass(hide);
+      $("#tleadDashMain").removeClass(unclickable);
+      const formData = {
+        title: $("#tktTitle")[0].value,
+        description: $("#tktDescription")[0].value,
+        status: $("#tktStatus")[0].value,
+        priorityLevel: $("#tktPriority")[0].value,
+        tempDate: $("#dueDate")[0].value,
+        recipientId: document.querySelector('input[name="user"]:checked').value
+      }
+      TechLeadDashConnection.send("CreateTicket", formData);
     }
-    TechLeadDashConnection.send("CreateTicket", formData);
   });
+
+  //modal Validation ---------------------------------------------------------------------------
+  function ValidNewTicketInput() {
+    let errorExists = false;
+    if ($("#tktTitle")[0].value === "") {
+      ShowError("#tktTitle", "#errTktTitle");
+      errorExists = true;
+    }
+    if ($("#tktDescription")[0].value === "") {
+      ShowError("#tktDescription", "#errTktDescription");
+      errorExists = true;
+    }
+    if (Date.now() > $("#dueDate").val()) {
+      ShowError("#dueDate", "#errDueDate");
+      errorExists = true;
+    }
+    return !errorExists;
+  }
+
+  $("#tktTitle").on("input", () => {
+    HideError("#tktTitle", "#errTktTitle");
+  });
+  $("#tktDescription").on("input", () => {
+    HideError("#tktDescription", "#errTktDescription");
+  });
+  $("#dueDate").on("input", () => {
+    HideError("#dueDate", "#errDueDate");
+  });
+
+  function ShowError(inputId, errorId) {
+    $(inputId).addClass("err-input");
+    $(errorId).removeClass(hide);
+    $(inputId).on("mouseover", () => {
+      $(errorId).removeClass(hide);
+    }).on("mouseout", () => {
+      $(errorId).addClass(hide);
+    });
+    errorExists = true;
+  }
+
+  function HideError(inputId, errorId) {
+    $(inputId).removeClass("err-input");
+    $(inputId).off("mouseover");
+    $(inputId).off("mouseout");
+    $(errorId).addClass(hide);
+  }
   $("#closeBtn").on("click", () => {
     $("#newTicketModal").addClass(hide);
     $("#tleadDashMain").removeClass(unclickable);
+    HideError("#tktTitle", "#errTktTitle");
+    HideError("#tktDescription", "#errTktDescription");
+    HideError("#dueDate", "#errDueDate");
   });
 
   // ticket details ---------------------------------------------------------------------------
@@ -186,25 +238,58 @@
     TechLeadDashConnection.send("LoadTeamMembers", ticket.recipientId);
 
     $("#updateBtn").on("click", () => {
-      $("#updateTicketModal").addClass(hide);
-      $("#ticketDetailsMain").removeClass(unclickable);
-      const formData = {
-        title: $("#updateTitle")[0].value,
-        description: $("#updateDescription")[0].value,
-        status: $("#updateStatus")[0].value,
-        priorityLevel: $("#updatePriority")[0].value,
-        tempDate: $("#updateDueDateInput")[0].value,
-        recipientId: document.querySelector('input[name="user"]:checked').value
+      if (ValidUpdateTicketInput()) {
+        $("#updateTicketModal").addClass(hide);
+        $("#ticketDetailsMain").removeClass(unclickable);
+        const formData = {
+          title: $("#updateTitle")[0].value,
+          description: $("#updateDescription")[0].value,
+          status: $("#updateStatus")[0].value,
+          priorityLevel: $("#updatePriority")[0].value,
+          tempDate: $("#updateDueDateInput")[0].value,
+          recipientId: document.querySelector('input[name="user"]:checked').value
+        }
+        $("#updateBtn").off();
+        TechLeadDashConnection.send("UpdateTicket", formData, ticket.id);
       }
-      $("#updateBtn").off();
-      TechLeadDashConnection.send("UpdateTicket", formData, ticket.id);
     });
   }
+
+  //edit modal Validation ---------------------------------------------------------------------------
+  function ValidUpdateTicketInput() {
+    let errorExists = false;
+    if ($("#updateTitle")[0].value === "") {
+      ShowError("#updateTitle", "#errUpdateTitle");
+      errorExists = true;
+    }
+    if ($("#updateDescription")[0].value === "") {
+      ShowError("#updateDescription", "#errUpdateDescription");
+      errorExists = true;
+    }
+    if (Date.now() > $("#updateDueDateInput").val()) {
+      ShowError("#updateDueDateInput", "#errUpdateDueDateInput");
+      errorExists = true;
+    }
+    return !errorExists;
+  }
+
+  $("#updateTitle").on("input", () => {
+    HideError("#updateTitle", "#errUpdateTitle");
+  });
+  $("#updateDescription").on("input", () => {
+    HideError("#updateDescription", "#errUpdateDescription");
+  });
+  $("#updateDueDateInput").on("input", () => {
+    HideError("#updateDueDateInput", "#errUpdateDueDateInput");
+  });
 
   $("#updateCloseBtn").on("click", () => {
     $("#updateTicketModal").addClass(hide);
     $("#ticketDetailsMain").removeClass(unclickable);
     $("#updateBtn").off();
+    HideError("#updateTitle", "#errUpdateTitle");
+    HideError("#updateDescription", "#errUpdateDescription");
+    HideError("#updateDueDateInput", "#errUpdateDueDateInput");
   });
 
   // comments ---------------------------------------------------------------------------

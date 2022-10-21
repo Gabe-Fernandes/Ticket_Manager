@@ -4,7 +4,7 @@
 	ViewData["Title"] = "Register";
 	var result = TempData["Confirmation_Animation"] ?? "Register";
 }
-<script async src="~/js/Validation/RegisterValidation.js"></script>
+<script async src="~/js/Validation/IdentityValidation.js"></script>
 
 <main class="register-main">
 	<h1>@result</h1>
@@ -44,7 +44,7 @@
 					<span asp-validation-for="Input.Password"></span>
 				<input asp-for="Input.ConfirmPassword" id="confirmPasswordInput" type="text" placeholder="repeat password">
 					<span asp-validation-for="Input.ConfirmPassword"></span>
-							<span id="errConfirmPassword" class="err errConfirmPassword hide">passwords must match</span>
+					<span id="errConfirmPassword" class="err errConfirmPassword hide">passwords must match</span>
 				<button type="submit" class="btn">Create Account</button>
 				<div class="requirements">
 					<div class="requirement-wrap">

@@ -19,6 +19,14 @@
      text-indent: 5%;
      font-size: 1em;
     }
+    .errEmail{
+      top: 23.4vh;
+      right: 28vw;
+    }
+    .errPassword{
+      top: 33.4vh;
+      right: 30vw;
+    }
     button{
       @include WidthHeight(80%, 7vh);
       margin: 1vh 0vw;
@@ -173,12 +181,20 @@
       text-indent: 5%;
       font-size: 1em;
     }
+    .errEmail{
+      top: 22vh;
+      right: 28vw;
+    }
+    .errConfirmPassword{
+      top: 40vh;
+      right: 23vw;
+    }
     .requirements{
       @include Flex-Col(flex-start, center);
       .requirement-wrap{
         @include Flex-Row(center, center);
         margin: 0.85vh 0vw;
-        .confirmation{
+        .valid{
           @include Confirmation(1.8em);
           margin-right: 1vw;
         }

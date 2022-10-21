@@ -183,12 +183,20 @@ article{
     border-radius: 0.2em;
     font-size: 1em;
   }
+  .errProjTitle{
+    top: 15vh;
+    right: -1vw;
+  }
   .date-container{
     @include Flex-Row(center, center);
     div{
       @include Flex-Col(center, center);
       margin: 0vh 1vw;
     }
+  }
+  .errStartDate{
+    top: 30.3vh;
+    left: -11vw;
   }
   .btn-background{
     @include CloseBtn(2.4em);
